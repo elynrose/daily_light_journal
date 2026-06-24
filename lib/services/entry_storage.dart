@@ -293,6 +293,40 @@ class EntryStorage {
     );
   }
 
+  Future<void> appendScriptureNotes(
+    String text, {
+    DateTime? date,
+    ServicePeriod? period,
+  }) async {
+    final trimmed = text.trim();
+    if (trimmed.isEmpty) return;
+
+    final targetDate = normalizeDate(date ?? DateTime.now());
+    final targetPeriod = period ?? servicePeriodFromTime(DateTime.now());
+    final existing = getEntrySync(
+      targetDate,
+      EntryCategory.scripture,
+      period: targetPeriod,
+    );
+    final existingNotes = existing?.notes.trim() ?? '';
+    final notes = existingNotes.isEmpty
+        ? trimmed
+        : '$existingNotes\n\n$trimmed';
+
+    await saveEntry(Entry(
+      id: dateCategoryKey(
+        targetDate,
+        EntryCategory.scripture,
+        period: targetPeriod,
+      ),
+      date: targetDate,
+      title: '',
+      notes: notes,
+      category: EntryCategory.scripture,
+      period: targetPeriod,
+    ));
+  }
+
   Future<void> addSongToTodayNotes(
     Song song, {
     DateTime? date,

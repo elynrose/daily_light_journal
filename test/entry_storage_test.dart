@@ -233,4 +233,38 @@ void main() {
       contains('Preached by: Pastor Lee'),
     );
   });
+
+  test('appendScriptureNotes appends text without changing sermon fields', () async {
+    final day = EntryStorage.normalizeDate(DateTime.now());
+
+    await storage.setSermonTitle(day, 'Sunday Message', period: ServicePeriod.am);
+    await storage.setSermonPreachedBy(day, 'Pastor John', period: ServicePeriod.am);
+    await storage.appendScriptureNotes(
+      'Genesis 1:1\nIn the beginning',
+      date: day,
+      period: ServicePeriod.am,
+    );
+    await storage.appendScriptureNotes(
+      'Genesis 1:2\nAnd the earth was without form',
+      date: day,
+      period: ServicePeriod.am,
+    );
+
+    final entry = storage.getEntrySync(
+      day,
+      EntryCategory.scripture,
+      period: ServicePeriod.am,
+    );
+
+    expect(entry?.notes, contains('Genesis 1:1'));
+    expect(entry?.notes, contains('Genesis 1:2'));
+    expect(
+      storage.getSermonTitleSync(day, period: ServicePeriod.am),
+      'Sunday Message',
+    );
+    expect(
+      storage.getSermonPreachedBySync(day, period: ServicePeriod.am),
+      'Pastor John',
+    );
+  });
 }

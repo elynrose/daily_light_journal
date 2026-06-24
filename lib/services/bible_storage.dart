@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
@@ -44,6 +45,28 @@ class BibleStorage {
       return verse.reference.toLowerCase().contains(lower) ||
           verse.text.toLowerCase().contains(lower);
     }).toList();
+  }
+
+  List<BibleVerse> versesForChapter(String chapterKey) {
+    return _verses.where((verse) => verse.chapterKey == chapterKey).toList();
+  }
+
+  static Map<String, List<BibleVerse>> groupByChapter(List<BibleVerse> verses) {
+    final grouped = <String, List<BibleVerse>>{};
+    for (final verse in verses) {
+      grouped.putIfAbsent(verse.chapterKey, () => []).add(verse);
+    }
+    return grouped;
+  }
+
+  static String formatVersesForNotes(List<BibleVerse> verses) {
+    return verses.map((verse) => verse.toNotesLine()).join('\n\n');
+  }
+
+  BibleVerse? pickRandomVerse({Random? random}) {
+    if (_verses.isEmpty) return null;
+    final index = (random ?? Random()).nextInt(_verses.length);
+    return _verses[index];
   }
 
   @visibleForTesting

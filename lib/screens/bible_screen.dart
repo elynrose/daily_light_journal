@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../models/bible_verse.dart';
 import '../services/bible_storage.dart';
+import '../services/entry_storage.dart';
 import '../theme/app_colors.dart';
 
 class BibleScreen extends StatefulWidget {
@@ -13,6 +14,7 @@ class BibleScreen extends StatefulWidget {
 
 class _BibleScreenState extends State<BibleScreen> {
   final BibleStorage _bibleStorage = BibleStorage.instance;
+  final EntryStorage _entryStorage = EntryStorage.instance;
   final TextEditingController _searchController = TextEditingController();
 
   List<BibleVerse> _verses = [];
@@ -52,6 +54,15 @@ class _BibleScreenState extends State<BibleScreen> {
     setState(() {
       _verses = _bibleStorage.search(query);
     });
+  }
+
+  Future<void> _addVerseToNotes(BibleVerse verse) async {
+    await _entryStorage.appendScriptureNotes(verse.toNotesLine());
+
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('${verse.reference} added to scripture notes')),
+    );
   }
 
   @override
@@ -126,36 +137,80 @@ class _BibleScreenState extends State<BibleScreen> {
       );
     }
 
+    final chapters = BibleStorage.groupByChapter(_verses);
+    final chapterKeys = chapters.keys.toList();
+
     return ListView.separated(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      itemCount: _verses.length,
+      itemCount: chapterKeys.length,
       separatorBuilder: (_, __) => AppColors.listSeparator(),
-      itemBuilder: (context, index) {
-        final verse = _verses[index];
-        return Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                verse.reference,
+      itemBuilder: (context, chapterIndex) {
+        final chapterKey = chapterKeys[chapterIndex];
+        final chapterVerses = chapters[chapterKey]!;
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 8, bottom: 4),
+              child: Text(
+                chapterKey,
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 15,
+                  fontSize: 16,
                   color: AppColors.text,
                 ),
               ),
-              const SizedBox(height: 4),
-              Text(
-                verse.text,
-                style: const TextStyle(
-                  fontSize: 15,
-                  height: 1.45,
-                  color: AppColors.text,
+            ),
+            ...chapterVerses.map(
+              (verse) => Padding(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            verse.reference,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15,
+                              color: AppColors.text,
+                            ),
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: () => _addVerseToNotes(verse),
+                          padding: EdgeInsets.zero,
+                          constraints: const BoxConstraints(
+                            minWidth: 32,
+                            minHeight: 32,
+                          ),
+                          tooltip: 'Add to scripture notes',
+                          icon: const Icon(
+                            Icons.add,
+                            size: 20,
+                            color: AppColors.text,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      verse.text,
+                      style: const TextStyle(
+                        fontSize: 15,
+                        height: 1.45,
+                        color: AppColors.text,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         );
       },
     );

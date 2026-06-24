@@ -4,7 +4,7 @@ import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:timezone/data/latest.dart' as tz_data;
 import 'package:timezone/timezone.dart' as tz;
 
-import 'entry_storage.dart';
+import 'notification_content.dart';
 
 class NotificationService {
   NotificationService._();
@@ -32,7 +32,16 @@ class NotificationService {
 
       const androidSettings =
           AndroidInitializationSettings('@mipmap/ic_launcher');
-      const initSettings = InitializationSettings(android: androidSettings);
+      const darwinSettings = DarwinInitializationSettings(
+        requestAlertPermission: false,
+        requestBadgePermission: false,
+        requestSoundPermission: false,
+      );
+      const initSettings = InitializationSettings(
+        android: androidSettings,
+        iOS: darwinSettings,
+        macOS: darwinSettings,
+      );
 
       await _plugin.initialize(settings: initSettings);
 
@@ -43,17 +52,46 @@ class NotificationService {
           const AndroidNotificationChannel(
             _channelId,
             _channelName,
-            description: 'Morning and evening journal reminders',
+            description: 'Morning and evening journal and scripture reminders',
             importance: Importance.high,
           ),
         );
         await androidPlugin?.requestNotificationsPermission();
       }
 
+      if (!kIsWeb &&
+          (defaultTargetPlatform == TargetPlatform.iOS ||
+              defaultTargetPlatform == TargetPlatform.macOS)) {
+        await _requestDarwinNotificationPermissions();
+      }
+
       _initialized = true;
     } catch (error) {
       debugPrint('NotificationService init failed: $error');
     }
+  }
+
+  Future<void> _requestDarwinNotificationPermissions() async {
+    if (defaultTargetPlatform == TargetPlatform.iOS) {
+      await _plugin
+          .resolvePlatformSpecificImplementation<
+              IOSFlutterLocalNotificationsPlugin>()
+          ?.requestPermissions(
+            alert: true,
+            badge: true,
+            sound: true,
+          );
+      return;
+    }
+
+    await _plugin
+        .resolvePlatformSpecificImplementation<
+            MacOSFlutterLocalNotificationsPlugin>()
+        ?.requestPermissions(
+          alert: true,
+          badge: true,
+          sound: true,
+        );
   }
 
   Future<void> refreshScheduledReminders() async {
@@ -68,7 +106,6 @@ class NotificationService {
   }
 
   Future<void> _refreshScheduledReminders() async {
-
     await _plugin.cancelAll();
 
     final now = tz.TZDateTime.now(tz.local);
@@ -114,15 +151,18 @@ class NotificationService {
     required tz.TZDateTime scheduledAt,
     required bool isMorning,
   }) async {
-    final snippet = EntryStorage.instance.pickRandomJournalSnippet();
+    final body = NotificationContent.pickBody();
     final title = isMorning ? 'Morning Light' : 'Evening Light';
-    final body = snippet?.toNotificationBody() ??
-        'Add notes to your journal to see them here each morning and evening.';
 
+    const darwinDetails = DarwinNotificationDetails(
+      presentAlert: true,
+      presentBadge: true,
+      presentSound: true,
+    );
     final androidDetails = AndroidNotificationDetails(
       _channelId,
       _channelName,
-      channelDescription: 'Morning and evening journal reminders',
+      channelDescription: 'Morning and evening journal and scripture reminders',
       importance: Importance.high,
       priority: Priority.high,
       styleInformation: BigTextStyleInformation(body),
@@ -133,7 +173,11 @@ class NotificationService {
       title: title,
       body: body,
       scheduledDate: scheduledAt,
-      notificationDetails: NotificationDetails(android: androidDetails),
+      notificationDetails: NotificationDetails(
+        android: androidDetails,
+        iOS: darwinDetails,
+        macOS: darwinDetails,
+      ),
       androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
     );
   }

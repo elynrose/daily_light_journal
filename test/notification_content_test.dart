@@ -1,0 +1,94 @@
+import 'dart:io';
+import 'dart:math';
+
+import 'package:flutter_test/flutter_test.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+
+import 'package:daily_light_journal/models/bible_verse.dart';
+import 'package:daily_light_journal/models/entry.dart';
+import 'package:daily_light_journal/services/bible_storage.dart';
+import 'package:daily_light_journal/services/entry_storage.dart';
+import 'package:daily_light_journal/services/notification_content.dart';
+
+void main() {
+  late Directory tempDir;
+  final storage = EntryStorage.instance;
+  final bibleStorage = BibleStorage.instance;
+
+  setUp(() async {
+    tempDir = await Directory.systemTemp.createTemp('notification_content_test');
+    await storage.init(hivePath: tempDir.path);
+    bibleStorage.setVersesForTest([
+      const BibleVerse(
+        reference: 'John 3:16',
+        text: 'For God so loved the world',
+      ),
+    ]);
+  });
+
+  tearDown(() async {
+    await Hive.close();
+    if (tempDir.existsSync()) {
+      await tempDir.delete(recursive: true);
+    }
+  });
+
+  test('uses bible verse when journal is empty', () {
+    final body = NotificationContent.pickBody(random: Random(0));
+
+    expect(body, 'John 3:16\nFor God so loved the world');
+  });
+
+  test('uses journal note when bible is empty', () async {
+    bibleStorage.setVersesForTest([]);
+
+    final day = DateTime(2024, 3, 15);
+    await storage.saveEntry(Entry(
+      id: 'quote',
+      date: day,
+      title: '',
+      notes: 'The Lord is my shepherd.',
+      category: EntryCategory.quote,
+      period: ServicePeriod.pm,
+    ));
+
+    final body = NotificationContent.pickBody(random: Random(0));
+
+    expect(body, contains('The Lord is my shepherd.'));
+    expect(body, contains('3/15/2024'));
+  });
+
+  test('mixes journal notes and bible verses when both exist', () async {
+    final day = DateTime(2024, 3, 15);
+    await storage.saveEntry(Entry(
+      id: 'quote',
+      date: day,
+      title: '',
+      notes: 'The Lord is my shepherd.',
+      category: EntryCategory.quote,
+      period: ServicePeriod.pm,
+    ));
+
+    final bodies = {
+      for (var i = 0; i < 20; i++)
+        NotificationContent.pickBody(random: Random(i)),
+    };
+
+    expect(
+      bodies.any((body) => body.contains('The Lord is my shepherd.')),
+      isTrue,
+    );
+    expect(
+      bodies.any((body) => body.contains('John 3:16')),
+      isTrue,
+    );
+  });
+
+  test('falls back when journal and bible are empty', () {
+    bibleStorage.setVersesForTest([]);
+
+    final body = NotificationContent.pickBody();
+
+    expect(body, NotificationContent.fallbackBody);
+  });
+}
