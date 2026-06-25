@@ -79,6 +79,7 @@ class Entry {
   final String songKey;
   final String number;
   final List<DailySongItem> songItems;
+  final List<String> notePages;
 
   Entry({
     required this.id,
@@ -90,7 +91,21 @@ class Entry {
     this.songKey = '',
     this.number = '',
     this.songItems = const [],
+    this.notePages = const [],
   });
+
+  List<String> get resolvedNotePages {
+    if (notePages.isNotEmpty) return notePages;
+    if (notes.trim().isNotEmpty) return [notes];
+    return const [];
+  }
+
+  String get combinedNotes {
+    if (notePages.isNotEmpty) {
+      return notePages.where((page) => page.trim().isNotEmpty).join('\n\n');
+    }
+    return notes;
+  }
 
   Entry copyWith({
     String? id,
@@ -102,6 +117,7 @@ class Entry {
     String? songKey,
     String? number,
     List<DailySongItem>? songItems,
+    List<String>? notePages,
   }) {
     return Entry(
       id: id ?? this.id,
@@ -113,6 +129,7 @@ class Entry {
       songKey: songKey ?? this.songKey,
       number: number ?? this.number,
       songItems: songItems ?? this.songItems,
+      notePages: notePages ?? this.notePages,
     );
   }
 
@@ -127,6 +144,7 @@ class Entry {
       'songKey': songKey,
       'number': number,
       'songItems': songItems.map((item) => item.toMap()).toList(),
+      'notePages': notePages,
     };
   }
 
@@ -137,6 +155,10 @@ class Entry {
             .map((item) => DailySongItem.fromMap(item as Map<dynamic, dynamic>))
             .toList()
         : <DailySongItem>[];
+    final rawPages = map['notePages'];
+    final pages = rawPages is List
+        ? rawPages.map((page) => page as String? ?? '').toList()
+        : <String>[];
 
     return Entry(
       id: map['id'] as String,
@@ -150,6 +172,7 @@ class Entry {
       songKey: map['songKey'] as String? ?? '',
       number: map['number'] as String? ?? '',
       songItems: items,
+      notePages: pages,
     );
   }
 }

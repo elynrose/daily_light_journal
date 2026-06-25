@@ -1,4 +1,4 @@
-package com.example.daily_light_journal
+package com.churchjournal.app
 
 import io.flutter.embedding.android.FlutterActivity
 

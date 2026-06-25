@@ -30,7 +30,53 @@ class SongStorage {
 
   Future<void> seedFromAssetIfEmpty() async {
     final box = _box;
-    if (box == null || box.isNotEmpty) return;
+    if (box == null) return;
+
+    if (box.isEmpty) {
+      await _loadAllSongsFromAsset();
+      return;
+    }
+
+    await syncMissingSongsFromAsset();
+  }
+
+  Future<void> syncMissingSongsFromAsset() async {
+    final box = _box;
+    if (box == null) return;
+
+    final existingNumbers = getAllSongs()
+        .map((song) => song.number)
+        .where((number) => number.isNotEmpty)
+        .toSet();
+
+    final raw = await rootBundle.loadString(_assetPath);
+    final decoded = jsonDecode(raw) as List<dynamic>;
+
+    for (final item in decoded) {
+      final song = Song.fromJson(item as Map<String, dynamic>);
+      if (song.number.isNotEmpty && existingNumbers.contains(song.number)) {
+        final existing = getAllSongs().firstWhere(
+          (stored) => stored.number == song.number,
+        );
+        if (_shouldReplaceFromAsset(existing, song)) {
+          await box.put(existing.id, song.copyWith(id: existing.id).toMap());
+        }
+        continue;
+      }
+      await box.put(song.id, song.toMap());
+      if (song.number.isNotEmpty) {
+        existingNumbers.add(song.number);
+      }
+    }
+  }
+
+  bool _shouldReplaceFromAsset(Song existing, Song asset) {
+    return existing.lyrics.contains('PP PPaa aagg ggee ee');
+  }
+
+  Future<void> _loadAllSongsFromAsset() async {
+    final box = _box;
+    if (box == null) return;
 
     final raw = await rootBundle.loadString(_assetPath);
     final decoded = jsonDecode(raw) as List<dynamic>;

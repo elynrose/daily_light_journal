@@ -3,16 +3,16 @@ import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-import 'package:daily_light_journal/main.dart';
-import 'package:daily_light_journal/services/entry_storage.dart';
-import 'package:daily_light_journal/services/song_storage.dart';
+import 'package:church_journal/main.dart';
+import 'package:church_journal/services/entry_storage.dart';
+import 'package:church_journal/services/song_storage.dart';
 
 void main() {
   late Directory tempDir;
 
   setUp(() async {
     TestWidgetsFlutterBinding.ensureInitialized();
-    tempDir = await Directory.systemTemp.createTemp('daily_light_journal_test');
+    tempDir = await Directory.systemTemp.createTemp('church_journal_test');
     await EntryStorage.instance.init(hivePath: tempDir.path);
     await SongStorage.instance.init(hivePath: tempDir.path);
   });

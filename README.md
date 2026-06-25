@@ -1,4 +1,4 @@
-# daily_light_journal
+# Church Journal
 
 A new Flutter project.
 

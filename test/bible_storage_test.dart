@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:daily_light_journal/models/bible_verse.dart';
-import 'package:daily_light_journal/services/bible_storage.dart';
+import 'package:church_journal/models/bible_verse.dart';
+import 'package:church_journal/services/bible_storage.dart';
 
 void main() {
   test('search filters by reference and text', () {

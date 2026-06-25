@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:daily_light_journal/models/bible_verse.dart';
-import 'package:daily_light_journal/services/bible_storage.dart';
-import 'package:daily_light_journal/utils/bible_reference_parser.dart';
+import 'package:church_journal/models/bible_verse.dart';
+import 'package:church_journal/services/bible_storage.dart';
+import 'package:church_journal/utils/bible_reference_parser.dart';
 
 void main() {
   setUp(() {

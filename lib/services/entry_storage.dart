@@ -270,7 +270,7 @@ class EntryStorage {
       if (e.category != category) return false;
       if (lower.isEmpty) return true;
       return e.title.toLowerCase().contains(lower) ||
-          e.notes.toLowerCase().contains(lower) ||
+          e.combinedNotes.toLowerCase().contains(lower) ||
           e.songKey.toLowerCase().contains(lower) ||
           e.number.toLowerCase().contains(lower);
     }).toList()
@@ -278,18 +278,23 @@ class EntryStorage {
   }
 
   JournalSnippet? pickRandomJournalSnippet() {
-    final withNotes =
-        _entries.where((entry) => entry.notes.trim().isNotEmpty).toList();
+    final withNotes = _entries.where((entry) {
+      return entry.combinedNotes.trim().isNotEmpty;
+    }).toList();
     if (withNotes.isEmpty) return null;
 
     withNotes.shuffle();
     final entry = withNotes.first;
+    final pages = entry.resolvedNotePages.where((page) => page.trim().isNotEmpty);
+    final note = pages.isEmpty
+        ? entry.combinedNotes.trim()
+        : (pages.toList()..shuffle()).first.trim();
     return JournalSnippet(
       date: normalizeDate(entry.date),
       period: entry.period,
       title: getSermonTitleSync(entry.date, period: entry.period),
       preachedBy: getSermonPreachedBySync(entry.date, period: entry.period),
-      note: entry.notes.trim(),
+      note: note,
     );
   }
 

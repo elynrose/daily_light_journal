@@ -8,6 +8,7 @@ import '../services/entry_storage.dart';
 import '../services/song_storage.dart';
 import '../theme/app_colors.dart';
 import '../widgets/linked_scripture_field.dart';
+import '../widgets/quote_pages_field.dart';
 import '../widgets/side_category_tabs.dart';
 import 'song_detail_screen.dart';
 
@@ -49,8 +50,10 @@ class _JournalScreenState extends State<JournalScreen> {
   bool _isEditingTitle = false;
   bool _isEditingPreachedBy = false;
   List<DailySongItem> _songItems = [];
+  List<String> _quotePages = [''];
 
   bool get _isSongTab => _selectedCategory == EntryCategory.song;
+  bool get _isQuoteTab => _selectedCategory == EntryCategory.quote;
   bool get _isSermonTab =>
       _selectedCategory == EntryCategory.quote ||
       _selectedCategory == EntryCategory.scripture;
@@ -146,7 +149,12 @@ class _JournalScreenState extends State<JournalScreen> {
     final preachedBy = _isSermonTab
         ? _storage.getSermonPreachedBySync(_selectedDate, period: _selectedPeriod)
         : '';
-    final notes = entry?.notes ?? '';
+    final notes = _selectedCategory == EntryCategory.scripture
+        ? entry?.notes ?? ''
+        : '';
+    final quotePages = _selectedCategory == EntryCategory.quote
+        ? _pagesFromEntry(entry)
+        : [''];
 
     _titleController.value = TextEditingValue(
       text: sermonTitle,
@@ -161,10 +169,22 @@ class _JournalScreenState extends State<JournalScreen> {
       selection: TextSelection.collapsed(offset: notes.length),
     );
     _songItems = List<DailySongItem>.from(entry?.songItems ?? []);
+    _quotePages = quotePages;
 
     _titleController.addListener(_scheduleAutosave);
     _preachedByController.addListener(_scheduleAutosave);
     _notesController.addListener(_scheduleAutosave);
+  }
+
+  List<String> _pagesFromEntry(Entry? entry) {
+    final pages = entry?.resolvedNotePages ?? const <String>[];
+    if (pages.isEmpty) return [''];
+    return List<String>.from(pages);
+  }
+
+  void _onQuotePagesChanged(List<String> pages) {
+    _quotePages = pages;
+    _scheduleAutosave();
   }
 
   Future<void> _flushSave() async {
@@ -180,7 +200,13 @@ class _JournalScreenState extends State<JournalScreen> {
     }
 
     final sermonTitle = _titleController.text.trim();
-    final notes = _notesController.text.trim();
+    final notes = _isQuoteTab
+        ? ''
+        : _notesController.text.trim();
+    final quotePages = _isQuoteTab ? List<String>.from(_quotePages) : const <String>[];
+    final hasQuoteContent =
+        quotePages.any((page) => page.trim().isNotEmpty);
+    final hasScriptureContent = notes.isNotEmpty;
 
     await _storage.setSermonTitle(
       saveDate,
@@ -193,7 +219,54 @@ class _JournalScreenState extends State<JournalScreen> {
       period: savePeriod,
     );
 
-    if (notes.isEmpty) {
+    if (_isQuoteTab) {
+      if (!hasQuoteContent) {
+        await _storage.deleteEntryForDateCategoryAndPeriod(
+          saveDate,
+          saveCategory,
+          period: savePeriod,
+        );
+        if (mounted &&
+            saveCategory == _selectedCategory &&
+            savePeriod == _selectedPeriod &&
+            EntryStorage.isSameDate(saveDate, _selectedDate)) {
+          setState(() {
+            _currentEntryId = null;
+          });
+        }
+        return;
+      }
+
+      final entry = Entry(
+        id: EntryStorage.dateCategoryKey(
+          saveDate,
+          saveCategory,
+          period: savePeriod,
+        ),
+        date: saveDate,
+        title: '',
+        notes: '',
+        category: saveCategory,
+        period: savePeriod,
+        notePages: quotePages,
+      );
+
+      await _storage.saveEntry(entry);
+
+      if (!mounted) return;
+
+      if (saveCategory == _selectedCategory &&
+          savePeriod == _selectedPeriod &&
+          EntryStorage.isSameDate(saveDate, _selectedDate) &&
+          _currentEntryId != entry.id) {
+        setState(() {
+          _currentEntryId = entry.id;
+        });
+      }
+      return;
+    }
+
+    if (!hasScriptureContent) {
       await _storage.deleteEntryForDateCategoryAndPeriod(
         saveDate,
         saveCategory,
@@ -568,15 +641,24 @@ class _JournalScreenState extends State<JournalScreen> {
                     Expanded(
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(12, 4, 12, 12),
-                        child: LinkedScriptureField(
-                          key: ValueKey('linked-notes-$_fieldSlotId'),
-                          controller: _notesController,
-                          focusNode: _notesFocusNode,
-                          labelText: _selectedCategory.listTitle,
-                          onReferenceTap: (reference) {
-                            widget.onScriptureReferenceTap?.call(reference);
-                          },
-                        ),
+                        child: _isQuoteTab
+                            ? QuotePagesField(
+                                key: ValueKey('quote-pages-$_fieldSlotId'),
+                                initialPages: _quotePages,
+                                onPagesChanged: _onQuotePagesChanged,
+                                onReferenceTap: (reference) {
+                                  widget.onScriptureReferenceTap?.call(reference);
+                                },
+                              )
+                            : LinkedScriptureField(
+                                key: ValueKey('linked-notes-$_fieldSlotId'),
+                                controller: _notesController,
+                                focusNode: _notesFocusNode,
+                                labelText: _selectedCategory.listTitle,
+                                onReferenceTap: (reference) {
+                                  widget.onScriptureReferenceTap?.call(reference);
+                                },
+                              ),
                       ),
                     ),
                   ],

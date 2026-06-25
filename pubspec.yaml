@@ -1,8 +1,5 @@
-name: daily_light_journal
-description: >
-  A simple Flutter journal app allowing users to record and search through songs,
-  quotes, and scripture entries by date. This project is a starting point and
-  demonstrates a basic structure with categories and local storage services.
+name: church_journal
+description: Church Journal — record songs, quotes, and scriptures by date.
 
 environment:
   sdk: ">=3.0.0 <4.0.0"

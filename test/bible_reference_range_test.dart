@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:daily_light_journal/utils/bible_reference_range.dart';
+import 'package:church_journal/utils/bible_reference_range.dart';
 
 void main() {
   test('parseReferenceRange handles same-chapter shorthand', () {

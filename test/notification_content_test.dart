@@ -4,11 +4,11 @@ import 'dart:math';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-import 'package:daily_light_journal/models/bible_verse.dart';
-import 'package:daily_light_journal/models/entry.dart';
-import 'package:daily_light_journal/services/bible_storage.dart';
-import 'package:daily_light_journal/services/entry_storage.dart';
-import 'package:daily_light_journal/services/notification_content.dart';
+import 'package:church_journal/models/bible_verse.dart';
+import 'package:church_journal/models/entry.dart';
+import 'package:church_journal/services/bible_storage.dart';
+import 'package:church_journal/services/entry_storage.dart';
+import 'package:church_journal/services/notification_content.dart';
 
 void main() {
   late Directory tempDir;

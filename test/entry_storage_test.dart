@@ -3,9 +3,9 @@ import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-import 'package:daily_light_journal/models/entry.dart';
-import 'package:daily_light_journal/models/song.dart';
-import 'package:daily_light_journal/services/entry_storage.dart';
+import 'package:church_journal/models/entry.dart';
+import 'package:church_journal/models/song.dart';
+import 'package:church_journal/services/entry_storage.dart';
 
 void main() {
   late Directory tempDir;
