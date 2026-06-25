@@ -41,7 +41,11 @@ class BibleStorage {
   }
 
   static String normalizeReference(String reference) {
-    return reference.toLowerCase().replaceAll(RegExp(r'\s+'), ' ').trim();
+    return reference
+        .toLowerCase()
+        .replaceAll(RegExp(r'\s*:\s*'), ':')
+        .replaceAll(RegExp(r'\s+'), ' ')
+        .trim();
   }
 
   void _rebuildReferenceIndex() {

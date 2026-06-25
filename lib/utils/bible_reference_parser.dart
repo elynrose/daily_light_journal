@@ -21,10 +21,14 @@ class BibleReferenceMatch {
 class BibleReferenceParser {
   BibleReferenceParser._();
 
-  static final _verseNumberPattern = RegExp(r'\d+:\d+');
-  static final _rangeEndPattern = RegExp(r'\d+:\d+\s*-\s*(?:\d+:\s*)?\d+');
+  static final _verseNumberPattern = RegExp(r'\d+\s*:\s*\d+');
+  static final _rangeEndPattern = RegExp(
+    r'\d+\s*:\s*\d+\s*-\s*(?:\d+\s*:\s*)?\d+|\s*:\s*\d+\s*-\s*\d+',
+  );
   static final _referenceCharPattern = RegExp(r'[A-Za-z0-9]');
-  static final _rangeSuffixPattern = RegExp(r'^\s*-\s*(?:\d+:\s*)?\d+');
+  static final _rangeSuffixPattern = RegExp(
+    r'^\s*-\s*(?:\d+\s*:\s*)?\d+',
+  );
 
   static List<BibleReferenceMatch> findReferences(String text) {
     if (text.isEmpty) return const [];

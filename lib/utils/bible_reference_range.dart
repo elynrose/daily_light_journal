@@ -23,25 +23,59 @@ class BibleReferenceRange {
   }
 }
 
+final _numberedBookPattern = RegExp(r'^\d+\s');
+
 BibleReferenceRange? parseReferenceRange(String text) {
   final trimmed = text.trim();
   if (trimmed.isEmpty) return null;
 
-  final match = RegExp(
-    r'^(.*?)\s+(\d+):(\d+)\s*-\s*(?:(\d+):)?(\d+)$',
+  final standard = RegExp(
+    r'^(.*?)\s+(\d+)\s*:\s*(\d+)\s*-\s*(?:(\d+)\s*:\s*)?(\d+)$',
     caseSensitive: false,
   ).firstMatch(trimmed);
 
-  if (match == null) return null;
+  if (standard != null) {
+    return _buildRange(
+      book: standard.group(1)!.trim(),
+      chapter: int.parse(standard.group(2)!),
+      startVerse: int.parse(standard.group(3)!),
+      endChapter: standard.group(4) != null
+          ? int.parse(standard.group(4)!)
+          : int.parse(standard.group(2)!),
+      endVerse: int.parse(standard.group(5)!),
+    );
+  }
 
-  final book = match.group(1)!.trim();
-  final chapter = int.parse(match.group(2)!);
-  final startVerse = int.parse(match.group(3)!);
-  final explicitEndChapter = match.group(4);
-  final endVerse = int.parse(match.group(5)!);
-  final endChapter =
-      explicitEndChapter != null ? int.parse(explicitEndChapter) : chapter;
+  // Numbered books only: "1 Peter : 1-2" → chapter 1, verses 1–2.
+  final shorthand = RegExp(
+    r'^(.*?)\s*:\s*(\d+)\s*-\s*(\d+)$',
+    caseSensitive: false,
+  ).firstMatch(trimmed);
 
+  if (shorthand != null) {
+    final book = shorthand.group(1)!.trim();
+    if (!_numberedBookPattern.hasMatch(book)) return null;
+
+    final chapter = int.parse(shorthand.group(2)!);
+    return _buildRange(
+      book: book,
+      chapter: chapter,
+      startVerse: chapter,
+      endChapter: chapter,
+      endVerse: int.parse(shorthand.group(3)!),
+    );
+  }
+
+  return null;
+}
+
+BibleReferenceRange? _buildRange({
+  required String book,
+  required int chapter,
+  required int startVerse,
+  required int endChapter,
+  required int endVerse,
+}) {
   if (startVerse < 1 || endVerse < 1) return null;
   if (endChapter < chapter) return null;
   if (endChapter == chapter && endVerse < startVerse) return null;

@@ -21,4 +21,30 @@ void main() {
     expect(range?.book, 'john');
     expect(range?.displayReference, 'john 14:12-16');
   });
+
+  test('parseReferenceRange allows spaces around colon and dash', () {
+    final range = parseReferenceRange('1 Peter 1 : 1 - 2');
+
+    expect(range, isNotNull);
+    expect(range!.book, '1 Peter');
+    expect(range.chapter, 1);
+    expect(range.startVerse, 1);
+    expect(range.endVerse, 2);
+    expect(range.displayReference, '1 Peter 1:1-2');
+  });
+
+  test('parseReferenceRange handles numbered-book shorthand', () {
+    final range = parseReferenceRange('1 Peter : 1-2');
+
+    expect(range, isNotNull);
+    expect(range!.book, '1 Peter');
+    expect(range.chapter, 1);
+    expect(range.startVerse, 1);
+    expect(range.endVerse, 2);
+    expect(range.displayReference, '1 Peter 1:1-2');
+  });
+
+  test('parseReferenceRange rejects shorthand for unnumbered books', () {
+    expect(parseReferenceRange('John : 3-16'), isNull);
+  });
 }

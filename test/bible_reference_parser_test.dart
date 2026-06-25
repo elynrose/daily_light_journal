@@ -15,6 +15,8 @@ void main() {
       const BibleVerse(reference: 'John 14:14', text: 'If ye shall ask'),
       const BibleVerse(reference: 'John 14:15', text: 'If ye love me'),
       const BibleVerse(reference: 'John 14:16', text: 'And I will pray'),
+      const BibleVerse(reference: '1 Peter 1:1', text: 'Peter, an apostle'),
+      const BibleVerse(reference: '1 Peter 1:2', text: 'Elect according'),
     ]);
   });
 
@@ -74,5 +76,29 @@ void main() {
       'John 14:15',
       'John 14:16',
     ]);
+  });
+
+  test('findReferences links 1 Peter : 1-2 shorthand', () {
+    const text = 'Meditate on 1 Peter : 1-2 today.';
+
+    final matches = BibleReferenceParser.findReferences(text);
+
+    expect(matches, hasLength(1));
+    expect(matches.first.isRange, isTrue);
+    expect(matches.first.matchedText, '1 Peter : 1-2');
+    expect(matches.first.reference, '1 Peter 1:1-2');
+
+    final verses =
+        BibleStorage.instance.versesForReferenceQuery('1 Peter : 1-2');
+    expect(verses, hasLength(2));
+    expect(verses.first.reference, '1 Peter 1:1');
+    expect(verses.last.reference, '1 Peter 1:2');
+  });
+
+  test('verseForReference allows spaces around colon', () {
+    expect(
+      BibleStorage.instance.verseForReference('1 peter 1 : 1')?.reference,
+      '1 Peter 1:1',
+    );
   });
 }
