@@ -29,7 +29,7 @@ extension EntryCategoryLabel on EntryCategory {
       case EntryCategory.quote:
         return 'QUOTES';
       case EntryCategory.scripture:
-        return 'SCRIPT';
+        return 'SCRIPTURES';
     }
   }
 
@@ -40,7 +40,7 @@ extension EntryCategoryLabel on EntryCategory {
       case EntryCategory.quote:
         return 'Quotes';
       case EntryCategory.scripture:
-        return 'Script';
+        return 'Scriptures';
     }
   }
 }

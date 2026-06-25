@@ -562,7 +562,7 @@ class _JournalScreenState extends State<JournalScreen> {
                           controller: _notesController,
                           decoration: InputDecoration(
                             alignLabelWithHint: true,
-                            labelText: 'Notes',
+                            labelText: _selectedCategory.listTitle,
                             labelStyle: const TextStyle(
                               color: AppColors.text,
                               fontWeight: FontWeight.bold,
