@@ -112,6 +112,54 @@ class _BibleScreenState extends State<BibleScreen> {
     return _verseKeys.putIfAbsent(reference, GlobalKey.new);
   }
 
+  static const _bookStyle = TextStyle(
+    fontSize: 26,
+    fontWeight: FontWeight.w800,
+    color: AppColors.text,
+    height: 1.15,
+    letterSpacing: 0.3,
+  );
+
+  static const _chapterStyle = TextStyle(
+    fontSize: 18,
+    fontWeight: FontWeight.w700,
+    color: AppColors.text,
+    height: 1.25,
+  );
+
+  static const _verseNumberStyle = TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.w600,
+    color: AppColors.text,
+    height: 1.5,
+  );
+
+  static const _verseTextStyle = TextStyle(
+    fontSize: 15,
+    fontWeight: FontWeight.w300,
+    color: Color(0xFF3A3A3A),
+    height: 1.55,
+  );
+
+  (String book, String chapter) _parseChapterKey(String chapterKey) {
+    final parts = chapterKey.trim().split(RegExp(r'\s+'));
+    if (parts.length > 1) {
+      final last = parts.last;
+      if (RegExp(r'^\d+$').hasMatch(last)) {
+        return (parts.sublist(0, parts.length - 1).join(' '), last);
+      }
+    }
+    return (chapterKey, '');
+  }
+
+  String _verseNumber(String reference) {
+    final colonIndex = reference.lastIndexOf(':');
+    if (colonIndex < 0 || colonIndex == reference.length - 1) {
+      return reference;
+    }
+    return reference.substring(colonIndex + 1);
+  }
+
   void _onSearchChanged(String query) {
     setState(() {
       _highlightedReferences.clear();
@@ -211,25 +259,28 @@ class _BibleScreenState extends State<BibleScreen> {
       itemBuilder: (context, chapterIndex) {
         final chapterKey = chapterKeys[chapterIndex];
         final chapterVerses = chapters[chapterKey]!;
+        final (book, chapter) = _parseChapterKey(chapterKey);
 
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Padding(
-              padding: const EdgeInsets.only(top: 8, bottom: 4),
-              child: Text(
-                chapterKey,
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                  color: AppColors.text,
-                ),
+              padding: const EdgeInsets.only(top: 12, bottom: 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(book, style: _bookStyle),
+                  if (chapter.isNotEmpty) ...[
+                    const SizedBox(height: 2),
+                    Text('Chapter $chapter', style: _chapterStyle),
+                  ],
+                ],
               ),
             ),
             ...chapterVerses.map(
               (verse) => Padding(
                 key: _keyForVerse(verse.reference),
-                padding: const EdgeInsets.only(bottom: 8),
+                padding: const EdgeInsets.only(bottom: 10),
                 child: DecoratedBox(
                   decoration: BoxDecoration(
                     color: _highlightedReferences.contains(verse.reference)
@@ -238,45 +289,37 @@ class _BibleScreenState extends State<BibleScreen> {
                     borderRadius: BorderRadius.circular(6),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.all(4),
-                    child: Column(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 4,
+                      vertical: 2,
+                    ),
+                    child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Expanded(
-                              child: Text(
-                                verse.reference,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15,
-                                  color: AppColors.text,
-                                ),
-                              ),
-                            ),
-                            IconButton(
-                              onPressed: () => _addVerseToNotes(verse),
-                              padding: EdgeInsets.zero,
-                              constraints: const BoxConstraints(
-                                minWidth: 32,
-                                minHeight: 32,
-                              ),
-                              tooltip: 'Add to scripture notes',
-                              icon: const Icon(
-                                Icons.add,
-                                size: 20,
-                                color: AppColors.text,
-                              ),
-                            ),
-                          ],
+                        SizedBox(
+                          width: 28,
+                          child: Text(
+                            _verseNumber(verse.reference),
+                            style: _verseNumberStyle,
+                          ),
                         ),
-                        const SizedBox(height: 4),
-                        Text(
-                          verse.text,
-                          style: const TextStyle(
-                            fontSize: 15,
-                            height: 1.45,
+                        Expanded(
+                          child: Text(
+                            verse.text,
+                            style: _verseTextStyle,
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: () => _addVerseToNotes(verse),
+                          padding: EdgeInsets.zero,
+                          constraints: const BoxConstraints(
+                            minWidth: 32,
+                            minHeight: 32,
+                          ),
+                          tooltip: 'Add to scripture notes',
+                          icon: const Icon(
+                            Icons.add,
+                            size: 20,
                             color: AppColors.text,
                           ),
                         ),

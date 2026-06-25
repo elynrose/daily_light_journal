@@ -74,7 +74,21 @@ class SongStorage {
     if (existing.lyrics.contains('PP PPaa aagg ggee ee')) {
       return true;
     }
+    if (_looksLikeBadTitle(existing.title)) {
+      return true;
+    }
     return _looksLikeSongbookRefTitle(existing.title);
+  }
+
+  bool _looksLikeBadTitle(String title) {
+    final trimmed = title.trim();
+    if (trimmed.isEmpty) return true;
+    if (RegExp(r'^\d+$').hasMatch(trimmed)) return true;
+    if (RegExp(r'^\d+\)\s').hasMatch(trimmed)) return true;
+    if (RegExp(r'^chorus:?$', caseSensitive: false).hasMatch(trimmed)) {
+      return true;
+    }
+    return false;
   }
 
   bool _looksLikeSongbookRefTitle(String title) {
