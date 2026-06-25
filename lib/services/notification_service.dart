@@ -11,8 +11,8 @@ class NotificationService {
 
   static final NotificationService instance = NotificationService._();
 
-  static const _channelId = 'daily_light_reminders';
-  static const _channelName = 'Daily Light Reminders';
+  static const _channelId = 'church_journal_reminders';
+  static const _channelName = 'Church Journal Reminders';
   static const _morningHour = 7;
   static const _eveningHour = 19;
   static const _daysAhead = 7;
