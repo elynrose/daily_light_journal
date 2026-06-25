@@ -71,7 +71,16 @@ class SongStorage {
   }
 
   bool _shouldReplaceFromAsset(Song existing, Song asset) {
-    return existing.lyrics.contains('PP PPaa aagg ggee ee');
+    if (existing.lyrics.contains('PP PPaa aagg ggee ee')) {
+      return true;
+    }
+    return _looksLikeSongbookRefTitle(existing.title);
+  }
+
+  bool _looksLikeSongbookRefTitle(String title) {
+    final trimmed = title.trim();
+    if (trimmed.isEmpty) return false;
+    return RegExp(r'^(RH|MP|SP|OB|SK)\b', caseSensitive: false).hasMatch(trimmed);
   }
 
   Future<void> _loadAllSongsFromAsset() async {

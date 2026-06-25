@@ -149,9 +149,9 @@
   {
     "number": "22",
     "key": "G",
-    "songbookRef": "",
-    "title": "SP 49",
-    "lyrics": "SP 49\nHe is Lord, He is Lord,\nHe has risen from the dead\nAnd He is Lord,\nEvery knee shall bow,\nEvery tongue confess,\nThat Jesus Christ is Lord.\nYou are Lord, You are Lord,\nYou have risen from the dead\nAnd You are Lord,\nEvery knee shall bow,\nEvery tongue confess\nThat Jesus Christ is Lord."
+    "songbookRef": "SP 49",
+    "title": "He is Lord, He is Lord",
+    "lyrics": "He is Lord, He is Lord,\nHe has risen from the dead\nAnd He is Lord,\nEvery knee shall bow,\nEvery tongue confess,\nThat Jesus Christ is Lord.\nYou are Lord, You are Lord,\nYou have risen from the dead\nAnd You are Lord,\nEvery knee shall bow,\nEvery tongue confess\nThat Jesus Christ is Lord."
   },
   {
     "number": "23",
@@ -177,9 +177,9 @@
   {
     "number": "26",
     "key": "G",
-    "songbookRef": "",
-    "title": "MP 230 - 337",
-    "lyrics": "MP 230 - 337\nOh yes, I love that Man of Galilee, Galilee,\nFor He's done so very much for me,\nHe has taken all my sin,\nPlaced the Holy Ghost within,\nOh yes, I love that Man of Galilee.\nDown on my knees, I found my Jesus,\nDown on my knees, I found the Lord.\nNot on a mountain, nor in a valley,\nBut on my knees, I found the Lord."
+    "songbookRef": "MP 230 - 337",
+    "title": "Oh yes, I love that Man of Galilee, Galilee",
+    "lyrics": "Oh yes, I love that Man of Galilee, Galilee,\nFor He's done so very much for me,\nHe has taken all my sin,\nPlaced the Holy Ghost within,\nOh yes, I love that Man of Galilee.\nDown on my knees, I found my Jesus,\nDown on my knees, I found the Lord.\nNot on a mountain, nor in a valley,\nBut on my knees, I found the Lord."
   },
   {
     "number": "27",
@@ -373,9 +373,9 @@
   {
     "number": "54",
     "key": "Ab",
-    "songbookRef": "",
-    "title": "MP 487-121",
-    "lyrics": "MP 487-121\n'Tis burning in my soul\n'Tis burning in my soul\nThe fire of heavenly love\nIs burning in my soul.\nThe Holy Spirit came\nAll glory to His name,\nThe fire of heavenly love\nIs burning in my soul.\nLet the fire burn, hallelujah!\nLet the fire burn,\nIn this heart of mine,\nIn this heart of mine,\nLet the fire burn, hallelujah!\nLet the fire burn,\nBringing joy, joy, joy."
+    "songbookRef": "MP 487-121",
+    "title": "'Tis burning in my soul",
+    "lyrics": "'Tis burning in my soul\n'Tis burning in my soul\nThe fire of heavenly love\nIs burning in my soul.\nThe Holy Spirit came\nAll glory to His name,\nThe fire of heavenly love\nIs burning in my soul.\nLet the fire burn, hallelujah!\nLet the fire burn,\nIn this heart of mine,\nIn this heart of mine,\nLet the fire burn, hallelujah!\nLet the fire burn,\nBringing joy, joy, joy."
   },
   {
     "number": "55",
@@ -730,16 +730,16 @@
   {
     "number": "105",
     "key": "F",
-    "songbookRef": "",
-    "title": "MP 168 OB 223",
-    "lyrics": "MP 168 OB 223\nThe old, old story, it is ever new\nThe old, old story, praise the Lord it's true\nThat Jesus died for me as well as you\nI love the old, old story.\nWhen the roll is called up yonder\nI'll be walking on the King's highway\nTell me the old, old story\nI love Him better every day, Hallelujah!\nI will make you fishers of men\nIf you'll only follow Me\nThere's none but Christ can satisfy\nThere is no other name for me."
+    "songbookRef": "MP 168 OB 223",
+    "title": "The old, old story, it is ever new",
+    "lyrics": "The old, old story, it is ever new\nThe old, old story, praise the Lord it's true\nThat Jesus died for me as well as you\nI love the old, old story.\nWhen the roll is called up yonder\nI'll be walking on the King's highway\nTell me the old, old story\nI love Him better every day, Hallelujah!\nI will make you fishers of men\nIf you'll only follow Me\nThere's none but Christ can satisfy\nThere is no other name for me."
   },
   {
     "number": "106",
     "key": "G",
-    "songbookRef": "",
-    "title": "SP 121",
-    "lyrics": "SP 121\nGod is so good\nGod is so good\nGod is so good\nHe is so good to me.\nHe died for my sin\nHe died for my sin\nHe died for my sin\nHe is so good to me.\nHe set me free\nHe set me free\nHe set me free\nHe is so good to me.\nGod is so real\nGod is so real\nGod is so real\nHe is so good to me.\nPP PPaa aagg ggee ee    11 1111 11"
+    "songbookRef": "SP 121",
+    "title": "God is so good",
+    "lyrics": "God is so good\nGod is so good\nGod is so good\nHe is so good to me.\nHe died for my sin\nHe died for my sin\nHe died for my sin\nHe is so good to me.\nHe set me free\nHe set me free\nHe set me free\nHe is so good to me.\nGod is so real\nGod is so real\nGod is so real\nHe is so good to me."
   },
   {
     "number": "107",
@@ -793,9 +793,9 @@
   {
     "number": "114",
     "key": "Bb",
-    "songbookRef": "",
-    "title": "MP 322 OB 212",
-    "lyrics": "MP 322 OB 212\nI believe God, I believe God\nAsk what you will and it shall be done;\nTrust and obey, believe it and say:\nI believe, I believe God.\nAnd if you want salvation now\nAnd the Holy Ghost and power,\nJust trust and obey, believe it and say:\nI believe, I believe God."
+    "songbookRef": "MP 322 OB 212",
+    "title": "I believe God, I believe God",
+    "lyrics": "I believe God, I believe God\nAsk what you will and it shall be done;\nTrust and obey, believe it and say:\nI believe, I believe God.\nAnd if you want salvation now\nAnd the Holy Ghost and power,\nJust trust and obey, believe it and say:\nI believe, I believe God."
   },
   {
     "number": "115",
@@ -863,9 +863,9 @@
   {
     "number": "124",
     "key": "Eb",
-    "songbookRef": "",
-    "title": "SP 157",
-    "lyrics": "SP 157\nCome and let us go\nUp to the mountain of the Lord\nAnd to the house of our God.\nCome and let us go\nUp to the mountain of the Lord\nAnd to the house of our God.\nAnd He will teach us of His ways\nAnd we will walk in His paths\nFor the law shall go forth from Zion\nAnd the Word of the Lord\nFrom Jerusalem."
+    "songbookRef": "SP 157",
+    "title": "Come and let us go",
+    "lyrics": "Come and let us go\nUp to the mountain of the Lord\nAnd to the house of our God.\nCome and let us go\nUp to the mountain of the Lord\nAnd to the house of our God.\nAnd He will teach us of His ways\nAnd we will walk in His paths\nFor the law shall go forth from Zion\nAnd the Word of the Lord\nFrom Jerusalem."
   },
   {
     "number": "125",
@@ -884,9 +884,9 @@
   {
     "number": "127",
     "key": "Eb",
-    "songbookRef": "",
-    "title": "SK 185",
-    "lyrics": "SK 185\nOpen my eyes Lord,\nI want to see Jesus\nTo reach out and touch You\nTo say that I love You\nOpen my ears Lord,\nAnd teach me to listen\nOpen my eyes Lord\nI want to see Jesus."
+    "songbookRef": "SK 185",
+    "title": "Open my eyes Lord",
+    "lyrics": "Open my eyes Lord,\nI want to see Jesus\nTo reach out and touch You\nTo say that I love You\nOpen my ears Lord,\nAnd teach me to listen\nOpen my eyes Lord\nI want to see Jesus."
   },
   {
     "number": "128",
@@ -975,30 +975,30 @@
   {
     "number": "140",
     "key": "F",
-    "songbookRef": "",
-    "title": "MP 348 OB 70",
-    "lyrics": "MP 348 OB 70\nHe's everything\nHe's everything to me\nHe's everything\nHe's everything to me\nHe's my father, my mother\nMy sister and my brother\nHe's everything to me."
+    "songbookRef": "MP 348 OB 70",
+    "title": "He's everything",
+    "lyrics": "He's everything\nHe's everything to me\nHe's everything\nHe's everything to me\nHe's my father, my mother\nMy sister and my brother\nHe's everything to me."
   },
   {
     "number": "141",
     "key": "Ab",
-    "songbookRef": "",
-    "title": "SP 165",
-    "lyrics": "SP 165\nWe are heirs of the Father\nWe are joint heirs with the Son\nWe are children of His kingdom\nWe are family, we are one.\nWe are washed, we are sanctified\nWe are cleansed by His Blood\nWe are born of the Spirit\nWe are children, we are one.\nWe are longing for His Coming\nWe are looking to the skies\nWe are watching, we are waiting\nWe shall dwell with Him, we shall rise."
+    "songbookRef": "SP 165",
+    "title": "We are heirs of the Father",
+    "lyrics": "We are heirs of the Father\nWe are joint heirs with the Son\nWe are children of His kingdom\nWe are family, we are one.\nWe are washed, we are sanctified\nWe are cleansed by His Blood\nWe are born of the Spirit\nWe are children, we are one.\nWe are longing for His Coming\nWe are looking to the skies\nWe are watching, we are waiting\nWe shall dwell with Him, we shall rise."
   },
   {
     "number": "142",
     "key": "F",
-    "songbookRef": "",
-    "title": "SP 84",
-    "lyrics": "SP 84\nThe Spirit of the Lord\nIs now upon me\nTo heal the broken heart\nAnd set the captive free\nTo open prison doors\nAnd make the blind to see\nThe Spirit of the Lord\nIs now on me.\nPP PPaa aagg ggee ee    11 1144 44\n143   (Bb)  SP 50\nThou art worthy, Thou art worthy\nThou art worthy, O Lord\nTo receive glory, glory and honour\nGlory and honour and power.\nFor Thou hast created,\nHast all things created\nThou hast created all things\nAnd for Thy pleasure they are created\nThou art worthy, O Lord."
+    "songbookRef": "SP 84",
+    "title": "The Spirit of the Lord",
+    "lyrics": "The Spirit of the Lord\nIs now upon me\nTo heal the broken heart\nAnd set the captive free\nTo open prison doors\nAnd make the blind to see\nThe Spirit of the Lord\nIs now on me.\n143   (Bb)  SP 50\nThou art worthy, Thou art worthy\nThou art worthy, O Lord\nTo receive glory, glory and honour\nGlory and honour and power.\nFor Thou hast created,\nHast all things created\nThou hast created all things\nAnd for Thy pleasure they are created\nThou art worthy, O Lord."
   },
   {
     "number": "144",
     "key": "G",
-    "songbookRef": "",
-    "title": "SP 16",
-    "lyrics": "SP 16\nWe are gathering together unto Him\nWe are gathering together unto Him\nUnto Him shall the gathering\nOf the people be\nWe are gathering together unto Him."
+    "songbookRef": "SP 16",
+    "title": "We are gathering together unto Him",
+    "lyrics": "We are gathering together unto Him\nWe are gathering together unto Him\nUnto Him shall the gathering\nOf the people be\nWe are gathering together unto Him."
   },
   {
     "number": "145",
@@ -1024,9 +1024,9 @@
   {
     "number": "148",
     "key": "Ab",
-    "songbookRef": "",
-    "title": "OB 90 MP",
-    "lyrics": "OB 90 MP\n53\nBlessed be the name\nBlessed be the name\nBlessed be the name of the Lord\n(repeat)\nJesus is the name\nJesus is the name\nJesus is the name of the Lord\n(repeat)"
+    "songbookRef": "OB 90 MP",
+    "title": "53",
+    "lyrics": "53\nBlessed be the name\nBlessed be the name\nBlessed be the name of the Lord\n(repeat)\nJesus is the name\nJesus is the name\nJesus is the name of the Lord\n(repeat)"
   },
   {
     "number": "149",
@@ -1080,16 +1080,16 @@
   {
     "number": "156",
     "key": "C",
-    "songbookRef": "",
-    "title": "SP 90",
-    "lyrics": "SP 90\nHis name is higher,\nThan any other,\nHis name is Jesus,\nHis name is Lord\n(repeat)\nHis name is Wonderful\nHis name is Counsellor\nHis name is Prince of Peace\nThe Mighty God,\nHis name is higher than any other,\nHis name is Jesus, His name is Lord."
+    "songbookRef": "SP 90",
+    "title": "His name is higher",
+    "lyrics": "His name is higher,\nThan any other,\nHis name is Jesus,\nHis name is Lord\n(repeat)\nHis name is Wonderful\nHis name is Counsellor\nHis name is Prince of Peace\nThe Mighty God,\nHis name is higher than any other,\nHis name is Jesus, His name is Lord."
   },
   {
     "number": "157",
     "key": "F",
-    "songbookRef": "",
-    "title": "SK 14",
-    "lyrics": "SK 14\nAll hail King Jesus,\nAll hail Emmanuel;\nKing of Kings,\nLord of Lords,\nBright Morning Star.\nAnd throughout eternity\nI'll sing Your praises\nAnd I'll reign with You\nThroughout eternity."
+    "songbookRef": "SK 14",
+    "title": "All hail King Jesus",
+    "lyrics": "All hail King Jesus,\nAll hail Emmanuel;\nKing of Kings,\nLord of Lords,\nBright Morning Star.\nAnd throughout eternity\nI'll sing Your praises\nAnd I'll reign with You\nThroughout eternity."
   },
   {
     "number": "158",
@@ -1101,9 +1101,9 @@
   {
     "number": "159",
     "key": "F",
-    "songbookRef": "",
-    "title": "MP 15 SP 22",
-    "lyrics": "MP 15 SP 22\nHe is my everything,\nHe is my all;\nHe is my everything,\nBoth great and small.\nHe gave Himself for me,\nMade everything new;\nHe is my everything,\nNow how about you?\nSweet honey in the rock\nSweet honey in the rock\nFor He tastes like honey in the rock\nOh taste and see, that the Lord is good\nFor He tastes like honey in the rock."
+    "songbookRef": "MP 15 SP 22",
+    "title": "He is my everything",
+    "lyrics": "He is my everything,\nHe is my all;\nHe is my everything,\nBoth great and small.\nHe gave Himself for me,\nMade everything new;\nHe is my everything,\nNow how about you?\nSweet honey in the rock\nSweet honey in the rock\nFor He tastes like honey in the rock\nOh taste and see, that the Lord is good\nFor He tastes like honey in the rock."
   },
   {
     "number": "160",
@@ -1171,9 +1171,9 @@
   {
     "number": "169",
     "key": "F",
-    "songbookRef": "",
-    "title": "MP 220 SP 58",
-    "lyrics": "MP 220 SP 58\nIt's a lovely, lovely name,\nThe name of Jesus,\nIt's a lovely, lovely name\nFrom heaven above,\nDispelling the clouds of doubt and fear,\nFilling the saddest heart with cheer,\nIt's a lovely, lovely name,\nThe name I love."
+    "songbookRef": "MP 220 SP 58",
+    "title": "It's a lovely, lovely name",
+    "lyrics": "It's a lovely, lovely name,\nThe name of Jesus,\nIt's a lovely, lovely name\nFrom heaven above,\nDispelling the clouds of doubt and fear,\nFilling the saddest heart with cheer,\nIt's a lovely, lovely name,\nThe name I love."
   },
   {
     "number": "170",
@@ -1192,16 +1192,16 @@
   {
     "number": "172",
     "key": "Bb",
-    "songbookRef": "",
-    "title": "SK 1",
-    "lyrics": "SK 1\nMajesty, worship His Majesty\nUnto Jesus\nBe all glory, power and praise.\nMajesty, Kingdom authority\nFlow from His throne\nUnto His own\nHis anthem raise.\nSo exalt, lift up on high\nThe name of Jesus\nMagnify, come glorify\nChrist Jesus, the King.\nMajesty, worship His Majesty\nJesus who died,\nNow glorified,\nKing of all Kings."
+    "songbookRef": "SK 1",
+    "title": "Majesty, worship His Majesty",
+    "lyrics": "Majesty, worship His Majesty\nUnto Jesus\nBe all glory, power and praise.\nMajesty, Kingdom authority\nFlow from His throne\nUnto His own\nHis anthem raise.\nSo exalt, lift up on high\nThe name of Jesus\nMagnify, come glorify\nChrist Jesus, the King.\nMajesty, worship His Majesty\nJesus who died,\nNow glorified,\nKing of all Kings."
   },
   {
     "number": "173",
     "key": "Bb",
-    "songbookRef": "",
-    "title": "SK 154",
-    "lyrics": "SK 154\nHoly Spirit,\nThou art welcome in this place\nHoly Spirit,\nThou art welcome in this place.\nOmnipotent Father of mercy and grace\nThou art welcome in this place."
+    "songbookRef": "SK 154",
+    "title": "Holy Spirit",
+    "lyrics": "Holy Spirit,\nThou art welcome in this place\nHoly Spirit,\nThou art welcome in this place.\nOmnipotent Father of mercy and grace\nThou art welcome in this place."
   },
   {
     "number": "174",
@@ -1213,9 +1213,9 @@
   {
     "number": "175",
     "key": "F",
-    "songbookRef": "",
-    "title": "SP 135",
-    "lyrics": "SP 135\nI lift my voice, in song unto Thy name\nI lift my hands,\nYou're every day the same;\nCome fill me now,\nLord Jesus, let it be\nLet now my lips,\nSpeak new found praise to Thee.\nSinging hallelujah, hallelujah,\nPraise and worship to Thy name,\nSinging hallelujah, hallelujah,\nPraise and worship to Thy name."
+    "songbookRef": "SP 135",
+    "title": "I lift my voice, in song unto Thy name",
+    "lyrics": "I lift my voice, in song unto Thy name\nI lift my hands,\nYou're every day the same;\nCome fill me now,\nLord Jesus, let it be\nLet now my lips,\nSpeak new found praise to Thee.\nSinging hallelujah, hallelujah,\nPraise and worship to Thy name,\nSinging hallelujah, hallelujah,\nPraise and worship to Thy name."
   },
   {
     "number": "176",
@@ -1234,9 +1234,9 @@
   {
     "number": "178",
     "key": "G",
-    "songbookRef": "",
-    "title": "SP 140",
-    "lyrics": "SP 140\nCome bless the Lord\nAll ye servants of the Lord\nWho stand by night\nIn the house of the Lord\nLift up your hands\nIn the holy place\nAnd bless the Lord,\nAnd bless the Lord.\nPP PPaa aagg ggee ee    11 1177 77\n179  (F)  SP 140\nGreat is the Lord\nAnd greatly to be praised.\nIn the city of our God,\nIn the mountain of His holiness.\nBeautiful for situation\nThe joy of the whole earth,\nIs Mount Zion\nOn the sides of the north,\nThe city of the great King."
+    "songbookRef": "SP 140",
+    "title": "Come bless the Lord",
+    "lyrics": "Come bless the Lord\nAll ye servants of the Lord\nWho stand by night\nIn the house of the Lord\nLift up your hands\nIn the holy place\nAnd bless the Lord,\nAnd bless the Lord.\n179  (F)  SP 140\nGreat is the Lord\nAnd greatly to be praised.\nIn the city of our God,\nIn the mountain of His holiness.\nBeautiful for situation\nThe joy of the whole earth,\nIs Mount Zion\nOn the sides of the north,\nThe city of the great King."
   },
   {
     "number": "180",
@@ -1255,30 +1255,30 @@
   {
     "number": "182",
     "key": "F",
-    "songbookRef": "",
-    "title": "SK 81",
-    "lyrics": "SK 81\nWe're together again\nJust praising the Lord\nWe're together again\nIn one accord.\nSomething good\nIs going to happen\nSomething good is in store,\nWe're together again\nJust praising the Lord.\nWherever I go, I'll praise Him\nWherever I can, I'll praise Him\nFor His love surrounds me like the sea.\nI'll praise the name of Jesus,\nLift up the name of Jesus,\nFor the name of Jesus lifted me."
+    "songbookRef": "SK 81",
+    "title": "We're together again",
+    "lyrics": "We're together again\nJust praising the Lord\nWe're together again\nIn one accord.\nSomething good\nIs going to happen\nSomething good is in store,\nWe're together again\nJust praising the Lord.\nWherever I go, I'll praise Him\nWherever I can, I'll praise Him\nFor His love surrounds me like the sea.\nI'll praise the name of Jesus,\nLift up the name of Jesus,\nFor the name of Jesus lifted me."
   },
   {
     "number": "183",
     "key": "G",
-    "songbookRef": "",
-    "title": "MP 39 OB 181",
-    "lyrics": "MP 39 OB 181\nGot any rivers\nYou think are uncrossable?\nGot any mountains\nYou can't tunnel through?\nGod specializes\nIn things thought impossible,\nHe can do just what no other can do."
+    "songbookRef": "MP 39 OB 181",
+    "title": "Got any rivers",
+    "lyrics": "Got any rivers\nYou think are uncrossable?\nGot any mountains\nYou can't tunnel through?\nGod specializes\nIn things thought impossible,\nHe can do just what no other can do."
   },
   {
     "number": "184",
     "key": "C",
-    "songbookRef": "",
-    "title": "MP 215 SK 199",
-    "lyrics": "MP 215 SK 199\nI will sing of the mercies\nOf the Lord, forever,\nI will sing, I will sing.\nI will sing of the mercies\nOf the Lord, forever,\nI will sing, of the mercies of the Lord.\nWith my mouth, shall I make known,\nThy faithfulness, Thy faithfulness,\nWith my mouth, shall I make known,\nThy faithfulness, to all generations.\nI will sing of the mercies\nOf the Lord, forever,\nI will sing, of the mercies of the Lord."
+    "songbookRef": "MP 215 SK 199",
+    "title": "I will sing of the mercies",
+    "lyrics": "I will sing of the mercies\nOf the Lord, forever,\nI will sing, I will sing.\nI will sing of the mercies\nOf the Lord, forever,\nI will sing, of the mercies of the Lord.\nWith my mouth, shall I make known,\nThy faithfulness, Thy faithfulness,\nWith my mouth, shall I make known,\nThy faithfulness, to all generations.\nI will sing of the mercies\nOf the Lord, forever,\nI will sing, of the mercies of the Lord."
   },
   {
     "number": "185",
     "key": "Eb",
-    "songbookRef": "",
-    "title": "MP 128 OB 174",
-    "lyrics": "MP 128 OB 174\nOh when the saints, go marching in,\nOh when the saints, go marching in,\nHow I long to be in that number,\nWhen the saints, go marching in.\nOh when they shout the victory\nOh when they shout the victory\nHow I long to be in that number\nWhen they shout the victory.\nOh when they crown Him Lord of all,\nOh when they crown Him Lord of all,\nLord I want to be in that number,\nWhen they crown You Lord of all."
+    "songbookRef": "MP 128 OB 174",
+    "title": "Oh when the saints, go marching in",
+    "lyrics": "Oh when the saints, go marching in,\nOh when the saints, go marching in,\nHow I long to be in that number,\nWhen the saints, go marching in.\nOh when they shout the victory\nOh when they shout the victory\nHow I long to be in that number\nWhen they shout the victory.\nOh when they crown Him Lord of all,\nOh when they crown Him Lord of all,\nLord I want to be in that number,\nWhen they crown You Lord of all."
   },
   {
     "number": "186",
@@ -1290,9 +1290,9 @@
   {
     "number": "187",
     "key": "F",
-    "songbookRef": "",
-    "title": "MP 118-197",
-    "lyrics": "MP 118-197\nEvery day with Jesus,\nIs sweeter than the day before,\nEvery passing moment,\nI love Him more and more,\nJesus saves and keeps me,\nAnd He's the One I'm waiting for.\nEvery day with Jesus,\nIs sweeter than the day before.\nFollow, I will follow Thee, my Lord,\nFollow every passing day,\nMy tomorrows are all known to Thee,\nI will serve and follow Thee."
+    "songbookRef": "MP 118-197",
+    "title": "Every day with Jesus",
+    "lyrics": "Every day with Jesus,\nIs sweeter than the day before,\nEvery passing moment,\nI love Him more and more,\nJesus saves and keeps me,\nAnd He's the One I'm waiting for.\nEvery day with Jesus,\nIs sweeter than the day before.\nFollow, I will follow Thee, my Lord,\nFollow every passing day,\nMy tomorrows are all known to Thee,\nI will serve and follow Thee."
   },
   {
     "number": "188",
@@ -1311,16 +1311,16 @@
   {
     "number": "190",
     "key": "Bb",
-    "songbookRef": "",
-    "title": "MP 78-264",
-    "lyrics": "MP 78-264\nLife is wonderful, yes it's wonderful,\nLife is wonderful now to me.\nI let Jesus in, He changed everything,\nLife is wonderful now.\nSince His blessing came into my heart,\nJoy unspeakable fills every part.\nNow I want to live for my Lord,\nLife is wonderful now.\nMake my life to be, like a melody,\nEver sounding out the message of the cross;\nSaviour let me be, like a melody,\nEver sounding out the message of the cross.\nWith Jesus in your heart\nNo discord can arise,\nFor He can make the saddest heart to,\nHarmonise.\nSaviour let me be, like a melody,\nEver sounding out the message of the cross."
+    "songbookRef": "MP 78-264",
+    "title": "Life is wonderful, yes it's wonderful",
+    "lyrics": "Life is wonderful, yes it's wonderful,\nLife is wonderful now to me.\nI let Jesus in, He changed everything,\nLife is wonderful now.\nSince His blessing came into my heart,\nJoy unspeakable fills every part.\nNow I want to live for my Lord,\nLife is wonderful now.\nMake my life to be, like a melody,\nEver sounding out the message of the cross;\nSaviour let me be, like a melody,\nEver sounding out the message of the cross.\nWith Jesus in your heart\nNo discord can arise,\nFor He can make the saddest heart to,\nHarmonise.\nSaviour let me be, like a melody,\nEver sounding out the message of the cross."
   },
   {
     "number": "191",
     "key": "Eb",
-    "songbookRef": "",
-    "title": "SP 204",
-    "lyrics": "SP 204\nSomething beautiful\nSomething good\nAll my confusion\nHe understood\nAll I had to offer Him\nWas brokenness and strife\nBut He made something, beautiful\nOut of my life."
+    "songbookRef": "SP 204",
+    "title": "Something beautiful",
+    "lyrics": "Something beautiful\nSomething good\nAll my confusion\nHe understood\nAll I had to offer Him\nWas brokenness and strife\nBut He made something, beautiful\nOut of my life."
   },
   {
     "number": "192",
@@ -1332,51 +1332,51 @@
   {
     "number": "193",
     "key": "Eb",
-    "songbookRef": "",
-    "title": "SP 145",
-    "lyrics": "SP 145\nWithin the veil\nI now would come\nInto the Holy place\nTo look upon His face\nI see such beauty there\nNone other can compare\nI worship Thee, my Lord\nWithin the veil."
+    "songbookRef": "SP 145",
+    "title": "Within the veil",
+    "lyrics": "Within the veil\nI now would come\nInto the Holy place\nTo look upon His face\nI see such beauty there\nNone other can compare\nI worship Thee, my Lord\nWithin the veil."
   },
   {
     "number": "194",
     "key": "Eb",
-    "songbookRef": "",
-    "title": "SP 12",
-    "lyrics": "SP 12\nA new commandment I give unto you\nThat ye love one another\nAs I have loved you\nThat ye love one another\nAs I have loved you.\nBy this shall all men know\nThat ye are My disciples\nIf ye have love, one for another.\nBy this, shall all men know\nThat ye are My disciples\nIf ye have love, one for another."
+    "songbookRef": "SP 12",
+    "title": "A new commandment I give unto you",
+    "lyrics": "A new commandment I give unto you\nThat ye love one another\nAs I have loved you\nThat ye love one another\nAs I have loved you.\nBy this shall all men know\nThat ye are My disciples\nIf ye have love, one for another.\nBy this, shall all men know\nThat ye are My disciples\nIf ye have love, one for another."
   },
   {
     "number": "195",
     "key": "C",
-    "songbookRef": "",
-    "title": "SK 33",
-    "lyrics": "SK 33\nEmmanuel, Emmanuel\nHis name is called, Emmanuel.\nHe's God with us\nRevealed in us\nHis name is called, Emmanuel."
+    "songbookRef": "SK 33",
+    "title": "Emmanuel, Emmanuel",
+    "lyrics": "Emmanuel, Emmanuel\nHis name is called, Emmanuel.\nHe's God with us\nRevealed in us\nHis name is called, Emmanuel."
   },
   {
     "number": "196",
     "key": "Eb",
-    "songbookRef": "",
-    "title": "SP 111",
-    "lyrics": "SP 111\nPraise the name of Jesus\nPraise the name of Jesus\nHe is my Rock,\nHe is my Fortress,\nHe is my Deliverer,\nIn Him will I trust,\nPraise the name of Jesus."
+    "songbookRef": "SP 111",
+    "title": "Praise the name of Jesus",
+    "lyrics": "Praise the name of Jesus\nPraise the name of Jesus\nHe is my Rock,\nHe is my Fortress,\nHe is my Deliverer,\nIn Him will I trust,\nPraise the name of Jesus."
   },
   {
     "number": "197",
     "key": "F",
-    "songbookRef": "",
-    "title": "SP 144",
-    "lyrics": "SP 144\nHe gave me beauty for ashes\nThe oil of joy for mourning\nThe garment of praise\nFor the spirit of heaviness\nThat we might be trees of righteousness\nThe planting of the Lord\nThat He might be glorified"
+    "songbookRef": "SP 144",
+    "title": "He gave me beauty for ashes",
+    "lyrics": "He gave me beauty for ashes\nThe oil of joy for mourning\nThe garment of praise\nFor the spirit of heaviness\nThat we might be trees of righteousness\nThe planting of the Lord\nThat He might be glorified"
   },
   {
     "number": "198",
     "key": "F",
-    "songbookRef": "",
-    "title": "SP 162",
-    "lyrics": "SP 162\nA merry heart, doeth good like a medicine\nLike a medicine, is a merry heart,\nA broken spirit drieth the bones\nBut a merry heart, is the joy of the Lord."
+    "songbookRef": "SP 162",
+    "title": "A merry heart, doeth good like a medicine",
+    "lyrics": "A merry heart, doeth good like a medicine\nLike a medicine, is a merry heart,\nA broken spirit drieth the bones\nBut a merry heart, is the joy of the Lord."
   },
   {
     "number": "199",
     "key": "F",
-    "songbookRef": "",
-    "title": "SP 171",
-    "lyrics": "SP 171\nHow lovely are Thy dwelling places\nMy soul longs for the courts of the Lord\nMy heart and my flesh\nSing for joy to the living God\nYou are my King and my God.\nPP PPaa aagg ggee ee    11 1199 99\n200  (F)  SP 93\nMy Beloved is mine, and I am His\nAnd His banner over me is love.\nMy Beloved is mine, and I am His\nAnd His banner over me is love.\nMy Beloved is mine, and I am His\nAnd His banner over me is love,\nHis banner over me is love.\nHe brought me to\nHis banqueting table\nAnd His banner over me is love,\nHe brought me to\nHis banqueting table\nAnd His banner over me is love,\nHe brought me to\nHis banqueting table,\nAnd His banner over me is love,\nHis banner over me is love.\nI'm safe and secure\nIn the Rock of all ages,\nAnd His banner over me is love.\nI'm safe and secure\nIn the Rock of all ages,\nAnd His banner over me is love.\nI'm safe and secure\nIn the Rock of all ages,\nAnd His banner over me is love\nHis banner over me is love."
+    "songbookRef": "SP 171",
+    "title": "How lovely are Thy dwelling places",
+    "lyrics": "How lovely are Thy dwelling places\nMy soul longs for the courts of the Lord\nMy heart and my flesh\nSing for joy to the living God\nYou are my King and my God.\n200  (F)  SP 93\nMy Beloved is mine, and I am His\nAnd His banner over me is love.\nMy Beloved is mine, and I am His\nAnd His banner over me is love.\nMy Beloved is mine, and I am His\nAnd His banner over me is love,\nHis banner over me is love.\nHe brought me to\nHis banqueting table\nAnd His banner over me is love,\nHe brought me to\nHis banqueting table\nAnd His banner over me is love,\nHe brought me to\nHis banqueting table,\nAnd His banner over me is love,\nHis banner over me is love.\nI'm safe and secure\nIn the Rock of all ages,\nAnd His banner over me is love.\nI'm safe and secure\nIn the Rock of all ages,\nAnd His banner over me is love.\nI'm safe and secure\nIn the Rock of all ages,\nAnd His banner over me is love\nHis banner over me is love."
   },
   {
     "number": "201",
@@ -1409,9 +1409,9 @@
   {
     "number": "205",
     "key": "F",
-    "songbookRef": "",
-    "title": "SK 215",
-    "lyrics": "SK 215\nWe have come into His house\nAnd gathered in His name, to worship Him,\nWe have come into His house\nAnd gathered in His name, to worship Him,\nWe have come into His house\nAnd gathered in His name\nTo worship Christ, the Lord,\nWorship Him, Christ the Lord.\nSo forget about yourself\nAnd concentrate on Him, and worship Him.\nSo forget about yourself\nAnd concentrate on Him, and worship Him.\nSo forget about yourself\nAnd concentrate on Him,\nAnd worship Christ the Lord,\nWorship Him, Christ the Lord.\nLet us lift up holy hands\nAnd magnify His name and worship Him,\nLet us lift up holy hands\nAnd magnify His name and worship Him,\nLet us lift up holy hands\nAnd magnify His name and worship\nChrist the Lord,\nWorship Him, Christ the Lord."
+    "songbookRef": "SK 215",
+    "title": "We have come into His house",
+    "lyrics": "We have come into His house\nAnd gathered in His name, to worship Him,\nWe have come into His house\nAnd gathered in His name, to worship Him,\nWe have come into His house\nAnd gathered in His name\nTo worship Christ, the Lord,\nWorship Him, Christ the Lord.\nSo forget about yourself\nAnd concentrate on Him, and worship Him.\nSo forget about yourself\nAnd concentrate on Him, and worship Him.\nSo forget about yourself\nAnd concentrate on Him,\nAnd worship Christ the Lord,\nWorship Him, Christ the Lord.\nLet us lift up holy hands\nAnd magnify His name and worship Him,\nLet us lift up holy hands\nAnd magnify His name and worship Him,\nLet us lift up holy hands\nAnd magnify His name and worship\nChrist the Lord,\nWorship Him, Christ the Lord."
   },
   {
     "number": "206",
@@ -1451,72 +1451,72 @@
   {
     "number": "211",
     "key": "Ab",
-    "songbookRef": "",
-    "title": "OB 86 MP 466",
-    "lyrics": "OB 86 MP 466\nThe cross upon which Jesus died\nIs a shelter in which we can hide,\nAnd its grace so free is sufficient for me,\nAnd deep is its fountain; as wide as the\nsea.\nChorus:\nThere's room at the cross for you,\nThere's room at the cross for you,\nThough millions have come,\nThere's still room for one.\nYes, there's room at the cross for you.\n2) Though millions have found Him a friend\nAnd have turned from the sins\nThey have sinned,\nThe Saviour still waits to open the gates,\nAnd welcome a sinner before it's too late.\n3) The hand of my Saviour is strong\nAnd the love of my Saviour is long,\nThrough sunshine or rain,\nThrough loss or in gain.\nThe blood flows from Calv'ry\nTo cleanse every stain."
+    "songbookRef": "OB 86 MP 466",
+    "title": "The cross upon which Jesus died",
+    "lyrics": "The cross upon which Jesus died\nIs a shelter in which we can hide,\nAnd its grace so free is sufficient for me,\nAnd deep is its fountain; as wide as the\nsea.\nChorus:\nThere's room at the cross for you,\nThere's room at the cross for you,\nThough millions have come,\nThere's still room for one.\nYes, there's room at the cross for you.\n2) Though millions have found Him a friend\nAnd have turned from the sins\nThey have sinned,\nThe Saviour still waits to open the gates,\nAnd welcome a sinner before it's too late.\n3) The hand of my Saviour is strong\nAnd the love of my Saviour is long,\nThrough sunshine or rain,\nThrough loss or in gain.\nThe blood flows from Calv'ry\nTo cleanse every stain."
   },
   {
     "number": "212",
     "key": "Eb",
-    "songbookRef": "",
-    "title": "RH 311 MP 397",
-    "lyrics": "RH 311 MP 397\nI hear Thy welcome voice,\nThat calls me, Lord, to Thee\nFor cleansing in Thy precious blood\nThat flowed on Calvary.\nChorus:\nI am coming, Lord,\nComing now to Thee:\nTrusting only in the blood\nThat flowed on Calvary.\n2) Though coming weak and vile,\nThou dost my strength assure:\nThou dost my vileness fully cleanse,\nTill spotless all and pure.\n3) 'Tis Jesus calls me on\nTo perfect faith and love,\nTo perfect hope, and peace, and trust.\nFor earth and heaven above.\n4) 'Tis Jesus who confirms\nThe blessed work within,\nBy adding grace to welcomed grace,\nWhere reigned the power of sin.\n5) And He the witness gives\nTo loyal hearts and free,\nThat every promise is fulfilled,\nIf faith but brings the plea.\n6) All hail, atoning blood!\nAll hail, redeeming grace!\nAll hail, the gift of Christ, our Lord,\nOur strength and righteousness!"
+    "songbookRef": "RH 311 MP 397",
+    "title": "I hear Thy welcome voice",
+    "lyrics": "I hear Thy welcome voice,\nThat calls me, Lord, to Thee\nFor cleansing in Thy precious blood\nThat flowed on Calvary.\nChorus:\nI am coming, Lord,\nComing now to Thee:\nTrusting only in the blood\nThat flowed on Calvary.\n2) Though coming weak and vile,\nThou dost my strength assure:\nThou dost my vileness fully cleanse,\nTill spotless all and pure.\n3) 'Tis Jesus calls me on\nTo perfect faith and love,\nTo perfect hope, and peace, and trust.\nFor earth and heaven above.\n4) 'Tis Jesus who confirms\nThe blessed work within,\nBy adding grace to welcomed grace,\nWhere reigned the power of sin.\n5) And He the witness gives\nTo loyal hearts and free,\nThat every promise is fulfilled,\nIf faith but brings the plea.\n6) All hail, atoning blood!\nAll hail, redeeming grace!\nAll hail, the gift of Christ, our Lord,\nOur strength and righteousness!"
   },
   {
     "number": "213",
     "key": "Ab",
-    "songbookRef": "",
-    "title": "RH 314 MP 399 OB",
-    "lyrics": "RH 314 MP 399 OB\n206\nPass me not, O gentle Saviour,\nHear my humble cry;\nWhile on others Thou art calling,\nDo not pass me by.\nChorus:\nSaviour, Saviour,\nHear my humble cry;\nWhile on others Thou art calling,\nDo not pass me by.\n2) Let me at Thy throne of mercy\nFind a sweet relief;\nKneeling there in deep contrition,\nHelp my unbelief.\n3) Trusting only in Thy merit\nWould I seek Thy face;\nHeal my wounded, broken spirit,\nSave me by Thy grace.\n4) Thou, the spring of all my comfort,\nMore than life to me\nWhom have I on earth beside Thee?\nWhom in heaven but Thee?"
+    "songbookRef": "RH 314 MP 399 OB",
+    "title": "206",
+    "lyrics": "206\nPass me not, O gentle Saviour,\nHear my humble cry;\nWhile on others Thou art calling,\nDo not pass me by.\nChorus:\nSaviour, Saviour,\nHear my humble cry;\nWhile on others Thou art calling,\nDo not pass me by.\n2) Let me at Thy throne of mercy\nFind a sweet relief;\nKneeling there in deep contrition,\nHelp my unbelief.\n3) Trusting only in Thy merit\nWould I seek Thy face;\nHeal my wounded, broken spirit,\nSave me by Thy grace.\n4) Thou, the spring of all my comfort,\nMore than life to me\nWhom have I on earth beside Thee?\nWhom in heaven but Thee?"
   },
   {
     "number": "214",
     "key": "Ab",
-    "songbookRef": "",
-    "title": "RH 356 MP 400 OB 179",
-    "lyrics": "RH 356 MP 400 OB 179\nSoftly, and tenderly Jesus is calling\nCalling for you and for me;\nSee, on the portals\nHe's waiting and watching\nWatching for you and for me.\nChorus:\nCome home, come home\nYe who are weary, come home,\nEarnestly, tenderly Jesus is calling\nCalling, \"O sinner, come home\"\nPP PPaa aagg ggee ee    22 2211 11\n2) Why should we tarry\nWhen Jesus is pleading,\nPleading for you and for me?\nWhy should we linger\nAnd heed not His mercies\nMercies for you and for me?\n3) Time is now fleeting\nThe moments are passing,\nPassing from you and from me,\nShadows are gathering, Jesus is coming\nComing for you and for me.\n4) Oh, for the wonderful\nLove He has promised,\nPromised for you and for me;\nThough we have sinned\nHe has mercy and pardon\nPardon for you and for me."
+    "songbookRef": "RH 356 MP 400 OB 179",
+    "title": "Softly, and tenderly Jesus is calling",
+    "lyrics": "Softly, and tenderly Jesus is calling\nCalling for you and for me;\nSee, on the portals\nHe's waiting and watching\nWatching for you and for me.\nChorus:\nCome home, come home\nYe who are weary, come home,\nEarnestly, tenderly Jesus is calling\nCalling, \"O sinner, come home\"\n2) Why should we tarry\nWhen Jesus is pleading,\nPleading for you and for me?\nWhy should we linger\nAnd heed not His mercies\nMercies for you and for me?\n3) Time is now fleeting\nThe moments are passing,\nPassing from you and from me,\nShadows are gathering, Jesus is coming\nComing for you and for me.\n4) Oh, for the wonderful\nLove He has promised,\nPromised for you and for me;\nThough we have sinned\nHe has mercy and pardon\nPardon for you and for me."
   },
   {
     "number": "215",
     "key": "F",
-    "songbookRef": "",
-    "title": "RH 573 MP 421 OB 37",
-    "lyrics": "RH 573 MP 421 OB 37\nHave Thine own way, Lord\nHave Thine own way,\nThou art the Potter,\nI am the clay.\nMould me and make me\nAfter Thy will;\nWhile I am waiting\nYielded and still.\n2) Have Thine own way, Lord,\nHave Thine own way,\nSearch me and try me,\nMaster, today\nWhiter than snow, Lord\nWash me just now,\nAs in Thy presence\nHumbly I bow.\n3) Have Thine own way, Lord,\nHave Thine own way,\nWounded and weary\nHelp me, I pray.\nPower - all power\nSurely is Thine,\nTouch me and heal me,\nSaviour divine.\n4) Have Thine own way, Lord,\nHave Thine own way,\nHold o'er my being\nAbsolute sway.\nFill with Thy Spirit\nTill all shall see\nChrist only, always,\nLiving in me."
+    "songbookRef": "RH 573 MP 421 OB 37",
+    "title": "Have Thine own way, Lord",
+    "lyrics": "Have Thine own way, Lord\nHave Thine own way,\nThou art the Potter,\nI am the clay.\nMould me and make me\nAfter Thy will;\nWhile I am waiting\nYielded and still.\n2) Have Thine own way, Lord,\nHave Thine own way,\nSearch me and try me,\nMaster, today\nWhiter than snow, Lord\nWash me just now,\nAs in Thy presence\nHumbly I bow.\n3) Have Thine own way, Lord,\nHave Thine own way,\nWounded and weary\nHelp me, I pray.\nPower - all power\nSurely is Thine,\nTouch me and heal me,\nSaviour divine.\n4) Have Thine own way, Lord,\nHave Thine own way,\nHold o'er my being\nAbsolute sway.\nFill with Thy Spirit\nTill all shall see\nChrist only, always,\nLiving in me."
   },
   {
     "number": "216",
     "key": "C",
-    "songbookRef": "",
-    "title": "RH 600 MP 408 OB 25",
-    "lyrics": "RH 600 MP 408 OB 25\nAll to Jesus I surrender,\nAll to Him I freely give;\nI will ever love and trust Him,\nIn His presence daily live.\nChorus:\nI surrender all,\nI surrender all;\nAll to Thee, my blessed Saviour,\nI surrender all.\n2) All to Jesus I surrender,\nHumbly at His feet I bow;\nWorldly pleasures all forsaken,\nTake me, Jesus, take me now.\n3) All to Jesus I surrender,\nLord, I give myself to Thee;\nFill me with Thy love and power,\nLet Thy blessing fall on me.\n4) All to Jesus I surrender,\nNow I feel the sacred flame;\nO the joy of full salvation,\nGlory, glory to His name."
+    "songbookRef": "RH 600 MP 408 OB 25",
+    "title": "All to Jesus I surrender",
+    "lyrics": "All to Jesus I surrender,\nAll to Him I freely give;\nI will ever love and trust Him,\nIn His presence daily live.\nChorus:\nI surrender all,\nI surrender all;\nAll to Thee, my blessed Saviour,\nI surrender all.\n2) All to Jesus I surrender,\nHumbly at His feet I bow;\nWorldly pleasures all forsaken,\nTake me, Jesus, take me now.\n3) All to Jesus I surrender,\nLord, I give myself to Thee;\nFill me with Thy love and power,\nLet Thy blessing fall on me.\n4) All to Jesus I surrender,\nNow I feel the sacred flame;\nO the joy of full salvation,\nGlory, glory to His name."
   },
   {
     "number": "217",
     "key": "Eb",
-    "songbookRef": "",
-    "title": "RH 376",
-    "lyrics": "RH 376\nI'm not ashamed to own my Lord,\nOr to defend His cause;\nMaintain the honour of His Word,\nThe glory of His cross.\nChorus:\nAt the cross, at the cross\nWhere I first saw the light,\nAnd the burden of my heart rolled away.\nIt was there by faith, I received my sight,\nAnd now I am happy all the day.\n2) Jesus, my Lord, I know His name\nHis name is all my trust,\nNor will He put my soul to shame,\nNor let my hope be lost.\n3) Firm as His throne, His promise stands,\nAnd He can well secure\nWhat I've committed to His hands,\nTill the decisive hour.\n4) Then will He own my worthless name\nBefore His Father's face;\nAnd in the new Jerusalem,\nAppoint my soul a place."
+    "songbookRef": "RH 376",
+    "title": "I'm not ashamed to own my Lord",
+    "lyrics": "I'm not ashamed to own my Lord,\nOr to defend His cause;\nMaintain the honour of His Word,\nThe glory of His cross.\nChorus:\nAt the cross, at the cross\nWhere I first saw the light,\nAnd the burden of my heart rolled away.\nIt was there by faith, I received my sight,\nAnd now I am happy all the day.\n2) Jesus, my Lord, I know His name\nHis name is all my trust,\nNor will He put my soul to shame,\nNor let my hope be lost.\n3) Firm as His throne, His promise stands,\nAnd He can well secure\nWhat I've committed to His hands,\nTill the decisive hour.\n4) Then will He own my worthless name\nBefore His Father's face;\nAnd in the new Jerusalem,\nAppoint my soul a place."
   },
   {
     "number": "218",
     "key": "Ab",
-    "songbookRef": "",
-    "title": "RH 578 MP 489 OB 38",
-    "lyrics": "RH 578 MP 489 OB 38\nI am Thine, O Lord, I have heard Thy voice\nAnd it told Thy love to me\nBut I long to rise in the arms of faith,\nAnd be closer drawn to Thee.\nChorus:\nDraw me nearer, nearer blessed Lord,\nTo the cross where Thou hast died;\nDraw me nearer, nearer,\nNearer, blessed Lord,\nTo Thy precious, bleeding side.\nPP PPaa aagg ggee ee    22 2222 22\n2) Consecrate me now to Thy service, Lord,\nBy the power of grace divine;\nLet my soul look up with a steadfast hope,\nAnd my will be lost in Thine.\n3) O the pure delight of a single hour,\nThat before Thy throne I spend,\nWhen I kneel in prayer,\nAnd with Thee my God,\nI commune as friend with friend.\n4) There are depths of love\nThat I cannot know\nTill I cross the narrow sea,\nThere are heights of joy that I may not reach\nTill I rest in peace with Thee."
+    "songbookRef": "RH 578 MP 489 OB 38",
+    "title": "I am Thine, O Lord, I have heard Thy voice",
+    "lyrics": "I am Thine, O Lord, I have heard Thy voice\nAnd it told Thy love to me\nBut I long to rise in the arms of faith,\nAnd be closer drawn to Thee.\nChorus:\nDraw me nearer, nearer blessed Lord,\nTo the cross where Thou hast died;\nDraw me nearer, nearer,\nNearer, blessed Lord,\nTo Thy precious, bleeding side.\n2) Consecrate me now to Thy service, Lord,\nBy the power of grace divine;\nLet my soul look up with a steadfast hope,\nAnd my will be lost in Thine.\n3) O the pure delight of a single hour,\nThat before Thy throne I spend,\nWhen I kneel in prayer,\nAnd with Thee my God,\nI commune as friend with friend.\n4) There are depths of love\nThat I cannot know\nTill I cross the narrow sea,\nThere are heights of joy that I may not reach\nTill I rest in peace with Thee."
   },
   {
     "number": "219",
     "key": "F",
-    "songbookRef": "",
-    "title": "RH 396 MP 390",
-    "lyrics": "RH 396 MP 390\nJesus keep me near the cross,\nThere a precious fountain.\nFree to all, a healing stream,\nFlows from Calvary's mountain.\nChorus:\nIn the cross, in the cross,\nBe my glory ever;\nTill my raptured soul shall find\nRest beyond the river.\n2) Near the cross, a trembling soul,\nLove and mercy found me;\nThere the bright and morning Star\nShed its beams around me.\n3) Near the cross, O Lamb of God,\nBring its scenes before me;\nHelp me walk from day to day,\nWith its shadow o'er me.\n4) Near the cross I'll watch and wait,\nHoping, trusting ever,\nTill I reach the gold strand,\nJust beyond the river."
+    "songbookRef": "RH 396 MP 390",
+    "title": "Jesus keep me near the cross",
+    "lyrics": "Jesus keep me near the cross,\nThere a precious fountain.\nFree to all, a healing stream,\nFlows from Calvary's mountain.\nChorus:\nIn the cross, in the cross,\nBe my glory ever;\nTill my raptured soul shall find\nRest beyond the river.\n2) Near the cross, a trembling soul,\nLove and mercy found me;\nThere the bright and morning Star\nShed its beams around me.\n3) Near the cross, O Lamb of God,\nBring its scenes before me;\nHelp me walk from day to day,\nWith its shadow o'er me.\n4) Near the cross I'll watch and wait,\nHoping, trusting ever,\nTill I reach the gold strand,\nJust beyond the river."
   },
   {
     "number": "220",
     "key": "Ab",
-    "songbookRef": "",
-    "title": "RH 541 MP 392",
-    "lyrics": "RH 541 MP 392\nI need Thee ev'ry hour,\nMost gracious Lord;\nNo tender voice like Thine\nCan peace afford.\nChorus:\nI need Thee, oh, I need Thee,\nEv'ry hour I need Thee;\nOh, bless me now, my Saviour,\nI come to Thee.\n2) I need Thee ev'ry hour,\nStay Thou near by\nTemptations lose their power,\nWhen Thou art nigh.\n3) I need Thee ev'ry hour,\nIn joy or pain\nCome quickly and abide,\nOr life is vain.\n4) I need Thee ev'ry hour,\nTeach me Thy will;\nAnd Thy rich promises\nIn me fulfil.\n5) I need Thee ev'ry hour,\nMost Holy One;\nOh, make me Thine indeed,\nThou blessed Son."
+    "songbookRef": "RH 541 MP 392",
+    "title": "I need Thee ev'ry hour",
+    "lyrics": "I need Thee ev'ry hour,\nMost gracious Lord;\nNo tender voice like Thine\nCan peace afford.\nChorus:\nI need Thee, oh, I need Thee,\nEv'ry hour I need Thee;\nOh, bless me now, my Saviour,\nI come to Thee.\n2) I need Thee ev'ry hour,\nStay Thou near by\nTemptations lose their power,\nWhen Thou art nigh.\n3) I need Thee ev'ry hour,\nIn joy or pain\nCome quickly and abide,\nOr life is vain.\n4) I need Thee ev'ry hour,\nTeach me Thy will;\nAnd Thy rich promises\nIn me fulfil.\n5) I need Thee ev'ry hour,\nMost Holy One;\nOh, make me Thine indeed,\nThou blessed Son."
   },
   {
     "number": "221",
@@ -1528,9 +1528,9 @@
   {
     "number": "222",
     "key": "C",
-    "songbookRef": "",
-    "title": "RH 527 MP 445",
-    "lyrics": "RH 527 MP 445\nWhen peace, like a river attendeth my way,\nWhen sorrows, like sea billows roll;\nWhatever my lot,\nThou hast taught me to know,\nIt is well, it is well with my soul.\nChorus:\nIt is well with my soul,\nIt is well, it is well, with my soul.\n2) Though Satan should buffet,\nIf trials should come,\nLet this blest assurance control:\nThat Christ hath regarded my helpless estate,\nAnd hath shed His own blood for my soul.\nPP PPaa aagg ggee ee    22 2233 33\n3) My sin oh, the bliss\nOf this glorious thought,\nMy sin not in part, but the whole\nIs nailed to His cross, and I bear it no more;\nPraise the Lord, praise the Lord, O my soul!\n4) For me, be it Christ,\nBe it Christ hence to live\nIf Jordan above me shall roll,\nNo pang shall be mine, for in death as in life\nThou wilt whisper Thy peace to my soul.\n5) But Lord, 'tis for Thee,\nFor Thy coming we wait,\nThe sky, not the grave, is our goal:\nOh trump of the angel! Oh, voice of the Lord!\nBlessed hope! Blessed rest of my soul."
+    "songbookRef": "RH 527 MP 445",
+    "title": "When peace, like a river attendeth my way",
+    "lyrics": "When peace, like a river attendeth my way,\nWhen sorrows, like sea billows roll;\nWhatever my lot,\nThou hast taught me to know,\nIt is well, it is well with my soul.\nChorus:\nIt is well with my soul,\nIt is well, it is well, with my soul.\n2) Though Satan should buffet,\nIf trials should come,\nLet this blest assurance control:\nThat Christ hath regarded my helpless estate,\nAnd hath shed His own blood for my soul.\n3) My sin oh, the bliss\nOf this glorious thought,\nMy sin not in part, but the whole\nIs nailed to His cross, and I bear it no more;\nPraise the Lord, praise the Lord, O my soul!\n4) For me, be it Christ,\nBe it Christ hence to live\nIf Jordan above me shall roll,\nNo pang shall be mine, for in death as in life\nThou wilt whisper Thy peace to my soul.\n5) But Lord, 'tis for Thee,\nFor Thy coming we wait,\nThe sky, not the grave, is our goal:\nOh trump of the angel! Oh, voice of the Lord!\nBlessed hope! Blessed rest of my soul."
   },
   {
     "number": "223",
@@ -1577,23 +1577,23 @@
   {
     "number": "229",
     "key": "Bb",
-    "songbookRef": "",
-    "title": "RH 631 MP 361",
-    "lyrics": "RH 631 MP 361\nI serve a risen Saviour,\nHe's in the world today;\nI know that He is living,\nWhatever men may say;\nI see His hand of mercy,\nI hear His voice of cheer,\nAnd just the time I need Him,\nHe's always near.\nChorus:\nHe lives, He lives,\nChrist Jesus lives today!\nHe walks with me and talks with me\nAlong life's narrow way.\nHe lives, He lives, salvation to impart,\nYou ask me how I know He lives?\nHe lives within my heart.\n2) In all the world around me,\nI see His loving care,\nAnd though my heart grows weary\nI never will despair\nI know that He is leading,\nThrough all the stormy blast,\nThe day of His appearing,\nWill come at last.\n3) Rejoice, rejoice, O Christian,\nLift up your voice and sing\nEternal hallelujahs to Jesus Christ the King!\nThe hope of all who seek Him,\nThe help of all who find,\nNone other is so loving, so good and kind."
+    "songbookRef": "RH 631 MP 361",
+    "title": "I serve a risen Saviour",
+    "lyrics": "I serve a risen Saviour,\nHe's in the world today;\nI know that He is living,\nWhatever men may say;\nI see His hand of mercy,\nI hear His voice of cheer,\nAnd just the time I need Him,\nHe's always near.\nChorus:\nHe lives, He lives,\nChrist Jesus lives today!\nHe walks with me and talks with me\nAlong life's narrow way.\nHe lives, He lives, salvation to impart,\nYou ask me how I know He lives?\nHe lives within my heart.\n2) In all the world around me,\nI see His loving care,\nAnd though my heart grows weary\nI never will despair\nI know that He is leading,\nThrough all the stormy blast,\nThe day of His appearing,\nWill come at last.\n3) Rejoice, rejoice, O Christian,\nLift up your voice and sing\nEternal hallelujahs to Jesus Christ the King!\nThe hope of all who seek Him,\nThe help of all who find,\nNone other is so loving, so good and kind."
   },
   {
     "number": "230",
     "key": "Ab",
-    "songbookRef": "",
-    "title": "RH 47 MP 413",
-    "lyrics": "RH 47 MP 413\nTo God be the glory,\nGreat things He hath done,\nSo loved He the world\nThat He gave us His Son,\nWho yielded His life an atonement for sin,\nAnd opened the life gate that all may go in.\nChorus:\nPraise the Lord, praise the Lord!\nLet the earth hear His voice,\nPraise the Lord, praise the Lord!\nLet the people rejoice,\nO come, to the Father\nThrough Jesus the Son,\nAnd give Him the glory,\nGreat things He hath done.\n2) O perfect redemption,\nThe purchase of blood,\nTo every believer the promise of God;\nThe vilest offender who truly believes,\nThat moment from Jesus a pardon receives.\n3) Great things He hath taught us,\nGreat things He hath done.\nAnd great our rejoicing\nThrough Jesus the Son;\nBut purer, and higher, and greater will be\nOur wonder, our transport\nWhen Jesus we see.\nPP PPaa aagg ggee ee    22 2255 55\n231  (F)  RH 299\nI've a message from the Lord, hallelujah!\nThe message unto you I'll give,\n'Tis recorded in His Word, hallelujah!\nIt is only that you look and live.\nChorus:\nLook and live my brother, live,\nLook to Jesus now and live,\n'Tis recorded in His Word, hallelujah!\nIt is only that you look and live.\n2) I've a message full of love, hallelujah!\nA message, O my friend, for you.\n'Tis a message, from above, hallelujah!\nJesus said it, and I know 'tis true.\n3) Life is offered unto you, hallelujah!\nEternal life your soul shall have,\nIf you'll only look to Him, hallelujah!\nLook to Jesus Who alone can save."
+    "songbookRef": "RH 47 MP 413",
+    "title": "To God be the glory",
+    "lyrics": "To God be the glory,\nGreat things He hath done,\nSo loved He the world\nThat He gave us His Son,\nWho yielded His life an atonement for sin,\nAnd opened the life gate that all may go in.\nChorus:\nPraise the Lord, praise the Lord!\nLet the earth hear His voice,\nPraise the Lord, praise the Lord!\nLet the people rejoice,\nO come, to the Father\nThrough Jesus the Son,\nAnd give Him the glory,\nGreat things He hath done.\n2) O perfect redemption,\nThe purchase of blood,\nTo every believer the promise of God;\nThe vilest offender who truly believes,\nThat moment from Jesus a pardon receives.\n3) Great things He hath taught us,\nGreat things He hath done.\nAnd great our rejoicing\nThrough Jesus the Son;\nBut purer, and higher, and greater will be\nOur wonder, our transport\nWhen Jesus we see.\n231  (F)  RH 299\nI've a message from the Lord, hallelujah!\nThe message unto you I'll give,\n'Tis recorded in His Word, hallelujah!\nIt is only that you look and live.\nChorus:\nLook and live my brother, live,\nLook to Jesus now and live,\n'Tis recorded in His Word, hallelujah!\nIt is only that you look and live.\n2) I've a message full of love, hallelujah!\nA message, O my friend, for you.\n'Tis a message, from above, hallelujah!\nJesus said it, and I know 'tis true.\n3) Life is offered unto you, hallelujah!\nEternal life your soul shall have,\nIf you'll only look to Him, hallelujah!\nLook to Jesus Who alone can save."
   },
   {
     "number": "232",
     "key": "Eb",
-    "songbookRef": "",
-    "title": "RH 429 MP 360 OB 18",
-    "lyrics": "RH 429 MP 360 OB 18\nOnward, Christian solders!\nMarching as to war,\nLooking unto Jesus,\nWho is gone before;\nChrist, the Royal Master,\nLeads against the foe;\nForward into battle,\nSee His banners go.\nChorus:\nOnward, Christian soldiers!\nMarching as to war,\nLooking unto Jesus,\nGoing on before.\n2) At the name of Jesus\nSatan's host doth flee;\nOn then Christian soldiers,\nOn to victory!\nHell's foundations quiver\nAt the shout of praise:\nBrothers, lift your voices,\nLoud your anthems raise.\n3) Like a mighty army\nMoves the Church of God:\nBrothers, we are treading\nWhere the saints have trod.\nWe are not divided,\nAll one body we\nOne in hope and doctrine,\nOne in charity.\n4) Crowns and thrones may perish,\nKingdoms rise and wane;\nBut the Church of Jesus\nConstant will remain;\nGates of hell can never\n'Gainst that Church prevail;\nWe have Christ's own promise\nAnd that cannot fail.\n5) Onward then, ye people,\nJoin our happy throng;\nBlend with ours your voices;\nIn the triumph song;\n\"Glory, praise and honour,\nUnto Christ the King\"\nThis, through countless ages,\nMen and angels sing."
+    "songbookRef": "RH 429 MP 360 OB 18",
+    "title": "Onward, Christian solders!",
+    "lyrics": "Onward, Christian solders!\nMarching as to war,\nLooking unto Jesus,\nWho is gone before;\nChrist, the Royal Master,\nLeads against the foe;\nForward into battle,\nSee His banners go.\nChorus:\nOnward, Christian soldiers!\nMarching as to war,\nLooking unto Jesus,\nGoing on before.\n2) At the name of Jesus\nSatan's host doth flee;\nOn then Christian soldiers,\nOn to victory!\nHell's foundations quiver\nAt the shout of praise:\nBrothers, lift your voices,\nLoud your anthems raise.\n3) Like a mighty army\nMoves the Church of God:\nBrothers, we are treading\nWhere the saints have trod.\nWe are not divided,\nAll one body we\nOne in hope and doctrine,\nOne in charity.\n4) Crowns and thrones may perish,\nKingdoms rise and wane;\nBut the Church of Jesus\nConstant will remain;\nGates of hell can never\n'Gainst that Church prevail;\nWe have Christ's own promise\nAnd that cannot fail.\n5) Onward then, ye people,\nJoin our happy throng;\nBlend with ours your voices;\nIn the triumph song;\n\"Glory, praise and honour,\nUnto Christ the King\"\nThis, through countless ages,\nMen and angels sing."
   },
   {
     "number": "233",
@@ -1605,9 +1605,9 @@
   {
     "number": "234",
     "key": "Ab",
-    "songbookRef": "",
-    "title": "RH 309 MP 388 OB 127",
-    "lyrics": "RH 309 MP 388 OB 127\nHave you been to Jesus\nFor the cleansing power?\nAre you washed in the blood of the Lamb?\nAre you fully trusting in His grace this hour?\nAre you washed in the blood of the Lamb?\nPP PPaa aagg ggee ee    22 2266 66\nChorus:\nAre you washed in the blood\nIn the soul-cleansing blood of the Lamb?\nAre your garments spotless?\nAre they white as snow,\nAre you washed in the blood of the Lamb?\n2) Are you walking daily\nBy the Saviour's side?\nAre you washed in the blood of the Lamb?\nDo you rest each moment in the Crucified?\nAre you washed in the blood of the Lamb?\n3) When the Bridegroom cometh\nWill your robes be white?\nPure and white in the blood of the Lamb?\nWill your soul be ready\nFor the mansions bright,\nAre you washed in the blood of the Lamb?\n4) Lay aside the garments\nThat are stained by sin.\nAnd be washed in the blood of the Lamb;\nThere's a fountain flowing\nFor the soul unclean,\nOh be washed in the blood of the Lamb!"
+    "songbookRef": "RH 309 MP 388 OB 127",
+    "title": "Have you been to Jesus",
+    "lyrics": "Have you been to Jesus\nFor the cleansing power?\nAre you washed in the blood of the Lamb?\nAre you fully trusting in His grace this hour?\nAre you washed in the blood of the Lamb?\nChorus:\nAre you washed in the blood\nIn the soul-cleansing blood of the Lamb?\nAre your garments spotless?\nAre they white as snow,\nAre you washed in the blood of the Lamb?\n2) Are you walking daily\nBy the Saviour's side?\nAre you washed in the blood of the Lamb?\nDo you rest each moment in the Crucified?\nAre you washed in the blood of the Lamb?\n3) When the Bridegroom cometh\nWill your robes be white?\nPure and white in the blood of the Lamb?\nWill your soul be ready\nFor the mansions bright,\nAre you washed in the blood of the Lamb?\n4) Lay aside the garments\nThat are stained by sin.\nAnd be washed in the blood of the Lamb;\nThere's a fountain flowing\nFor the soul unclean,\nOh be washed in the blood of the Lamb!"
   },
   {
     "number": "235",
@@ -1626,51 +1626,51 @@
   {
     "number": "237",
     "key": "F",
-    "songbookRef": "",
-    "title": "MP 379 OB 51",
-    "lyrics": "MP 379 OB 51\nDown at the cross where my Saviour died,\nDown where for cleansing from sin I cried;\nThere to my heart was the blood applied;\nGlory to His name!\nChorus:\nGlory to His name!\nGlory to His name!\nThere to my Heart was the blood applied;\nGlory to His name!\n2) I am so wondrously saved from sin,\nJesus so sweetly abides within,\nThere at the cross where He took me in;\nGlory to His name!\n3) Oh, precious fountain that saves from sin,\nI am so glad I have entered in;\nThere Jesus saves me and keeps me clean;\nGlory to His name!\n4) Come, to this fountain so rich and sweet;\nCast thy poor soul at the Saviour's feet;\nPlunge in today, and be made complete;\nGlory to His name!"
+    "songbookRef": "MP 379 OB 51",
+    "title": "Down at the cross where my Saviour died",
+    "lyrics": "Down at the cross where my Saviour died,\nDown where for cleansing from sin I cried;\nThere to my heart was the blood applied;\nGlory to His name!\nChorus:\nGlory to His name!\nGlory to His name!\nThere to my Heart was the blood applied;\nGlory to His name!\n2) I am so wondrously saved from sin,\nJesus so sweetly abides within,\nThere at the cross where He took me in;\nGlory to His name!\n3) Oh, precious fountain that saves from sin,\nI am so glad I have entered in;\nThere Jesus saves me and keeps me clean;\nGlory to His name!\n4) Come, to this fountain so rich and sweet;\nCast thy poor soul at the Saviour's feet;\nPlunge in today, and be made complete;\nGlory to His name!"
   },
   {
     "number": "238",
     "key": "Eb",
-    "songbookRef": "",
-    "title": "RH 682 MP 431",
-    "lyrics": "RH 682 MP 431\nThe Church's one foundation\nIs Jesus Christ her Lord;\nShe is His new creation\nBy water and the Word;\nFrom heaven He came and sought her\nTo be His holy Bride;\nWith His own blood He bought her,\nAnd for her life He died.\nPP PPaa aagg ggee ee    22 2277 77\n2) Elect from every nation,\nYet one o'er all the earth,\nHer charter of salvation\nOne Lord, one faith, one birth,\nOne holy name she blesses,\nPartakes one holy food,\nAnd to one hope she presses,\nWith every grace endued.\n3) Though with a scornful wonder\nMen see her sore oppressed,\nBy schisms rent asunder,\nBy heresies distressed,\nYet saints their watch are keeping\nTheir cry goes up, \"How long?\"\nAnd soon the night of weeping\nShall be the morn of song.\n4) 'Mid toil and tribulation,\nAnd tumult of her war,\nShe waits the consummation\nOf peace for evermore.\nTill with the vision glorious\nHer longing eyes are blest,\nAnd the great Church victorious\nShall be the Church at rest."
+    "songbookRef": "RH 682 MP 431",
+    "title": "The Church's one foundation",
+    "lyrics": "The Church's one foundation\nIs Jesus Christ her Lord;\nShe is His new creation\nBy water and the Word;\nFrom heaven He came and sought her\nTo be His holy Bride;\nWith His own blood He bought her,\nAnd for her life He died.\n2) Elect from every nation,\nYet one o'er all the earth,\nHer charter of salvation\nOne Lord, one faith, one birth,\nOne holy name she blesses,\nPartakes one holy food,\nAnd to one hope she presses,\nWith every grace endued.\n3) Though with a scornful wonder\nMen see her sore oppressed,\nBy schisms rent asunder,\nBy heresies distressed,\nYet saints their watch are keeping\nTheir cry goes up, \"How long?\"\nAnd soon the night of weeping\nShall be the morn of song.\n4) 'Mid toil and tribulation,\nAnd tumult of her war,\nShe waits the consummation\nOf peace for evermore.\nTill with the vision glorious\nHer longing eyes are blest,\nAnd the great Church victorious\nShall be the Church at rest."
   },
   {
     "number": "239",
     "key": "Eb",
-    "songbookRef": "",
-    "title": "RH 165 MP 483",
-    "lyrics": "RH 165 MP 483\nKing of my life, I crown Thee now,\nThine shall the glory be;\nLest I forget Thy thorn-crowned brow,\nLead me to Calvary.\nChorus:\nLest I forget Gethsemane,\nLest I forget Thine agony,\nLest I forget Thy love for me,\nLead me to Calvary.\n2) Show me the tomb where Thou wast laid,\nTenderly mourned and wept;\nAngels in robes of light arrayed,\nGuarded Thee whilst Thou slept.\n3) Let me, like Mary, through the gloom,\nCome with a gift to Thee;\nShow to me now the empty tomb,\nLead me to Calvary.\n4) May I be willing, Lord, to bear\nDaily my cross for Thee;\nEven Thy cup of grief to share,\nThou hast borne all for me.\n5) Fill me, O Lord, with Thy desire\nFor all who know not Thee;\nThen touch my lips with holy fire,\nTo speak of Calvary."
+    "songbookRef": "RH 165 MP 483",
+    "title": "King of my life, I crown Thee now",
+    "lyrics": "King of my life, I crown Thee now,\nThine shall the glory be;\nLest I forget Thy thorn-crowned brow,\nLead me to Calvary.\nChorus:\nLest I forget Gethsemane,\nLest I forget Thine agony,\nLest I forget Thy love for me,\nLead me to Calvary.\n2) Show me the tomb where Thou wast laid,\nTenderly mourned and wept;\nAngels in robes of light arrayed,\nGuarded Thee whilst Thou slept.\n3) Let me, like Mary, through the gloom,\nCome with a gift to Thee;\nShow to me now the empty tomb,\nLead me to Calvary.\n4) May I be willing, Lord, to bear\nDaily my cross for Thee;\nEven Thy cup of grief to share,\nThou hast borne all for me.\n5) Fill me, O Lord, with Thy desire\nFor all who know not Thee;\nThen touch my lips with holy fire,\nTo speak of Calvary."
   },
   {
     "number": "240",
     "key": "C",
-    "songbookRef": "",
-    "title": "RH 507 MP 502",
-    "lyrics": "RH 507 MP 502\nA wonderful Saviour is Jesus my Lord,\nA wonderful Saviour to me,\nHe hideth my soul in the cleft of the rock,\nWhere rivers of pleasure I see.\nChorus:\nHe hideth my soul in the cleft of the rock,\nThat shadows a dry thirsty land;\nHe hideth my life in the depths of His love,\nAnd covers me there with His hand\nAnd covers me there with His hand.\n2) A wonderful Saviour is Jesus my Lord,\nHe taketh my burden away,\nHe holdeth me up, and I shall not be moved,\nHe giveth me strength as my day.\n3) With numberless blessings\nEach moment He crowns,\nAnd filled with His fullness divine,\nI sing in my rapture, oh, glory to God\nFor such a Redeemer as mine.\n4) When clothed in His brightness\nTransported I rise,\nTo meet Him in the clouds of the sky,\nHis perfect salvation, His wonderful love,\nI'll shout with the millions on high."
+    "songbookRef": "RH 507 MP 502",
+    "title": "A wonderful Saviour is Jesus my Lord",
+    "lyrics": "A wonderful Saviour is Jesus my Lord,\nA wonderful Saviour to me,\nHe hideth my soul in the cleft of the rock,\nWhere rivers of pleasure I see.\nChorus:\nHe hideth my soul in the cleft of the rock,\nThat shadows a dry thirsty land;\nHe hideth my life in the depths of His love,\nAnd covers me there with His hand\nAnd covers me there with His hand.\n2) A wonderful Saviour is Jesus my Lord,\nHe taketh my burden away,\nHe holdeth me up, and I shall not be moved,\nHe giveth me strength as my day.\n3) With numberless blessings\nEach moment He crowns,\nAnd filled with His fullness divine,\nI sing in my rapture, oh, glory to God\nFor such a Redeemer as mine.\n4) When clothed in His brightness\nTransported I rise,\nTo meet Him in the clouds of the sky,\nHis perfect salvation, His wonderful love,\nI'll shout with the millions on high."
   },
   {
     "number": "241",
     "key": "Ab",
-    "songbookRef": "",
-    "title": "RH 519 MP 467",
-    "lyrics": "RH 519 MP 467\nI have a song that Jesus gave me,\nIt was sent from heav'n above;\nThere never was a sweeter melody,\n'Tis a melody of love.\nChorus:\nIn my heart there rings a melody,\nThere rings a melody\nWith heaven's harmony;\nIn my heart there rings a melody;\nThere rings a melody of love.\n2) I love the Christ that died on Calv'ry\nFor He washed my sins away;\nHe put within my heart a melody,\nAnd I know it's there to stay.\n3) 'Twill be my endless theme in glory,\nWith the angels I will sing;\n'Twill be a song with glorious harmony,\nWhen the courts of heaven ring."
+    "songbookRef": "RH 519 MP 467",
+    "title": "I have a song that Jesus gave me",
+    "lyrics": "I have a song that Jesus gave me,\nIt was sent from heav'n above;\nThere never was a sweeter melody,\n'Tis a melody of love.\nChorus:\nIn my heart there rings a melody,\nThere rings a melody\nWith heaven's harmony;\nIn my heart there rings a melody;\nThere rings a melody of love.\n2) I love the Christ that died on Calv'ry\nFor He washed my sins away;\nHe put within my heart a melody,\nAnd I know it's there to stay.\n3) 'Twill be my endless theme in glory,\nWith the angels I will sing;\n'Twill be a song with glorious harmony,\nWhen the courts of heaven ring."
   },
   {
     "number": "242",
     "key": "Bb",
-    "songbookRef": "",
-    "title": "RH 518 MP 389",
-    "lyrics": "RH 518 MP 389\nWho can cheer the heart like Jesus,\nBy His presence all divine?\nTrue and tender, pure and precious,\nO how blest to call Him mine!\nChorus:\nAll that thrills my soul is Jesus;\nHe is more than life to me;\nAnd the fairest of ten thousand,\nIn my blessed Lord I see.\n2) Love of Christ so freely given\nGrace of God beyond degree,\nMercy higher than the heaven\nDeeper than the deepest sea.\nPP PPaa aagg ggee ee    22 2288 88\n3) What a wonderful redemption!\nNever can a mortal know\nHow my sin, though red like crimson,\nCan be whiter than the snow.\n4) Ev'ry need His hand supplying,\nEv'ry good in Him I see;\nOn His strength divine relying,\nHe is all in all to me.\n5) By the crystal-flowing river\nWith the ransomed I will sing,\nAnd for ever and for ever\nPraise and glorify the King."
+    "songbookRef": "RH 518 MP 389",
+    "title": "Who can cheer the heart like Jesus",
+    "lyrics": "Who can cheer the heart like Jesus,\nBy His presence all divine?\nTrue and tender, pure and precious,\nO how blest to call Him mine!\nChorus:\nAll that thrills my soul is Jesus;\nHe is more than life to me;\nAnd the fairest of ten thousand,\nIn my blessed Lord I see.\n2) Love of Christ so freely given\nGrace of God beyond degree,\nMercy higher than the heaven\nDeeper than the deepest sea.\n3) What a wonderful redemption!\nNever can a mortal know\nHow my sin, though red like crimson,\nCan be whiter than the snow.\n4) Ev'ry need His hand supplying,\nEv'ry good in Him I see;\nOn His strength divine relying,\nHe is all in all to me.\n5) By the crystal-flowing river\nWith the ransomed I will sing,\nAnd for ever and for ever\nPraise and glorify the King."
   },
   {
     "number": "243",
     "key": "C",
-    "songbookRef": "",
-    "title": "MP 409 OB 135",
-    "lyrics": "MP 409 OB 135\nO, Lord my God,\nWhen I in awesome wonder,\nConsider all\nThe works Thine hands have made.\nI see the stars, I hear the mighty thunder,\nThy power throughout\nThe universe displayed.\nChorus:\nThen sings my soul,\nMy Saviour God, to Thee,\nHow great Thou art;\nHow great Thou art;\nThen sings my soul,\nMy Saviour God, to Thee,\nHow great Thou art,\nHow great Thou art.\n2) And when I think,\nThat God His Son not sparing,\nSent Him to die, I scarce can take it in,\nThat on the cross,\nMy burdens gladly bearing,\nHe bled and died, to take away my sin.\n3) When Christ shall come,\nWith shout of acclamation,\nAnd take me home,\nWhat joy shall fill my heart,\nThen I shall bow, in humble adoration,\nAnd there proclaim:\nMy God, how great Thou art."
+    "songbookRef": "MP 409 OB 135",
+    "title": "O, Lord my God",
+    "lyrics": "O, Lord my God,\nWhen I in awesome wonder,\nConsider all\nThe works Thine hands have made.\nI see the stars, I hear the mighty thunder,\nThy power throughout\nThe universe displayed.\nChorus:\nThen sings my soul,\nMy Saviour God, to Thee,\nHow great Thou art;\nHow great Thou art;\nThen sings my soul,\nMy Saviour God, to Thee,\nHow great Thou art,\nHow great Thou art.\n2) And when I think,\nThat God His Son not sparing,\nSent Him to die, I scarce can take it in,\nThat on the cross,\nMy burdens gladly bearing,\nHe bled and died, to take away my sin.\n3) When Christ shall come,\nWith shout of acclamation,\nAnd take me home,\nWhat joy shall fill my heart,\nThen I shall bow, in humble adoration,\nAnd there proclaim:\nMy God, how great Thou art."
   },
   {
     "number": "244",
@@ -1682,65 +1682,65 @@
   {
     "number": "245",
     "key": "Eb",
-    "songbookRef": "",
-    "title": "RH 155 MP 443",
-    "lyrics": "RH 155 MP 443\nHow sweet the name of Jesus sounds\nIn a believer's ear;\nIt soothes his sorrows, heals his wounds\nAnd drives away his fear.\n2) It makes the wounded spirit whole,\nAnd calms the troubled breast;\n'Tis manna to the hungry soul,\nAnd to the weary rest.\n3) Dear Name, the Rock on which I build\nMy shield and hiding-place,\nMy never-failing treasury, filled\nWith boundless stores of grace.\n4) Jesus, my Shepherd, Saviour, Friend,\nMy Prophet, Priest and King,\nMy Lord, my life, my way, my end,\nAccept the praise I bring.\n5) I would Thy boundless love proclaim\nWith every fleeting breath;\nSo shall the music of Thy name\nRefresh my soul in death.\nPP PPaa aagg ggee ee    22 2299 99\n246  (G)  RH 644 MP 369\nWhat a wonderful change\nIn my life has been wrought\nSince Jesus came into my heart,\nI have light in my soul\nWhich so long I had sought,\nSince Jesus came into my heart.\nChorus:\nSince Jesus came into my heart,\nSince Jesus came into my heart,\nFloods of joy o'er my soul\nLike the sea billows roll,\nSince Jesus came into my heart.\n2) I have ceased from my wand'ring\nAnd going astray\nSince Jesus came into my heart,\nAnd my sins which were many\nAre all washed away\nSince Jesus came into my heart.\n3) I'm possessed of a hope\nThat is steadfast and sure\nSince Jesus came into my heart,\nAnd no dark clouds of doubt\nNow my pathway obscure.\nSince Jesus came into my heart.\n4) There's a light in the valley\nOf death now for me,\nSince Jesus came into my heart,\nAnd the gates of the city beyond I can see,\nSince Jesus came into my heart.\n5) I shall go there to dwell\nIn that city I know,\nSince Jesus came into my heart,\nAnd I'm happy, so happy as onward I go,\nSince Jesus came into my heart."
+    "songbookRef": "RH 155 MP 443",
+    "title": "How sweet the name of Jesus sounds",
+    "lyrics": "How sweet the name of Jesus sounds\nIn a believer's ear;\nIt soothes his sorrows, heals his wounds\nAnd drives away his fear.\n2) It makes the wounded spirit whole,\nAnd calms the troubled breast;\n'Tis manna to the hungry soul,\nAnd to the weary rest.\n3) Dear Name, the Rock on which I build\nMy shield and hiding-place,\nMy never-failing treasury, filled\nWith boundless stores of grace.\n4) Jesus, my Shepherd, Saviour, Friend,\nMy Prophet, Priest and King,\nMy Lord, my life, my way, my end,\nAccept the praise I bring.\n5) I would Thy boundless love proclaim\nWith every fleeting breath;\nSo shall the music of Thy name\nRefresh my soul in death.\n246  (G)  RH 644 MP 369\nWhat a wonderful change\nIn my life has been wrought\nSince Jesus came into my heart,\nI have light in my soul\nWhich so long I had sought,\nSince Jesus came into my heart.\nChorus:\nSince Jesus came into my heart,\nSince Jesus came into my heart,\nFloods of joy o'er my soul\nLike the sea billows roll,\nSince Jesus came into my heart.\n2) I have ceased from my wand'ring\nAnd going astray\nSince Jesus came into my heart,\nAnd my sins which were many\nAre all washed away\nSince Jesus came into my heart.\n3) I'm possessed of a hope\nThat is steadfast and sure\nSince Jesus came into my heart,\nAnd no dark clouds of doubt\nNow my pathway obscure.\nSince Jesus came into my heart.\n4) There's a light in the valley\nOf death now for me,\nSince Jesus came into my heart,\nAnd the gates of the city beyond I can see,\nSince Jesus came into my heart.\n5) I shall go there to dwell\nIn that city I know,\nSince Jesus came into my heart,\nAnd I'm happy, so happy as onward I go,\nSince Jesus came into my heart."
   },
   {
     "number": "247",
     "key": "C",
-    "songbookRef": "",
-    "title": "RH 555 MP 358 OB 166",
-    "lyrics": "RH 555 MP 358 OB 166\nSing the wondrous love of Jesus,\nSing His mercy and His grace;\nIn the mansions bright and blessed,\nHe'll prepare for us a place.\nChorus:\nWhen we all get to heaven\nWhat a day of rejoicing that will be!\nWhen we all see Jesus,\nWe'll sing and shout the victory.\n2) While we walk the pilgrim pathway,\nClouds will overspread the sky;\nBut when trav'ling days are over,\nNot a shadow, not a sigh.\n3) Let us, then, be true and faithful,\nTrusting, serving every day;\nJust one glimpse of Him in glory\nWill the toils of life repay.\n4) Onward to the prize before us!\nSoon His beauty we'll behold;\nSoon the pearly gates will open,\nWe shall tread the streets of gold."
+    "songbookRef": "RH 555 MP 358 OB 166",
+    "title": "Sing the wondrous love of Jesus",
+    "lyrics": "Sing the wondrous love of Jesus,\nSing His mercy and His grace;\nIn the mansions bright and blessed,\nHe'll prepare for us a place.\nChorus:\nWhen we all get to heaven\nWhat a day of rejoicing that will be!\nWhen we all see Jesus,\nWe'll sing and shout the victory.\n2) While we walk the pilgrim pathway,\nClouds will overspread the sky;\nBut when trav'ling days are over,\nNot a shadow, not a sigh.\n3) Let us, then, be true and faithful,\nTrusting, serving every day;\nJust one glimpse of Him in glory\nWill the toils of life repay.\n4) Onward to the prize before us!\nSoon His beauty we'll behold;\nSoon the pearly gates will open,\nWe shall tread the streets of gold."
   },
   {
     "number": "248",
     "key": "Eb",
-    "songbookRef": "",
-    "title": "MP 477 OB 23",
-    "lyrics": "MP 477 OB 23\nMy faith looks up to Thee,\nThou Lamb of Calvary,\nSaviour divine.\nNow hear me while I pray,\nTake all my guilt away,\nOh let me from this day\nBe wholly Thine.\n2) By Thy rich grace impart\nStrength to my fainting heart,\nMy zeal inspire,\nAs Thou hast died for me\nO may my love to Thee\nPure, warm and changeless be,\nA living fire.\n3) While life's dark maze I tread,\nAnd griefs around me spread,\nBe Thou my guide.\nBid darkness turn to day,\nWipe sorrow's tears away.\nNor ever let me stray\nFrom Thee aside.\n4) When Jesus comes for me\nIn power and majesty,\nTo take me home\nBlest Saviour, then in love,\nFear and distrust remove,\nO bear me safe above,\nA ransomed soul."
+    "songbookRef": "MP 477 OB 23",
+    "title": "My faith looks up to Thee",
+    "lyrics": "My faith looks up to Thee,\nThou Lamb of Calvary,\nSaviour divine.\nNow hear me while I pray,\nTake all my guilt away,\nOh let me from this day\nBe wholly Thine.\n2) By Thy rich grace impart\nStrength to my fainting heart,\nMy zeal inspire,\nAs Thou hast died for me\nO may my love to Thee\nPure, warm and changeless be,\nA living fire.\n3) While life's dark maze I tread,\nAnd griefs around me spread,\nBe Thou my guide.\nBid darkness turn to day,\nWipe sorrow's tears away.\nNor ever let me stray\nFrom Thee aside.\n4) When Jesus comes for me\nIn power and majesty,\nTo take me home\nBlest Saviour, then in love,\nFear and distrust remove,\nO bear me safe above,\nA ransomed soul."
   },
   {
     "number": "249",
     "key": "Ab",
-    "songbookRef": "",
-    "title": "RH 217 MP 486 OB 139",
-    "lyrics": "RH 217 MP 486 OB 139\nI'm rejoicing night and day,\nAs I walk the pilgrim way,\nFor the hand of God in all my life I see,\nAnd the reason of my bliss,\nYes, the secret all is this;\nThat the Comforter abides with me.\nChorus:\nHe abides, He abides,\nHallelujah, He abides with me!\nI'm rejoicing night and day,\nAs I walk the narrow way,\nFor the Comforter abides with me.\n2) Once my heart was full of sin,\nOnce I had no peace within,\nTill I heard how Jesus died upon the tree;\nThen I fell down at His feet,\nAnd there came a peace so sweet,\nNow the Comforter abides with me.\nPP PPaa aagg ggee ee    33 3300 00\n3) He is with me everywhere,\nAnd He knows my every care,\nI'm as happy as a bird and just as free;\nFor the Spirit has control,\nJesus satisfies my soul,\nSince the Comforter abides with me.\n4) There's no thirsting for the things\nOf the world - they've taken wings;\nLong ago I gave them up, and instantly\nAll my night was turned to day,\nAll my burdens rolled away,\nNow the Comforter abides with me."
+    "songbookRef": "RH 217 MP 486 OB 139",
+    "title": "I'm rejoicing night and day",
+    "lyrics": "I'm rejoicing night and day,\nAs I walk the pilgrim way,\nFor the hand of God in all my life I see,\nAnd the reason of my bliss,\nYes, the secret all is this;\nThat the Comforter abides with me.\nChorus:\nHe abides, He abides,\nHallelujah, He abides with me!\nI'm rejoicing night and day,\nAs I walk the narrow way,\nFor the Comforter abides with me.\n2) Once my heart was full of sin,\nOnce I had no peace within,\nTill I heard how Jesus died upon the tree;\nThen I fell down at His feet,\nAnd there came a peace so sweet,\nNow the Comforter abides with me.\n3) He is with me everywhere,\nAnd He knows my every care,\nI'm as happy as a bird and just as free;\nFor the Spirit has control,\nJesus satisfies my soul,\nSince the Comforter abides with me.\n4) There's no thirsting for the things\nOf the world - they've taken wings;\nLong ago I gave them up, and instantly\nAll my night was turned to day,\nAll my burdens rolled away,\nNow the Comforter abides with me."
   },
   {
     "number": "250",
     "key": "D",
-    "songbookRef": "",
-    "title": "RH 370 MP 365 OB 176",
-    "lyrics": "RH 370 MP 365 OB 176\nBlessed assurance, Jesus is mine,\nOh, what a foretaste of glory divine,\nHeir of salvation, purchase of God,\nBorn of His Spirit, washed in His blood.\nChorus:\nThis is my story, this is my song,\nPraising my Saviour all the day long,\nThis is my story, this is my song,\nPraising my Saviour all the day long.\n2) Perfect submission, perfect delight,\nVisions of rapture now burst on my sight,\nAngels descending, bring from above\nEchoes of mercy, whispers of love.\n3) Perfect submission, all is at rest,\nI in my Saviour, am happy and blest\nWatching and waiting, looking above,\nFilled with His goodness, lost in His love."
+    "songbookRef": "RH 370 MP 365 OB 176",
+    "title": "Blessed assurance, Jesus is mine",
+    "lyrics": "Blessed assurance, Jesus is mine,\nOh, what a foretaste of glory divine,\nHeir of salvation, purchase of God,\nBorn of His Spirit, washed in His blood.\nChorus:\nThis is my story, this is my song,\nPraising my Saviour all the day long,\nThis is my story, this is my song,\nPraising my Saviour all the day long.\n2) Perfect submission, perfect delight,\nVisions of rapture now burst on my sight,\nAngels descending, bring from above\nEchoes of mercy, whispers of love.\n3) Perfect submission, all is at rest,\nI in my Saviour, am happy and blest\nWatching and waiting, looking above,\nFilled with His goodness, lost in His love."
   },
   {
     "number": "251",
     "key": "G",
-    "songbookRef": "",
-    "title": "RH 714 MP 444",
-    "lyrics": "RH 714 MP 444\nCome ye that love the Lord,\nAnd let your joys be known;\nJoin in a song with sweet accord,\nJoin in a song with sweet accord\nAnd thus surround the throne,\nAnd thus surround the throne.\nChorus:\nWe're marching to Zion,\nBeautiful, beautiful, Zion;\nWe're marching upward to Zion,\nThe beautiful city of God.\n2) Let those refuse to sing\nWho never knew our God;\nBut children of the heavenly King\nBut children of the heavenly King\nShall speak their joys abroad,\nShall speak their joys abroad.\n3) The hill of Zion yields\nA thousand sacred sweets;\nBefore we reach the heavenly fields,\nBefore we reach the heavenly fields,\nOr walk the golden streets\nOr walk the golden streets.\n4) Then let our songs abound,\nAnd every tear be dry;\nWe're marching through Emmanuel's ground\nWe're marching through Emmanuel's ground\nTo fairer worlds on high\nTo fairer worlds on high."
+    "songbookRef": "RH 714 MP 444",
+    "title": "Come ye that love the Lord",
+    "lyrics": "Come ye that love the Lord,\nAnd let your joys be known;\nJoin in a song with sweet accord,\nJoin in a song with sweet accord\nAnd thus surround the throne,\nAnd thus surround the throne.\nChorus:\nWe're marching to Zion,\nBeautiful, beautiful, Zion;\nWe're marching upward to Zion,\nThe beautiful city of God.\n2) Let those refuse to sing\nWho never knew our God;\nBut children of the heavenly King\nBut children of the heavenly King\nShall speak their joys abroad,\nShall speak their joys abroad.\n3) The hill of Zion yields\nA thousand sacred sweets;\nBefore we reach the heavenly fields,\nBefore we reach the heavenly fields,\nOr walk the golden streets\nOr walk the golden streets.\n4) Then let our songs abound,\nAnd every tear be dry;\nWe're marching through Emmanuel's ground\nWe're marching through Emmanuel's ground\nTo fairer worlds on high\nTo fairer worlds on high."
   },
   {
     "number": "252",
     "key": "G",
-    "songbookRef": "",
-    "title": "RH 158 MP 498 OB 222",
-    "lyrics": "RH 158 MP 498 OB 222\nTake the name of Jesus with you,\nChild of sorrow and of woe;\nIt will joy and comfort give you\nTake it then where'er you go.\nChorus:\nPrecious name, oh, how sweet!\nHope of earth and joy of heaven;\nPrecious name, oh, how sweet!\nHope of earth and joy of heaven.\n2) Take the name of Jesus ever,\nAs a shield from every snare;\nIf temptations round you gather,\nBreathe that holy name in prayer.\n3) Oh, the precious name of Jesus!\nHow it thrills our souls with joy,\nWhen His loving arms receive us,\nAnd His songs our tongues employ!\n4) At the name of Jesus bowing;\nFalling prostate at His feet;\nKing of kings in heaven we'll crown Him,\nWhen our journey is complete."
+    "songbookRef": "RH 158 MP 498 OB 222",
+    "title": "Take the name of Jesus with you",
+    "lyrics": "Take the name of Jesus with you,\nChild of sorrow and of woe;\nIt will joy and comfort give you\nTake it then where'er you go.\nChorus:\nPrecious name, oh, how sweet!\nHope of earth and joy of heaven;\nPrecious name, oh, how sweet!\nHope of earth and joy of heaven.\n2) Take the name of Jesus ever,\nAs a shield from every snare;\nIf temptations round you gather,\nBreathe that holy name in prayer.\n3) Oh, the precious name of Jesus!\nHow it thrills our souls with joy,\nWhen His loving arms receive us,\nAnd His songs our tongues employ!\n4) At the name of Jesus bowing;\nFalling prostate at His feet;\nKing of kings in heaven we'll crown Him,\nWhen our journey is complete."
   },
   {
     "number": "253",
     "key": "F",
-    "songbookRef": "",
-    "title": "MP 383 OB 2",
-    "lyrics": "MP 383 OB 2\nAmazing grace, how sweet the sound,\nThat saved a wretch like me,\nI once was lost, but now am found,\nWas blind, but now I see.\n2) 'Twas grace that taught my heart to fear,\nAnd grace my fears relieved,\nHow precious did that grace appear\nThe hour I first believed.\n3) Through many dangers, toils and snares,\nI have already come;\n'Tis grace hath brought me safe thus far\nAnd grace will lead me home.\n4) When we've been there\nTen thousand years,\nBright shining as the sun,\nWe've no less days to sing God's praise\nThan when we first begun."
+    "songbookRef": "MP 383 OB 2",
+    "title": "Amazing grace, how sweet the sound",
+    "lyrics": "Amazing grace, how sweet the sound,\nThat saved a wretch like me,\nI once was lost, but now am found,\nWas blind, but now I see.\n2) 'Twas grace that taught my heart to fear,\nAnd grace my fears relieved,\nHow precious did that grace appear\nThe hour I first believed.\n3) Through many dangers, toils and snares,\nI have already come;\n'Tis grace hath brought me safe thus far\nAnd grace will lead me home.\n4) When we've been there\nTen thousand years,\nBright shining as the sun,\nWe've no less days to sing God's praise\nThan when we first begun."
   },
   {
     "number": "254",
     "key": "F",
-    "songbookRef": "",
-    "title": "MP 405 OB 168",
-    "lyrics": "MP 405 OB 168\nI can hear my Saviour calling,\nI can hear my Saviour calling\nI can hear my Saviour calling\nTake thy cross and follow, follow me.\nPP PPaa aagg ggee ee    33 3311 11\nChorus:\nWhere He leads me I will follow\nWhere He leads me I will follow\nWhere He leads me I will follow\nI'll go with Him, with Him, all the way.\n2) I'll go with Him thru' the garden,\nI'll go with Him thru' the garden,\nI'll go with Him thru' the garden,\nI'll go with Him, with Him all the way.\n3) He will give me grace and glory,\nHe will give me grace and glory,\nHe will give me grace and glory,\nAnd go with me, with me all the way."
+    "songbookRef": "MP 405 OB 168",
+    "title": "I can hear my Saviour calling",
+    "lyrics": "I can hear my Saviour calling,\nI can hear my Saviour calling\nI can hear my Saviour calling\nTake thy cross and follow, follow me.\nChorus:\nWhere He leads me I will follow\nWhere He leads me I will follow\nWhere He leads me I will follow\nI'll go with Him, with Him, all the way.\n2) I'll go with Him thru' the garden,\nI'll go with Him thru' the garden,\nI'll go with Him thru' the garden,\nI'll go with Him, with Him all the way.\n3) He will give me grace and glory,\nHe will give me grace and glory,\nHe will give me grace and glory,\nAnd go with me, with me all the way."
   },
   {
     "number": "255",
@@ -1759,16 +1759,16 @@
   {
     "number": "257",
     "key": "Bb",
-    "songbookRef": "",
-    "title": "RH 626 MP 470 OB 35",
-    "lyrics": "RH 626 MP 470 OB 35\nI was sinking deep in sin,\nSinking to rise no more,\nOverwhelmed by guilt within,\nMercy I did implore,\nThen the Master of the sea\nHeard my despairing cry,\nChrist my Saviour lifted me,\nNow safe am I.\nChorus:\nLove lifted me,\nLove lifted me,\nWhen no one but Christ could help,\nLove lifted me.\n(repeat)\n2) Souls in danger, look above,\nJesus completely saves;\nHe will lift you by His love,\nOut of the angry waves.\nHe's the Master of the sea,\nBillows His will obey;\nHe your Saviour wants to be\nBe saved today!\n3) When the waves of sorrow roll,\nWhen I am in distress,\nJesus takes my hand in His,\nEver He loves to bless,\nHe will every fear dispel,\nSatisfy every need;\nAll who heed His loving call,\nFind rest indeed."
+    "songbookRef": "RH 626 MP 470 OB 35",
+    "title": "I was sinking deep in sin",
+    "lyrics": "I was sinking deep in sin,\nSinking to rise no more,\nOverwhelmed by guilt within,\nMercy I did implore,\nThen the Master of the sea\nHeard my despairing cry,\nChrist my Saviour lifted me,\nNow safe am I.\nChorus:\nLove lifted me,\nLove lifted me,\nWhen no one but Christ could help,\nLove lifted me.\n(repeat)\n2) Souls in danger, look above,\nJesus completely saves;\nHe will lift you by His love,\nOut of the angry waves.\nHe's the Master of the sea,\nBillows His will obey;\nHe your Saviour wants to be\nBe saved today!\n3) When the waves of sorrow roll,\nWhen I am in distress,\nJesus takes my hand in His,\nEver He loves to bless,\nHe will every fear dispel,\nSatisfy every need;\nAll who heed His loving call,\nFind rest indeed."
   },
   {
     "number": "258",
     "key": "Ab",
-    "songbookRef": "",
-    "title": "RH 472 OB 8",
-    "lyrics": "RH 472 OB 8\nAs I journey through the land\nSinging as I go,\nPointing souls to Calvary\nTo the crimson flow,\nMany arrows pierce my soul\nFrom without, within;\nBut my Lord leads me on,\nThrough Him I must win.\nChorus:\nOh I want to see Him,\nLook upon His face,\nThere to sing forever,\nOf His saving grace;\nOn the streets of Glory\nLet me lift my voice;\nCares all past, home at last,\nEver to rejoice.\n2) When in service for my Lord\nDark may be the night,\nBut I'll cling more close to Him,\nHe will give me light;\nSatan's snares may vex my soul,\nTurn my thoughts aside;\nBut my Lord goes ahead,\nLeads whate'er betide.\nPP PPaa aagg ggee ee    33 3322 22\n3) When in valleys low I look\nT'ward the mountain height,\nAnd behold my Saviour there,\nLeading in the fight,\nWith a tender hand outstretched\nT'ward the valley low,\nGuiding me, I can see,\nAs I onward go.\n4) When before me billows rise\nFrom the mighty deep,\nThen my Lord directs my barque;\nHe doth safely keep,\nAnd He leads me gently on\nThrough this world below\nHe's a real Friend to me,\nO I love Him so."
+    "songbookRef": "RH 472 OB 8",
+    "title": "As I journey through the land",
+    "lyrics": "As I journey through the land\nSinging as I go,\nPointing souls to Calvary\nTo the crimson flow,\nMany arrows pierce my soul\nFrom without, within;\nBut my Lord leads me on,\nThrough Him I must win.\nChorus:\nOh I want to see Him,\nLook upon His face,\nThere to sing forever,\nOf His saving grace;\nOn the streets of Glory\nLet me lift my voice;\nCares all past, home at last,\nEver to rejoice.\n2) When in service for my Lord\nDark may be the night,\nBut I'll cling more close to Him,\nHe will give me light;\nSatan's snares may vex my soul,\nTurn my thoughts aside;\nBut my Lord goes ahead,\nLeads whate'er betide.\n3) When in valleys low I look\nT'ward the mountain height,\nAnd behold my Saviour there,\nLeading in the fight,\nWith a tender hand outstretched\nT'ward the valley low,\nGuiding me, I can see,\nAs I onward go.\n4) When before me billows rise\nFrom the mighty deep,\nThen my Lord directs my barque;\nHe doth safely keep,\nAnd He leads me gently on\nThrough this world below\nHe's a real Friend to me,\nO I love Him so."
   },
   {
     "number": "259",
@@ -1780,16 +1780,16 @@
   {
     "number": "260",
     "key": "G",
-    "songbookRef": "",
-    "title": "RH 763 MP 367 OB 87",
-    "lyrics": "RH 763 MP 367 OB 87\nWhen the trumpet of the Lord shall sound,\nAnd time shall be no more,\nAnd the morning breaks,\nEternal, bright and fair;\nWhen the saved of earth shall gather\nOver on the other shore,\nAnd the roll is called up yonder I'll be there.\nChorus:\nWhen the roll is called up yonder,\nWhen the roll is called up yonder,\nWhen the roll is called up yonder,\nWhen the roll is called up yonder,\nI'll be there.\n2) On that bright and cloudless morning,\nWhen the dead in Christ shall rise,\nAnd the glory of His resurrection share:\nWhen His chosen ones shall gather\nTo their home beyond the skies,\nAnd the roll is called up yonder, I'll be there.\n3) Let us labour for the Master\nFrom the dawn till setting sun,\nLet us talk of all His wondrous love and care,\nThen when all of life is over,\nAnd our work on earth is done.\nAnd the roll is called up yonder, I'll be there."
+    "songbookRef": "RH 763 MP 367 OB 87",
+    "title": "When the trumpet of the Lord shall sound",
+    "lyrics": "When the trumpet of the Lord shall sound,\nAnd time shall be no more,\nAnd the morning breaks,\nEternal, bright and fair;\nWhen the saved of earth shall gather\nOver on the other shore,\nAnd the roll is called up yonder I'll be there.\nChorus:\nWhen the roll is called up yonder,\nWhen the roll is called up yonder,\nWhen the roll is called up yonder,\nWhen the roll is called up yonder,\nI'll be there.\n2) On that bright and cloudless morning,\nWhen the dead in Christ shall rise,\nAnd the glory of His resurrection share:\nWhen His chosen ones shall gather\nTo their home beyond the skies,\nAnd the roll is called up yonder, I'll be there.\n3) Let us labour for the Master\nFrom the dawn till setting sun,\nLet us talk of all His wondrous love and care,\nThen when all of life is over,\nAnd our work on earth is done.\nAnd the roll is called up yonder, I'll be there."
   },
   {
     "number": "261",
     "key": "Eb",
-    "songbookRef": "",
-    "title": "RH 76 MP 479",
-    "lyrics": "RH 76 MP 479\nNearer, still nearer, close to Thy heart,\nDraw me, my Saviour, so precious Thou art;\nFold me, O fold me, close to Thy breast,\nShelter me safe in that haven of rest.\n2) Nearer, still nearer, nothing I bring,\nNaught as an offering to Jesus my King;\nOnly my sinful, now contrite heart,\nGrant me the cleansing\nThy blood doth impart.\n3) Nearer, still nearer, Lord to be Thine,\nSin, with its follies, I gladly resign;\nAll of its pleasure, pomp and its pride,\nGive me but Jesus, my Lord crucified.\n4) Nearer, still nearer, while life shall last,\nTill all its struggles and trials are past;\nThen through eternity, ever I'll be\nNearer, my Saviour, still nearer to Thee."
+    "songbookRef": "RH 76 MP 479",
+    "title": "Nearer, still nearer, close to Thy heart",
+    "lyrics": "Nearer, still nearer, close to Thy heart,\nDraw me, my Saviour, so precious Thou art;\nFold me, O fold me, close to Thy breast,\nShelter me safe in that haven of rest.\n2) Nearer, still nearer, nothing I bring,\nNaught as an offering to Jesus my King;\nOnly my sinful, now contrite heart,\nGrant me the cleansing\nThy blood doth impart.\n3) Nearer, still nearer, Lord to be Thine,\nSin, with its follies, I gladly resign;\nAll of its pleasure, pomp and its pride,\nGive me but Jesus, my Lord crucified.\n4) Nearer, still nearer, while life shall last,\nTill all its struggles and trials are past;\nThen through eternity, ever I'll be\nNearer, my Saviour, still nearer to Thee."
   },
   {
     "number": "262",
@@ -1801,16 +1801,16 @@
   {
     "number": "264",
     "key": "F",
-    "songbookRef": "",
-    "title": "RH 713 OB 220",
-    "lyrics": "RH 713 OB 220\nBlest be the tie that binds\nOur hearts in Christian love;\nThe fellowship of kindred minds\nIs like to that above.\n2) Before our Father's throne,\nWe pour our ardent prayers;\nOur fears, our hopes, our aims are one,\nOur comforts and our cares.\n3) We share our mutual woes;\nOur mutual burdens bear;\nAnd often for each other flows\nThe sympathising tear.\n4) When we asunder part,\nIt gives us inward pain;\nBut we shall still be joined in heart;\nAnd hope to meet again.\n5) This glorious hope revives\nOur courage by the way,\nWhile each in expectation lives,\nAnd longs to see the day.\n6) From sorrow, toil and pain,\nAnd sin we shall be free,\nAnd perfect love and friendship reign\nThrough all eternity."
+    "songbookRef": "RH 713 OB 220",
+    "title": "Blest be the tie that binds",
+    "lyrics": "Blest be the tie that binds\nOur hearts in Christian love;\nThe fellowship of kindred minds\nIs like to that above.\n2) Before our Father's throne,\nWe pour our ardent prayers;\nOur fears, our hopes, our aims are one,\nOur comforts and our cares.\n3) We share our mutual woes;\nOur mutual burdens bear;\nAnd often for each other flows\nThe sympathising tear.\n4) When we asunder part,\nIt gives us inward pain;\nBut we shall still be joined in heart;\nAnd hope to meet again.\n5) This glorious hope revives\nOur courage by the way,\nWhile each in expectation lives,\nAnd longs to see the day.\n6) From sorrow, toil and pain,\nAnd sin we shall be free,\nAnd perfect love and friendship reign\nThrough all eternity."
   },
   {
     "number": "265",
     "key": "Eb",
-    "songbookRef": "",
-    "title": "RH 354 MP 401 OB 154",
-    "lyrics": "RH 354 MP 401 OB 154\nJust as I am, without one plea,\nBut that Thy blood was shed for me,\nAnd that Thou bidst me come to Thee,\nO Lamb of God, I come.\n2) Just as I am, and waiting not\nTo rid my soul of one dark blot,\nTo Thee, whose blood\nCan cleanse each spot,\nO Lamb of God, I come.\n3) Just as I am, though tossed about\nWith many a conflict, many a doubt,\nFightings and fears within, without,\nO Lamb of God, I come.\n4) Just as I am, poor, wretched, blind\nSight, riches, healing of the mind,\nYea, all I need, in Thee to find,\nO Lamb of God, I come.\n5) Just as I am, Thou wilt receive,\nWilt welcome, pardon, cleanse, relieve\nBecause Thy promise I believe,\nO Lamb of God, I come.\n6) Just as I am, Thy love unknown\nHas broken every barrier down;\nNow to be Thine, yea, Thine alone,\nO Lamb of God, I come.\n7) Just as I am, of that free love\nThe breadth, length, depth\nAnd height to prove,\nHere for a season, then above,\nO Lamb of God I come."
+    "songbookRef": "RH 354 MP 401 OB 154",
+    "title": "Just as I am, without one plea",
+    "lyrics": "Just as I am, without one plea,\nBut that Thy blood was shed for me,\nAnd that Thou bidst me come to Thee,\nO Lamb of God, I come.\n2) Just as I am, and waiting not\nTo rid my soul of one dark blot,\nTo Thee, whose blood\nCan cleanse each spot,\nO Lamb of God, I come.\n3) Just as I am, though tossed about\nWith many a conflict, many a doubt,\nFightings and fears within, without,\nO Lamb of God, I come.\n4) Just as I am, poor, wretched, blind\nSight, riches, healing of the mind,\nYea, all I need, in Thee to find,\nO Lamb of God, I come.\n5) Just as I am, Thou wilt receive,\nWilt welcome, pardon, cleanse, relieve\nBecause Thy promise I believe,\nO Lamb of God, I come.\n6) Just as I am, Thy love unknown\nHas broken every barrier down;\nNow to be Thine, yea, Thine alone,\nO Lamb of God, I come.\n7) Just as I am, of that free love\nThe breadth, length, depth\nAnd height to prove,\nHere for a season, then above,\nO Lamb of God I come."
   },
   {
     "number": "266",
@@ -1822,16 +1822,16 @@
   {
     "number": "267",
     "key": "G",
-    "songbookRef": "",
-    "title": "RH 520 MP 356",
-    "lyrics": "RH 520 MP 356\nThere's within my heart a melody,\nJesus whispers sweet and low:\nFear not, I am with you peace be still,\nIn all of life's ebb and flow.\nChorus:\nJesus, Jesus, Jesus,\nSweetest name I know,\nFills my ev'ry longing,\nKeeps me singing as I go.\n2) All my life was wrecked by sin and strife,\nDiscord filled my heart with pain,\nJesus swept across the broken strings\nStirred the slumb'ring chords again.\n3) Feasting on the riches of His grace,\nResting 'neath His shelt'ring wing,\nAlways looking on His smiling face,\nThat is why I shout and sing.\n4) Though sometimes He leads\nThrough waters deep,\nTrials fall across the way,\nThough sometimes\nThe path seems rough and steep,\nSee His footprints all the way.\n5) Soon He's coming back to welcome me;\nFar beyond the starry sky;\nI shall wing my flight to worlds unknown,\nI shall reign with Him on high."
+    "songbookRef": "RH 520 MP 356",
+    "title": "There's within my heart a melody",
+    "lyrics": "There's within my heart a melody,\nJesus whispers sweet and low:\nFear not, I am with you peace be still,\nIn all of life's ebb and flow.\nChorus:\nJesus, Jesus, Jesus,\nSweetest name I know,\nFills my ev'ry longing,\nKeeps me singing as I go.\n2) All my life was wrecked by sin and strife,\nDiscord filled my heart with pain,\nJesus swept across the broken strings\nStirred the slumb'ring chords again.\n3) Feasting on the riches of His grace,\nResting 'neath His shelt'ring wing,\nAlways looking on His smiling face,\nThat is why I shout and sing.\n4) Though sometimes He leads\nThrough waters deep,\nTrials fall across the way,\nThough sometimes\nThe path seems rough and steep,\nSee His footprints all the way.\n5) Soon He's coming back to welcome me;\nFar beyond the starry sky;\nI shall wing my flight to worlds unknown,\nI shall reign with Him on high."
   },
   {
     "number": "268",
     "key": "Bb",
-    "songbookRef": "",
-    "title": "MP 474 OB 167",
-    "lyrics": "MP 474 OB 167\nOn a hill far away, stood an old rugged cross,\nThe emblem of suff'ring and shame;\nAnd I love that old cross\nWhere the dearest and best\nFor a world of lost sinners was slain.\nChorus:\nSo I'll cherish the old rugged cross,\nTill my trophies at last I lay down;\nI will cling to the old rugged cross\nAnd exchange it some day for a crown.\n2) Oh, that old rugged cross,\nSo despised by the world\nHas a wondrous attraction for me;\nFor the dear Lamb of God,\nLeft His glory above,\nTo bear it to dark Calvary.\n3) In the old rugged cross,\nStained with blood so divine,\nA wondrous beauty I see;\nFor 'twas on that old cross\nJesus suffered and died\nTo pardon and sanctify me.\n4) To the old rugged cross\nI will ever be true;\nIts shame and reproach gladly bear;\nThen He'll call me some day\nTo my home far away,\nWhere His glory forever I'll share."
+    "songbookRef": "MP 474 OB 167",
+    "title": "On a hill far away, stood an old rugged cross",
+    "lyrics": "On a hill far away, stood an old rugged cross,\nThe emblem of suff'ring and shame;\nAnd I love that old cross\nWhere the dearest and best\nFor a world of lost sinners was slain.\nChorus:\nSo I'll cherish the old rugged cross,\nTill my trophies at last I lay down;\nI will cling to the old rugged cross\nAnd exchange it some day for a crown.\n2) Oh, that old rugged cross,\nSo despised by the world\nHas a wondrous attraction for me;\nFor the dear Lamb of God,\nLeft His glory above,\nTo bear it to dark Calvary.\n3) In the old rugged cross,\nStained with blood so divine,\nA wondrous beauty I see;\nFor 'twas on that old cross\nJesus suffered and died\nTo pardon and sanctify me.\n4) To the old rugged cross\nI will ever be true;\nIts shame and reproach gladly bear;\nThen He'll call me some day\nTo my home far away,\nWhere His glory forever I'll share."
   },
   {
     "number": "269",
@@ -1878,9 +1878,9 @@
   {
     "number": "275",
     "key": "Ab",
-    "songbookRef": "",
-    "title": "RH 770",
-    "lyrics": "RH 770\nIn these, the closing days of time,\nWhat joy, the glorious hope affords,\nThat soon, O wondrous truth sublime,\nHe shall reign King of Kings\nAnd Lord of Lords.\nPP PPaa aagg ggee ee    33 3366 66\nChorus:\nHe's coming soon, He's coming soon;\nWith joy we welcome His returning\nIt may be morn, it may be night or noon,\nWe know He's coming soon.\n2) The signs around in earth and air,\nOr painted on the starlit sky,\nGod's faithful witnesses declare\nThat the coming of the Saviour,\nDraweth nigh.\n3) The dead in Christ who 'neath us lie,\nIn countless numbers all shall rise\nWhen through the portals of the sky,\nHe shall come to prepare our paradise.\n4) And we who living yet remain,\nCaught up, shall meet our faithful Lord;\nThis hope we cherish not in vain,\nBut we comfort one another by this Word."
+    "songbookRef": "RH 770",
+    "title": "In these, the closing days of time",
+    "lyrics": "In these, the closing days of time,\nWhat joy, the glorious hope affords,\nThat soon, O wondrous truth sublime,\nHe shall reign King of Kings\nAnd Lord of Lords.\nChorus:\nHe's coming soon, He's coming soon;\nWith joy we welcome His returning\nIt may be morn, it may be night or noon,\nWe know He's coming soon.\n2) The signs around in earth and air,\nOr painted on the starlit sky,\nGod's faithful witnesses declare\nThat the coming of the Saviour,\nDraweth nigh.\n3) The dead in Christ who 'neath us lie,\nIn countless numbers all shall rise\nWhen through the portals of the sky,\nHe shall come to prepare our paradise.\n4) And we who living yet remain,\nCaught up, shall meet our faithful Lord;\nThis hope we cherish not in vain,\nBut we comfort one another by this Word."
   },
   {
     "number": "276",
@@ -1906,9 +1906,9 @@
   {
     "number": "279",
     "key": "G",
-    "songbookRef": "",
-    "title": "RH 369 OB 140",
-    "lyrics": "RH 369 OB 140\nRedeemed how I love to proclaim it,\nRedeemed by the blood of the Lamb;\nRedeemed through His infinite mercy,\nHis child, and forever, I am.\nPP PPaa aagg ggee ee    33 3377 77\nChorus:\nRedeemed, redeemed!\nRedeemed by the blood of the Lamb;\nRedeemed, redeemed!\nHis child, and forever, I am.\n2) Redeemed and so happy in Jesus,\nNo language my rapture can tell;\nI know that the light of His presence\nWith me doth continually dwell.\n3) I think of my blessed Redeemer,\nI think of Him all the day long;\nI sing, for I cannot be silent;\nHis love is the theme of my song.\n4) I know I shall see in His beauty\nThe King in whose law I delight;\nWho lovingly guardeth my footsteps,\nAnd giveth me songs in the night."
+    "songbookRef": "RH 369 OB 140",
+    "title": "Redeemed how I love to proclaim it",
+    "lyrics": "Redeemed how I love to proclaim it,\nRedeemed by the blood of the Lamb;\nRedeemed through His infinite mercy,\nHis child, and forever, I am.\nChorus:\nRedeemed, redeemed!\nRedeemed by the blood of the Lamb;\nRedeemed, redeemed!\nHis child, and forever, I am.\n2) Redeemed and so happy in Jesus,\nNo language my rapture can tell;\nI know that the light of His presence\nWith me doth continually dwell.\n3) I think of my blessed Redeemer,\nI think of Him all the day long;\nI sing, for I cannot be silent;\nHis love is the theme of my song.\n4) I know I shall see in His beauty\nThe King in whose law I delight;\nWho lovingly guardeth my footsteps,\nAnd giveth me songs in the night."
   },
   {
     "number": "280",
@@ -1920,9 +1920,9 @@
   {
     "number": "281",
     "key": "Eb",
-    "songbookRef": "",
-    "title": "RH 328 OB 201",
-    "lyrics": "RH 328 OB 201\nThe great Physician now is near,\nThe sympathizing Jesus,\nHe speaks the drooping heart to cheer,\nOh, hear the voice of Jesus.\nChorus:\nSweetest note in seraph song,\nSweetest name on mortal tongue,\nSweetest carol ever sung,\nJesus, blessed Jesus.\n2) Your many sins are all forgiven,\nOh, hear the voice of Jesus;\nGo on your way in peace to heaven\nAnd wear a crown with Jesus.\n3) All glory to the dying Lamb!\nI now believe in Jesus;\nI love the blessed Saviour's name,\nI love the name of Jesus.\n4) His name dispels my guilt and fear,\nNo other name but Jesus;\nO how my soul delights to hear\nThe precious name of Jesus."
+    "songbookRef": "RH 328 OB 201",
+    "title": "The great Physician now is near",
+    "lyrics": "The great Physician now is near,\nThe sympathizing Jesus,\nHe speaks the drooping heart to cheer,\nOh, hear the voice of Jesus.\nChorus:\nSweetest note in seraph song,\nSweetest name on mortal tongue,\nSweetest carol ever sung,\nJesus, blessed Jesus.\n2) Your many sins are all forgiven,\nOh, hear the voice of Jesus;\nGo on your way in peace to heaven\nAnd wear a crown with Jesus.\n3) All glory to the dying Lamb!\nI now believe in Jesus;\nI love the blessed Saviour's name,\nI love the name of Jesus.\n4) His name dispels my guilt and fear,\nNo other name but Jesus;\nO how my soul delights to hear\nThe precious name of Jesus."
   },
   {
     "number": "282",
@@ -1934,9 +1934,9 @@
   {
     "number": "283",
     "key": "G",
-    "songbookRef": "",
-    "title": "MP 375 OB 170",
-    "lyrics": "MP 375 OB 170\nLiving below in this old sinful world,\nHardly a comfort can afford;\nStriving alone to face temptations sore,\nWhere could I go but to the Lord?\nChorus:\nWhere could I go, O where could I go?\nSeeking a refuge for my soul?\nNeeding a friend to help me in the end,\nWhere could I go but to the Lord?\n2) Neighbours are kind,\nI love them ev'ry one,\nWe get along in sweet accord;\nBut when my soul\nNeeds manna from above,\nWhere could I go but to the Lord?\n3) Life here is grand\nWith friends I love so dear,\nComfort I get from God's own Word;\nYet when I face the chilling hand of death,\nWhere could I go but to the Lord?\nPP PPaa aagg ggee ee    33 3388 88"
+    "songbookRef": "MP 375 OB 170",
+    "title": "Living below in this old sinful world",
+    "lyrics": "Living below in this old sinful world,\nHardly a comfort can afford;\nStriving alone to face temptations sore,\nWhere could I go but to the Lord?\nChorus:\nWhere could I go, O where could I go?\nSeeking a refuge for my soul?\nNeeding a friend to help me in the end,\nWhere could I go but to the Lord?\n2) Neighbours are kind,\nI love them ev'ry one,\nWe get along in sweet accord;\nBut when my soul\nNeeds manna from above,\nWhere could I go but to the Lord?\n3) Life here is grand\nWith friends I love so dear,\nComfort I get from God's own Word;\nYet when I face the chilling hand of death,\nWhere could I go but to the Lord?"
   },
   {
     "number": "284",
@@ -1948,9 +1948,9 @@
   {
     "number": "285",
     "key": "Eb",
-    "songbookRef": "",
-    "title": "RH 380",
-    "lyrics": "RH 380\nLoved with everlasting love,\nLed by grace that love to know,\nSpirit breathing from above,\nThou hast taught me it is so.\nOh, this full and perfect peace!\nOh, this transport all divine!\nIn a love which cannot cease,\nI am His and He is mine.\n2) Heaven above is softer blue,\nEarth around is sweeter green,\nSomething lives in every hue\nChristless eyes have never seen\nBirds with gladder songs o'erflow,\nFlowers with deeper beauties shine,\nSince I know, as now I know,\nI am His and He is mine.\n3) Things that once were wild alarms\nCannot now disturb my rest;\nClosed in everlasting arms,\nPillowed on the loving breast;\nOh, to lie for ever here!\nDoubt and care and self resign,\nWhile He whispers in my ear\nI am His and He is mine.\n4) His for ever, only His;\nWho the Lord and me shall part?\nAh, with what a rest of bliss,\nChrist can fill the loving heart!\nHeaven and earth may fade and flee;\nFirstborn light in gloom decline;\nBut while God and I shall be,\nI am His and He is mine."
+    "songbookRef": "RH 380",
+    "title": "Loved with everlasting love",
+    "lyrics": "Loved with everlasting love,\nLed by grace that love to know,\nSpirit breathing from above,\nThou hast taught me it is so.\nOh, this full and perfect peace!\nOh, this transport all divine!\nIn a love which cannot cease,\nI am His and He is mine.\n2) Heaven above is softer blue,\nEarth around is sweeter green,\nSomething lives in every hue\nChristless eyes have never seen\nBirds with gladder songs o'erflow,\nFlowers with deeper beauties shine,\nSince I know, as now I know,\nI am His and He is mine.\n3) Things that once were wild alarms\nCannot now disturb my rest;\nClosed in everlasting arms,\nPillowed on the loving breast;\nOh, to lie for ever here!\nDoubt and care and self resign,\nWhile He whispers in my ear\nI am His and He is mine.\n4) His for ever, only His;\nWho the Lord and me shall part?\nAh, with what a rest of bliss,\nChrist can fill the loving heart!\nHeaven and earth may fade and flee;\nFirstborn light in gloom decline;\nBut while God and I shall be,\nI am His and He is mine."
   },
   {
     "number": "286",
@@ -1976,23 +1976,23 @@
   {
     "number": "289",
     "key": "Ab",
-    "songbookRef": "",
-    "title": "RH 324",
-    "lyrics": "RH 324\nAnd can it be, that I should gain\nAn interest in the Saviour's blood?\nDied He for me, who caused His pain?\nFor me, who Him to death pursued?\nAmazing love! How can it be\nThat Thou, my God, shouldst die for me?\n2) 'Tis mystery all! The immortal dies!\nWho can explore His strange design?\nIn vain the first born seraph tries\nTo sound the depth of love divine!\n'Tis mercy all! Let earth adore,\nLet angel minds inquire no more.\n3) He left His Father's throne above\n(So free, so infinite His grace!)\nEmptied Himself of all but love,\nAnd bled for Adam's helpless race;\n'Tis mercy all, immense and free,\nFor, O my God, it found out me!\n4) Long my imprisoned spirit lay\nFast bound in sin and nature's night;\nThine eye diffused a quickening ray,\nI woke, the dungeon flamed with light;\nMy chains fell of, my heart was free,\nI rose went forth, and followed Thee.\n5) No condemnation now I dread,\nJesus, and all in Him, is mine;\nAlive in Him, my living Head,\nAnd clothed in righteousness divine,\nBold I approach the eternal throne,\nAnd claim the crown,\nThrough Christ, my own."
+    "songbookRef": "RH 324",
+    "title": "And can it be, that I should gain",
+    "lyrics": "And can it be, that I should gain\nAn interest in the Saviour's blood?\nDied He for me, who caused His pain?\nFor me, who Him to death pursued?\nAmazing love! How can it be\nThat Thou, my God, shouldst die for me?\n2) 'Tis mystery all! The immortal dies!\nWho can explore His strange design?\nIn vain the first born seraph tries\nTo sound the depth of love divine!\n'Tis mercy all! Let earth adore,\nLet angel minds inquire no more.\n3) He left His Father's throne above\n(So free, so infinite His grace!)\nEmptied Himself of all but love,\nAnd bled for Adam's helpless race;\n'Tis mercy all, immense and free,\nFor, O my God, it found out me!\n4) Long my imprisoned spirit lay\nFast bound in sin and nature's night;\nThine eye diffused a quickening ray,\nI woke, the dungeon flamed with light;\nMy chains fell of, my heart was free,\nI rose went forth, and followed Thee.\n5) No condemnation now I dread,\nJesus, and all in Him, is mine;\nAlive in Him, my living Head,\nAnd clothed in righteousness divine,\nBold I approach the eternal throne,\nAnd claim the crown,\nThrough Christ, my own."
   },
   {
     "number": "290",
     "key": "Ab",
-    "songbookRef": "",
-    "title": "RH 394 MP 384",
-    "lyrics": "RH 394 MP 384\nMore about Jesus would I know,\nMore of His grace to others show;\nMore of His saving fullness see,\nMore of His love who died for me.\nChorus:\nMore, more about Jesus,\nMore, more about Jesus;\nMore of His saving fullness see,\nMore of His love, who died for me.\n2) More about Jesus let me learn,\nMore of His holy will discern;\nSpirit of God, my teacher be,\nShowing the things of Christ to me.\n3) More about Jesus, in His Word,\nHolding communion with my Lord;\nHearing His voice in every line,\nMaking each faithful saying mine.\n4) More about Jesus, on His throne,\nRiches in glory all His own;\nMore of His kingdom's sure increase;\nMore of His coming, Prince of Peace."
+    "songbookRef": "RH 394 MP 384",
+    "title": "More about Jesus would I know",
+    "lyrics": "More about Jesus would I know,\nMore of His grace to others show;\nMore of His saving fullness see,\nMore of His love who died for me.\nChorus:\nMore, more about Jesus,\nMore, more about Jesus;\nMore of His saving fullness see,\nMore of His love, who died for me.\n2) More about Jesus let me learn,\nMore of His holy will discern;\nSpirit of God, my teacher be,\nShowing the things of Christ to me.\n3) More about Jesus, in His Word,\nHolding communion with my Lord;\nHearing His voice in every line,\nMaking each faithful saying mine.\n4) More about Jesus, on His throne,\nRiches in glory all His own;\nMore of His kingdom's sure increase;\nMore of His coming, Prince of Peace."
   },
   {
     "number": "291",
     "key": "Ab",
-    "songbookRef": "",
-    "title": "RH 176",
-    "lyrics": "RH 176\nI stand amazed in the presence\nOf Jesus the Nazarene,\nAnd wonder how He could love me,\nA sinner, condemned, unclean.\nChorus:\nHow marvellous! How wonderful!\nAnd my song shall ever be;\nHow marvellous! How wonderful!\nIs my Saviour's love for me!\n2) For me it was in the garden\nHe prayed: Not My will, but Thine.\nHe had no tears for His own griefs,\nBut sweat drops of blood for mine.\n3) In pity angels beheld Him,\nAnd came from the world of light\nTo comfort Him in the sorrows\nHe bore for my soul that night.\n4) He took my sins and my sorrows,\nHe made them His very own;\nHe bore the burden to Calvary,\nAnd suffered, and died alone.\n5) When with the ransomed in glory\nHis face I at last shall see,\n'Twill be my joy through the ages\nTo sing of His love for me.\nPP PPaa aagg ggee ee    44 4400 00\n292  (Bb)  RH 699\nFairest of all the earth beside,\nChiefest of all unto Thy Bride,\nFullness divine in Thee I see,\nWonderful Man of Calvary.\nChorus:\nThat Man of Calvary\nHas won my heart from me,\nAnd died to set me free,\nBlest Man of Calvary!\n2) Granting the sinner life and peace,\nGranting the captive sweet release,\nShedding His blood to make us free,\nMerciful Man of Calvary.\n3) Giving the gifts obtained for men,\nPouring out love beyond our ken,\nGiving us spotless purity;\nBountiful Man of Calvary.\n4) Comfort of all my earthly way,\nJesus, I'll meet Thee some sweet day;\nCentre of glory Thee I'll see,\nWonderful Man of Calvary."
+    "songbookRef": "RH 176",
+    "title": "I stand amazed in the presence",
+    "lyrics": "I stand amazed in the presence\nOf Jesus the Nazarene,\nAnd wonder how He could love me,\nA sinner, condemned, unclean.\nChorus:\nHow marvellous! How wonderful!\nAnd my song shall ever be;\nHow marvellous! How wonderful!\nIs my Saviour's love for me!\n2) For me it was in the garden\nHe prayed: Not My will, but Thine.\nHe had no tears for His own griefs,\nBut sweat drops of blood for mine.\n3) In pity angels beheld Him,\nAnd came from the world of light\nTo comfort Him in the sorrows\nHe bore for my soul that night.\n4) He took my sins and my sorrows,\nHe made them His very own;\nHe bore the burden to Calvary,\nAnd suffered, and died alone.\n5) When with the ransomed in glory\nHis face I at last shall see,\n'Twill be my joy through the ages\nTo sing of His love for me.\n292  (Bb)  RH 699\nFairest of all the earth beside,\nChiefest of all unto Thy Bride,\nFullness divine in Thee I see,\nWonderful Man of Calvary.\nChorus:\nThat Man of Calvary\nHas won my heart from me,\nAnd died to set me free,\nBlest Man of Calvary!\n2) Granting the sinner life and peace,\nGranting the captive sweet release,\nShedding His blood to make us free,\nMerciful Man of Calvary.\n3) Giving the gifts obtained for men,\nPouring out love beyond our ken,\nGiving us spotless purity;\nBountiful Man of Calvary.\n4) Comfort of all my earthly way,\nJesus, I'll meet Thee some sweet day;\nCentre of glory Thee I'll see,\nWonderful Man of Calvary."
   },
   {
     "number": "293",
@@ -2004,16 +2004,16 @@
   {
     "number": "294",
     "key": "Ab",
-    "songbookRef": "",
-    "title": "RH 484 OB 45",
-    "lyrics": "RH 484 OB 45\nWhat a fellowship, what a joy divine,\nLeaning on the everlasting arms;\nWhat a blessedness,\nWhat a peace is mine,\nLeaning on the everlasting arms.\nChorus:\nLeaning, leaning,\nSafe and secure from all alarms;\nLeaning, leaning,\nLeaning on the everlasting arms.\n2) Oh, how sweet to walk\nIn this pilgrim way,\nLeaning on the everlasting arms;\nOh, how bright the path\nGrows from day to day,\nLeaning on the everlasting arms.\n3) What have I to dread,\nWhat have I to fear,\nLeaning on the everlasting arms;\nI have blessed peace\nWith my Lord so near,\nLeaning on the everlasting arms."
+    "songbookRef": "RH 484 OB 45",
+    "title": "What a fellowship, what a joy divine",
+    "lyrics": "What a fellowship, what a joy divine,\nLeaning on the everlasting arms;\nWhat a blessedness,\nWhat a peace is mine,\nLeaning on the everlasting arms.\nChorus:\nLeaning, leaning,\nSafe and secure from all alarms;\nLeaning, leaning,\nLeaning on the everlasting arms.\n2) Oh, how sweet to walk\nIn this pilgrim way,\nLeaning on the everlasting arms;\nOh, how bright the path\nGrows from day to day,\nLeaning on the everlasting arms.\n3) What have I to dread,\nWhat have I to fear,\nLeaning on the everlasting arms;\nI have blessed peace\nWith my Lord so near,\nLeaning on the everlasting arms."
   },
   {
     "number": "295",
     "key": "C",
-    "songbookRef": "",
-    "title": "RH 186",
-    "lyrics": "RH 186\nLow in the grave He lay\nJesus, My Saviour!\nWaiting the coming day\nJesus, my Lord!\nChorus:\nUp from the grave He arose\nWith a mighty triumph o'er His foes;\nHe arose, a Victor from the dark domain,\nAnd He lives for ever\nWith His saints to reign!\nHe arose! He arose!\nHallelujah! Christ arose!\n2) Vainly they watch His bed.\nJesus, my Saviour!\nVainly they seal the dead\nJesus, my Lord!\n3) Death cannot keep his prey\nJesus, my Saviour!\nHe tore the bars away\nJesus, my Lord!"
+    "songbookRef": "RH 186",
+    "title": "Low in the grave He lay",
+    "lyrics": "Low in the grave He lay\nJesus, My Saviour!\nWaiting the coming day\nJesus, my Lord!\nChorus:\nUp from the grave He arose\nWith a mighty triumph o'er His foes;\nHe arose, a Victor from the dark domain,\nAnd He lives for ever\nWith His saints to reign!\nHe arose! He arose!\nHallelujah! Christ arose!\n2) Vainly they watch His bed.\nJesus, my Saviour!\nVainly they seal the dead\nJesus, my Lord!\n3) Death cannot keep his prey\nJesus, my Saviour!\nHe tore the bars away\nJesus, my Lord!"
   },
   {
     "number": "296",
@@ -2144,30 +2144,30 @@
   {
     "number": "315",
     "key": "Eb",
-    "songbookRef": "",
-    "title": "RH 427",
-    "lyrics": "RH 427\nWhen upon life’s billows you are tempest tossed\nWhen you are discouraged, thinking all is lost\nCount your many blessings, name them one by one\nAnd it will surprise you what the Lord has done.\nChorus:\nCount your blessings,\nName them one by one\nCount your blessings,\nSee what God hath done\nCount your blessings,\nName them one by one\nAnd it will surprise you\nWhat the Lord has done.\n2) Are you ever burdened with a load of care?\nDoes the cross seem heavy you are called to bear?\nCount your many blessings, every doubt will fly\nAnd you will be singing as the days go by.\n3) When you look at others with their lands and gold,\nThink that Christ has promised you His wealth untold,\nCount your many blessings, money cannot buy\nYour reward in heaven, nor your home on high.\n4) So amid the conflict, whether great or small\nDo not be discouraged, God is over all,\nCount your many blessings, angels will attend,\nHelp and comfort give you to your journey’s end."
+    "songbookRef": "RH 427",
+    "title": "When upon life’s billows you are tempest tossed",
+    "lyrics": "When upon life’s billows you are tempest tossed\nWhen you are discouraged, thinking all is lost\nCount your many blessings, name them one by one\nAnd it will surprise you what the Lord has done.\nChorus:\nCount your blessings,\nName them one by one\nCount your blessings,\nSee what God hath done\nCount your blessings,\nName them one by one\nAnd it will surprise you\nWhat the Lord has done.\n2) Are you ever burdened with a load of care?\nDoes the cross seem heavy you are called to bear?\nCount your many blessings, every doubt will fly\nAnd you will be singing as the days go by.\n3) When you look at others with their lands and gold,\nThink that Christ has promised you His wealth untold,\nCount your many blessings, money cannot buy\nYour reward in heaven, nor your home on high.\n4) So amid the conflict, whether great or small\nDo not be discouraged, God is over all,\nCount your many blessings, angels will attend,\nHelp and comfort give you to your journey’s end."
   },
   {
     "number": "316",
     "key": "Bb",
-    "songbookRef": "",
-    "title": "RH 261",
-    "lyrics": "RH 261\nStanding on the promises of Christ my King\nThrough eternal ages let His praises ring\nGlory in the highest, I will shout and sing,\nStanding on the promises of God.\nChorus:\nStanding, standing,\nStanding on the promises of God my Saviour\nStanding, standing,\nI’m standing on the promises of God.\n2) Standing on the promises that cannot fail,\nWhen the howling storms of doubt and fear assail\nBy the living Word of God I shall prevail,\nStanding on the promises  of God\n3) Standing on the promises I now can see\nPerfect, present cleansing in the blood for me\nStanding in the liberty where Christ makes free,\nStanding on the promises of God.\n4) Standing on the promises of Christ the Lord,\nBound to Him eternally by love’s strong cord,\nOvercoming daily with the Spirit’s sword,\nStanding on the promises of God."
+    "songbookRef": "RH 261",
+    "title": "Standing on the promises of Christ my King",
+    "lyrics": "Standing on the promises of Christ my King\nThrough eternal ages let His praises ring\nGlory in the highest, I will shout and sing,\nStanding on the promises of God.\nChorus:\nStanding, standing,\nStanding on the promises of God my Saviour\nStanding, standing,\nI’m standing on the promises of God.\n2) Standing on the promises that cannot fail,\nWhen the howling storms of doubt and fear assail\nBy the living Word of God I shall prevail,\nStanding on the promises  of God\n3) Standing on the promises I now can see\nPerfect, present cleansing in the blood for me\nStanding in the liberty where Christ makes free,\nStanding on the promises of God.\n4) Standing on the promises of Christ the Lord,\nBound to Him eternally by love’s strong cord,\nOvercoming daily with the Spirit’s sword,\nStanding on the promises of God."
   },
   {
     "number": "317",
     "key": "C",
-    "songbookRef": "",
-    "title": "RH 335",
-    "lyrics": "RH 335\nThere is a fountain filled with blood,\nDrawn from Immanuel’s veins,\nAnd sinners plunged beneath that flood\nLose all their guilty stains.\n2) The dying thief rejoiced to see\nThat fountain in his day\nAnd there may I, though vile as he,\nWash all my sins away.\n3) I do believe I will believe,\nThat Jesus died for me\nThat on the cross He shed His Blood,\nFrom sin to set me free.\n4) Dear dying Lamb, Thy precious blood\nShall never lose its power,\nTill all the ransomed church of God\nBe saved to sin no more.\n5) E’er since by faith I saw the stream\nThy flowing wounds supply,\nRedeeming love has been my theme,\nAnd shall be till I die."
+    "songbookRef": "RH 335",
+    "title": "There is a fountain filled with blood",
+    "lyrics": "There is a fountain filled with blood,\nDrawn from Immanuel’s veins,\nAnd sinners plunged beneath that flood\nLose all their guilty stains.\n2) The dying thief rejoiced to see\nThat fountain in his day\nAnd there may I, though vile as he,\nWash all my sins away.\n3) I do believe I will believe,\nThat Jesus died for me\nThat on the cross He shed His Blood,\nFrom sin to set me free.\n4) Dear dying Lamb, Thy precious blood\nShall never lose its power,\nTill all the ransomed church of God\nBe saved to sin no more.\n5) E’er since by faith I saw the stream\nThy flowing wounds supply,\nRedeeming love has been my theme,\nAnd shall be till I die."
   },
   {
     "number": "318",
     "key": "Bb",
-    "songbookRef": "",
-    "title": "RH 341",
-    "lyrics": "RH 341\nRock of Ages, cleft for me,\nLet me hide myself in Thee\nLet the water and the blood,\nFrom Thy riven side which flowed,\nBe of sin the double cure\nCleanse me from its guilt and power.\nPP PPaa aagg ggee ee    44 4466 66\n2) Not the labours of my hands,\nCan fulfil Thy law’s demands\nCould my zeal no res-pite know,\nCould my tears for ever flow,\nAll for sin could not atone\nThou must save and Thou alone.\n3) Nothing in my hand I bring,\nSimply to Thy Cross I cling\nNaked, come to Thee for dress\nHelpless, look to Thee for grace\nFoul, I to the fountain fly\nWash me, Saviour, or I die.\n4) While I draw this fleeting breath,\nWhen my eyelids close in death,\nWhen I soar to worlds unknown,\nSee Thee on Thy judgment throne,\nRock of Ages, cleft for me,\nLet me hide myself in Thee."
+    "songbookRef": "RH 341",
+    "title": "Rock of Ages, cleft for me",
+    "lyrics": "Rock of Ages, cleft for me,\nLet me hide myself in Thee\nLet the water and the blood,\nFrom Thy riven side which flowed,\nBe of sin the double cure\nCleanse me from its guilt and power.\n2) Not the labours of my hands,\nCan fulfil Thy law’s demands\nCould my zeal no res-pite know,\nCould my tears for ever flow,\nAll for sin could not atone\nThou must save and Thou alone.\n3) Nothing in my hand I bring,\nSimply to Thy Cross I cling\nNaked, come to Thee for dress\nHelpless, look to Thee for grace\nFoul, I to the fountain fly\nWash me, Saviour, or I die.\n4) While I draw this fleeting breath,\nWhen my eyelids close in death,\nWhen I soar to worlds unknown,\nSee Thee on Thy judgment throne,\nRock of Ages, cleft for me,\nLet me hide myself in Thee."
   },
   {
     "number": "319",
