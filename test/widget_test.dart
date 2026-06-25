@@ -32,8 +32,9 @@ void main() {
     expect(find.textContaining('No songs for this'), findsOneWidget);
     expect(find.text('AM'), findsOneWidget);
     expect(find.text('PM'), findsOneWidget);
-    expect(find.text('NOTES'), findsOneWidget);
-    expect(find.text('SONGS'), findsAtLeastNWidgets(1));
+    expect(find.text('NOTES'), findsAtLeastNWidgets(2));
+    expect(find.text('WORSHIP'), findsOneWidget);
+    expect(find.text('SONGS'), findsOneWidget);
     expect(find.text('BIBLE'), findsOneWidget);
   });
 }

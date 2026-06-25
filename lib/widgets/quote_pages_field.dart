@@ -156,7 +156,7 @@ class QuotePagesFieldState extends State<QuotePagesField> {
                   key: ValueKey('quote-page-$index-${_pages.length}'),
                   controller: _controllers[index],
                   focusNode: _focusNodes[index],
-                  labelText: 'Quotes',
+                  labelText: 'Notes',
                   onReferenceTap: widget.onReferenceTap,
                 ),
               );

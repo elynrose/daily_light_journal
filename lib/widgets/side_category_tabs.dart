@@ -22,7 +22,7 @@ class SideCategoryTabs extends StatelessWidget {
       child: SizedBox(
         width: 44,
         child: Column(
-          children: EntryCategory.values.map((category) {
+          children: EntryCategoryLabel.sideTabOrder.map((category) {
             final isSelected = category == selectedCategory;
             final tabColor = category.backgroundColor;
 

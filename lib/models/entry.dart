@@ -22,12 +22,18 @@ ServicePeriod servicePeriodFromTime(DateTime time) {
 }
 
 extension EntryCategoryLabel on EntryCategory {
+  static const sideTabOrder = [
+    EntryCategory.song,
+    EntryCategory.scripture,
+    EntryCategory.quote,
+  ];
+
   String get tabLabel {
     switch (this) {
       case EntryCategory.song:
-        return 'SONGS';
+        return 'WORSHIP';
       case EntryCategory.quote:
-        return 'QUOTES';
+        return 'NOTES';
       case EntryCategory.scripture:
         return 'SCRIPTURES';
     }
@@ -36,9 +42,9 @@ extension EntryCategoryLabel on EntryCategory {
   String get listTitle {
     switch (this) {
       case EntryCategory.song:
-        return 'Songs';
+        return 'Worship';
       case EntryCategory.quote:
-        return 'Quotes';
+        return 'Notes';
       case EntryCategory.scripture:
         return 'Scriptures';
     }
