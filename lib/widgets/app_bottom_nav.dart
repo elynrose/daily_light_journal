@@ -30,8 +30,8 @@ class AppBottomNav extends StatelessWidget {
               children: [
                 Expanded(
                   child: _TabButton(
-                    label: 'NOTES',
-                    icon: Icons.notes,
+                    label: 'HOME',
+                    icon: Icons.home,
                     selected: selectedTab == AppTab.notes,
                     selectedColor: AppColors.offWhite,
                     onTap: () => onTabSelected(AppTab.notes),
