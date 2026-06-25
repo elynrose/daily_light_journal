@@ -30,7 +30,7 @@ class DailyLightJournalApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Daily Light Journal',
+      title: 'Church Journal',
       theme: ThemeData(
         scaffoldBackgroundColor: AppColors.offWhite,
         colorScheme: ColorScheme.fromSeed(
@@ -69,6 +69,8 @@ class _AppShellState extends State<AppShell> with WidgetsBindingObserver {
   DateTime? _journalDate;
   ServicePeriod? _journalPeriod;
   int _journalRefreshToken = 0;
+  String? _bibleInitialReference;
+  int _bibleRefreshToken = 0;
 
   @override
   void initState() {
@@ -105,6 +107,14 @@ class _AppShellState extends State<AppShell> with WidgetsBindingObserver {
     });
   }
 
+  void _onOpenBibleReference(String reference) {
+    setState(() {
+      _selectedTab = AppTab.bible;
+      _bibleInitialReference = reference;
+      _bibleRefreshToken++;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -129,6 +139,7 @@ class _AppShellState extends State<AppShell> with WidgetsBindingObserver {
           initialCategory: _journalCategory,
           initialDate: _journalDate,
           initialPeriod: _journalPeriod,
+          onScriptureReferenceTap: _onOpenBibleReference,
         );
       case AppTab.songs:
         return SongsScreen(
@@ -136,7 +147,12 @@ class _AppShellState extends State<AppShell> with WidgetsBindingObserver {
           onAddedToNotes: _onAddedToNotes,
         );
       case AppTab.bible:
-        return const BibleScreen(key: ValueKey('bible'));
+        return BibleScreen(
+          key: ValueKey(
+            'bible-$_bibleRefreshToken-${_bibleInitialReference ?? ''}',
+          ),
+          initialReference: _bibleInitialReference,
+        );
     }
   }
 }

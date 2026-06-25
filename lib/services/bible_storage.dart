@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
 import '../models/bible_verse.dart';
+import '../utils/bible_reference_range.dart';
 
 class BibleStorage {
   BibleStorage._();
@@ -15,6 +16,7 @@ class BibleStorage {
 
   List<BibleVerse> _verses = [];
   bool _loaded = false;
+  final Map<String, BibleVerse> _versesByNormalizedReference = {};
 
   bool get isLoaded => _loaded;
 
@@ -34,7 +36,59 @@ class BibleStorage {
           ),
         )
         .toList();
+    _rebuildReferenceIndex();
     _loaded = true;
+  }
+
+  static String normalizeReference(String reference) {
+    return reference.toLowerCase().replaceAll(RegExp(r'\s+'), ' ').trim();
+  }
+
+  void _rebuildReferenceIndex() {
+    _versesByNormalizedReference
+      ..clear()
+      ..addEntries(
+        _verses.map(
+          (verse) => MapEntry(normalizeReference(verse.reference), verse),
+        ),
+      );
+  }
+
+  BibleVerse? verseForReference(String reference) {
+    return _versesByNormalizedReference[normalizeReference(reference)];
+  }
+
+  List<BibleVerse> versesForReferenceQuery(String query) {
+    final range = parseReferenceRange(query);
+    if (range != null) {
+      return _versesForRange(range);
+    }
+
+    final single = verseForReference(query);
+    if (single != null) return [single];
+    return const [];
+  }
+
+  List<BibleVerse> _versesForRange(BibleReferenceRange range) {
+    if (range.endChapter != range.chapter) {
+      return const [];
+    }
+
+    final from = range.startVerse < range.endVerse
+        ? range.startVerse
+        : range.endVerse;
+    final to = range.startVerse > range.endVerse
+        ? range.startVerse
+        : range.endVerse;
+
+    final verses = <BibleVerse>[];
+    for (var verseNumber = from; verseNumber <= to; verseNumber++) {
+      final verse = verseForReference(range.verseReference(verseNumber));
+      if (verse != null) {
+        verses.add(verse);
+      }
+    }
+    return verses;
   }
 
   List<BibleVerse> search(String query) {
@@ -72,6 +126,7 @@ class BibleStorage {
   @visibleForTesting
   void setVersesForTest(List<BibleVerse> verses) {
     _verses = List<BibleVerse>.from(verses);
+    _rebuildReferenceIndex();
     _loaded = true;
   }
 }

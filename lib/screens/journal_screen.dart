@@ -7,6 +7,7 @@ import '../models/song.dart';
 import '../services/entry_storage.dart';
 import '../services/song_storage.dart';
 import '../theme/app_colors.dart';
+import '../widgets/linked_scripture_field.dart';
 import '../widgets/side_category_tabs.dart';
 import 'song_detail_screen.dart';
 
@@ -14,12 +15,14 @@ class JournalScreen extends StatefulWidget {
   final EntryCategory initialCategory;
   final DateTime? initialDate;
   final ServicePeriod? initialPeriod;
+  final ValueChanged<String>? onScriptureReferenceTap;
 
   const JournalScreen({
     super.key,
     this.initialCategory = EntryCategory.song,
     this.initialDate,
     this.initialPeriod,
+    this.onScriptureReferenceTap,
   });
 
   @override
@@ -35,6 +38,7 @@ class _JournalScreenState extends State<JournalScreen> {
   final TextEditingController _notesController = TextEditingController();
   final FocusNode _titleFocusNode = FocusNode();
   final FocusNode _preachedByFocusNode = FocusNode();
+  final FocusNode _notesFocusNode = FocusNode();
 
   late DateTime _selectedDate;
   late EntryCategory _selectedCategory;
@@ -65,7 +69,12 @@ class _JournalScreenState extends State<JournalScreen> {
     _notesController.addListener(_scheduleAutosave);
     _titleFocusNode.addListener(_onTitleFocusChange);
     _preachedByFocusNode.addListener(_onPreachedByFocusChange);
+    _notesFocusNode.addListener(_onNotesFocusChange);
     _loadEntryForCurrentSelection();
+  }
+
+  void _onNotesFocusChange() {
+    if (mounted) setState(() {});
   }
 
   void _onTitleFocusChange() {
@@ -407,11 +416,13 @@ class _JournalScreenState extends State<JournalScreen> {
     _notesController.removeListener(_scheduleAutosave);
     _titleFocusNode.removeListener(_onTitleFocusChange);
     _preachedByFocusNode.removeListener(_onPreachedByFocusChange);
+    _notesFocusNode.removeListener(_onNotesFocusChange);
     _titleController.dispose();
     _preachedByController.dispose();
     _notesController.dispose();
     _titleFocusNode.dispose();
     _preachedByFocusNode.dispose();
+    _notesFocusNode.dispose();
     super.dispose();
   }
 
@@ -557,22 +568,14 @@ class _JournalScreenState extends State<JournalScreen> {
                     Expanded(
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(12, 4, 12, 12),
-                        child: TextField(
-                          key: ValueKey('notes-$_fieldSlotId'),
+                        child: LinkedScriptureField(
+                          key: ValueKey('linked-notes-$_fieldSlotId'),
                           controller: _notesController,
-                          decoration: InputDecoration(
-                            alignLabelWithHint: true,
-                            labelText: _selectedCategory.listTitle,
-                            labelStyle: const TextStyle(
-                              color: AppColors.text,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            border: InputBorder.none,
-                          ),
-                          maxLines: null,
-                          expands: true,
-                          textAlignVertical: TextAlignVertical.top,
-                          style: const TextStyle(fontSize: 16, color: AppColors.text),
+                          focusNode: _notesFocusNode,
+                          labelText: _selectedCategory.listTitle,
+                          onReferenceTap: (reference) {
+                            widget.onScriptureReferenceTap?.call(reference);
+                          },
                         ),
                       ),
                     ),
