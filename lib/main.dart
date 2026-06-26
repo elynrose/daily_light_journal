@@ -13,6 +13,7 @@ import 'screens/songs_screen.dart';
 import 'services/app_preferences_service.dart';
 import 'services/bible_storage.dart';
 import 'services/entry_storage.dart';
+import 'services/journal_context.dart';
 import 'services/notification_service.dart';
 import 'services/photo_storage.dart';
 import 'services/song_storage.dart';
@@ -126,13 +127,21 @@ class _AppShellState extends State<AppShell> with WidgetsBindingObserver {
     });
   }
 
-  void _onAddedToNotes() {
+  void _onAddedToJournal(EntryCategory category) {
+    final journal = JournalContext.instance;
     setState(() {
       _selectedTab = AppTab.notes;
-      _journalCategory = EntryCategory.song;
+      _journalCategory = category;
+      _journalDate = journal.date;
+      _journalPeriod = journal.period;
       _journalRefreshToken++;
     });
   }
+
+  void _onAddedSongToJournal() => _onAddedToJournal(EntryCategory.song);
+
+  void _onAddedScriptureToJournal() =>
+      _onAddedToJournal(EntryCategory.scripture);
 
   void _onOpenBibleReference(String reference) {
     setState(() {
@@ -192,7 +201,7 @@ class _AppShellState extends State<AppShell> with WidgetsBindingObserver {
       case AppTab.songs:
         return SongsScreen(
           key: const ValueKey('songs'),
-          onAddedToNotes: _onAddedToNotes,
+          onAddedToNotes: _onAddedSongToJournal,
         );
       case AppTab.bible:
         return BibleScreen(
@@ -200,6 +209,7 @@ class _AppShellState extends State<AppShell> with WidgetsBindingObserver {
             'bible-$_bibleRefreshToken-${_bibleInitialReference ?? ''}',
           ),
           initialReference: _bibleInitialReference,
+          onAddedToScriptures: _onAddedScriptureToJournal,
         );
       case AppTab.gallery:
         return const GalleryScreen(key: ValueKey('gallery'));

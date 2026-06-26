@@ -9,8 +9,13 @@ import '../theme/app_colors.dart';
 
 class BibleScreen extends StatefulWidget {
   final String? initialReference;
+  final VoidCallback? onAddedToScriptures;
 
-  const BibleScreen({super.key, this.initialReference});
+  const BibleScreen({
+    super.key,
+    this.initialReference,
+    this.onAddedToScriptures,
+  });
 
   @override
   State<BibleScreen> createState() => _BibleScreenState();
@@ -181,6 +186,7 @@ class _BibleScreenState extends State<BibleScreen> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text('${verse.reference} added to scripture notes')),
     );
+    widget.onAddedToScriptures?.call();
   }
 
   @override
