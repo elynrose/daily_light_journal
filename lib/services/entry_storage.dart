@@ -294,6 +294,7 @@ class EntryStorage {
     return JournalSnippet(
       date: normalizeDate(entry.date),
       period: entry.period,
+      category: entry.category,
       title: getSermonTitleSync(entry.date, period: entry.period),
       preachedBy: getSermonPreachedBySync(entry.date, period: entry.period),
       note: note,

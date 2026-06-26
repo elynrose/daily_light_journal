@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
@@ -5,8 +7,14 @@ import 'package:timezone/data/latest.dart' as tz_data;
 import 'package:timezone/timezone.dart' as tz;
 
 import '../models/app_preferences.dart';
+import '../models/notification_payload.dart';
 import 'app_preferences_service.dart';
 import 'notification_content.dart';
+
+@pragma('vm:entry-point')
+void notificationTapBackgroundHandler(NotificationResponse response) {
+  NotificationService.instance.handleNotificationResponse(response);
+}
 
 class NotificationService {
   NotificationService._();
@@ -19,8 +27,13 @@ class NotificationService {
 
   final FlutterLocalNotificationsPlugin _plugin =
       FlutterLocalNotificationsPlugin();
+  final StreamController<NotificationPayload> _tapController =
+      StreamController<NotificationPayload>.broadcast();
 
   bool _initialized = false;
+  NotificationPayload? _pendingTap;
+
+  Stream<NotificationPayload> get onNotificationTap => _tapController.stream;
 
   Future<void> init() async {
     if (_initialized) return;
@@ -43,7 +56,17 @@ class NotificationService {
         macOS: darwinSettings,
       );
 
-      await _plugin.initialize(settings: initSettings);
+      await _plugin.initialize(
+        settings: initSettings,
+        onDidReceiveNotificationResponse: handleNotificationResponse,
+        onDidReceiveBackgroundNotificationResponse:
+            notificationTapBackgroundHandler,
+      );
+
+      final launchDetails = await _plugin.getNotificationAppLaunchDetails();
+      if (launchDetails?.didNotificationLaunchApp ?? false) {
+        handleNotificationResponse(launchDetails!.notificationResponse);
+      }
 
       if (!kIsWeb && defaultTargetPlatform == TargetPlatform.android) {
         final androidPlugin = _plugin.resolvePlatformSpecificImplementation<
@@ -92,6 +115,22 @@ class NotificationService {
           badge: true,
           sound: true,
         );
+  }
+
+  void handleNotificationResponse(NotificationResponse? response) {
+    final payload = NotificationPayload.decode(response?.payload);
+    if (payload == null) return;
+
+    _pendingTap = payload;
+    if (!_tapController.isClosed) {
+      _tapController.add(payload);
+    }
+  }
+
+  NotificationPayload? takePendingNotificationTap() {
+    final payload = _pendingTap;
+    _pendingTap = null;
+    return payload;
   }
 
   Future<void> refreshScheduledReminders() async {
@@ -172,7 +211,7 @@ class NotificationService {
     required tz.TZDateTime scheduledAt,
     required bool isMorning,
   }) async {
-    final body = NotificationContent.pickBody();
+    final reminder = NotificationContent.pickReminder();
     final title = isMorning ? 'Morning Light' : 'Evening Light';
 
     const darwinDetails = DarwinNotificationDetails(
@@ -186,13 +225,14 @@ class NotificationService {
       channelDescription: 'Morning and evening journal and scripture reminders',
       importance: Importance.high,
       priority: Priority.high,
-      styleInformation: BigTextStyleInformation(body),
+      styleInformation: BigTextStyleInformation(reminder.body),
     );
 
     await _plugin.zonedSchedule(
       id: id,
       title: title,
-      body: body,
+      body: reminder.body,
+      payload: reminder.payload,
       scheduledDate: scheduledAt,
       notificationDetails: NotificationDetails(
         android: androidDetails,

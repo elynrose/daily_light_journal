@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import 'models/entry.dart';
+import 'models/notification_payload.dart';
 import 'screens/bible_screen.dart';
 import 'screens/gallery_screen.dart';
 import 'screens/journal_screen.dart';
@@ -86,15 +87,28 @@ class _AppShellState extends State<AppShell> with WidgetsBindingObserver {
   int _journalRefreshToken = 0;
   String? _bibleInitialReference;
   int _bibleRefreshToken = 0;
+  StreamSubscription<NotificationPayload>? _notificationTapSub;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    _notificationTapSub =
+        NotificationService.instance.onNotificationTap.listen(
+      _openNotificationTarget,
+    );
+
+    final pending = NotificationService.instance.takePendingNotificationTap();
+    if (pending != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _openNotificationTarget(pending);
+      });
+    }
   }
 
   @override
   void dispose() {
+    _notificationTapSub?.cancel();
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
@@ -126,6 +140,27 @@ class _AppShellState extends State<AppShell> with WidgetsBindingObserver {
       _bibleInitialReference = reference;
       _bibleRefreshToken++;
     });
+  }
+
+  void _openNotificationTarget(NotificationPayload payload) {
+    if (!mounted) return;
+
+    switch (payload) {
+      case JournalNotificationPayload():
+        setState(() {
+          _selectedTab = AppTab.notes;
+          _journalCategory = payload.category;
+          _journalDate = payload.date;
+          _journalPeriod = payload.period;
+          _journalRefreshToken++;
+        });
+      case BibleNotificationPayload():
+        setState(() {
+          _selectedTab = AppTab.bible;
+          _bibleInitialReference = payload.reference;
+          _bibleRefreshToken++;
+        });
+    }
   }
 
   @override

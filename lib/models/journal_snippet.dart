@@ -3,6 +3,7 @@ import 'entry.dart';
 class JournalSnippet {
   final DateTime date;
   final ServicePeriod period;
+  final EntryCategory category;
   final String title;
   final String preachedBy;
   final String note;
@@ -10,6 +11,7 @@ class JournalSnippet {
   const JournalSnippet({
     required this.date,
     required this.period,
+    required this.category,
     required this.title,
     required this.preachedBy,
     required this.note,
