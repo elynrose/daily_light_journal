@@ -4,11 +4,16 @@ import 'package:flutter/material.dart';
 
 import 'models/entry.dart';
 import 'screens/bible_screen.dart';
+import 'screens/gallery_screen.dart';
 import 'screens/journal_screen.dart';
+import 'screens/onboarding_screen.dart';
+import 'screens/settings_screen.dart';
 import 'screens/songs_screen.dart';
+import 'services/app_preferences_service.dart';
 import 'services/bible_storage.dart';
 import 'services/entry_storage.dart';
 import 'services/notification_service.dart';
+import 'services/photo_storage.dart';
 import 'services/song_storage.dart';
 import 'theme/app_colors.dart';
 import 'widgets/app_bottom_nav.dart';
@@ -17,6 +22,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EntryStorage.instance.init();
   await SongStorage.instance.init();
+  await PhotoStorage.instance.init();
+  await AppPreferencesService.instance.init();
   await SongStorage.instance.seedFromAssetIfEmpty();
   await BibleStorage.instance.load();
   await NotificationService.instance.init();
@@ -29,29 +36,37 @@ class DailyLightJournalApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Church Journal',
-      theme: ThemeData(
-        scaffoldBackgroundColor: AppColors.offWhite,
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: AppColors.dustyBlue,
-        ).copyWith(onSurface: AppColors.text),
-        useMaterial3: true,
-        textTheme: ThemeData.light().textTheme.apply(
-              bodyColor: AppColors.text,
-              displayColor: AppColors.text,
+    return ListenableBuilder(
+      listenable: AppPreferencesService.instance,
+      builder: (context, _) {
+        final onboardingComplete =
+            AppPreferencesService.instance.onboardingComplete;
+
+        return MaterialApp(
+          title: 'Church Journal',
+          theme: ThemeData(
+            scaffoldBackgroundColor: AppColors.offWhite,
+            colorScheme: ColorScheme.fromSeed(
+              seedColor: AppColors.dustyBlue,
+            ).copyWith(onSurface: AppColors.text),
+            useMaterial3: true,
+            textTheme: ThemeData.light().textTheme.apply(
+                  bodyColor: AppColors.text,
+                  displayColor: AppColors.text,
+                ),
+            appBarTheme: const AppBarTheme(
+              foregroundColor: AppColors.text,
+              backgroundColor: AppColors.dustyBlue,
             ),
-        appBarTheme: const AppBarTheme(
-          foregroundColor: AppColors.text,
-          backgroundColor: AppColors.dustyBlue,
-        ),
-        iconTheme: const IconThemeData(color: AppColors.text),
-        inputDecorationTheme: const InputDecorationTheme(
-          labelStyle: TextStyle(color: AppColors.text),
-          hintStyle: TextStyle(color: AppColors.text),
-        ),
-      ),
-      home: const AppShell(),
+            iconTheme: const IconThemeData(color: AppColors.text),
+            inputDecorationTheme: const InputDecorationTheme(
+              labelStyle: TextStyle(color: AppColors.text),
+              hintStyle: TextStyle(color: AppColors.text),
+            ),
+          ),
+          home: onboardingComplete ? const AppShell() : const OnboardingScreen(),
+        );
+      },
     );
   }
 }
@@ -101,8 +116,6 @@ class _AppShellState extends State<AppShell> with WidgetsBindingObserver {
     setState(() {
       _selectedTab = AppTab.notes;
       _journalCategory = EntryCategory.song;
-      _journalDate = EntryStorage.normalizeDate(DateTime.now());
-      _journalPeriod = servicePeriodFromTime(DateTime.now());
       _journalRefreshToken++;
     });
   }
@@ -153,6 +166,10 @@ class _AppShellState extends State<AppShell> with WidgetsBindingObserver {
           ),
           initialReference: _bibleInitialReference,
         );
+      case AppTab.gallery:
+        return const GalleryScreen(key: ValueKey('gallery'));
+      case AppTab.settings:
+        return const SettingsScreen(key: ValueKey('settings'));
     }
   }
 }

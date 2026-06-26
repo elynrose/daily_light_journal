@@ -8,6 +8,7 @@ class LinkedScriptureField extends StatefulWidget {
   final FocusNode focusNode;
   final String labelText;
   final ValueChanged<String> onReferenceTap;
+  final double fontScale;
 
   const LinkedScriptureField({
     super.key,
@@ -15,6 +16,7 @@ class LinkedScriptureField extends StatefulWidget {
     required this.focusNode,
     required this.labelText,
     required this.onReferenceTap,
+    this.fontScale = 1.0,
   });
 
   @override
@@ -80,21 +82,22 @@ class _LinkedScriptureFieldState extends State<LinkedScriptureField> {
   bool get _showTextField => _isEditing || widget.controller.text.isEmpty;
 
   TextSpan _buildLinkedSpan(String text) {
+    final bodySize = 16 * widget.fontScale;
     final references = BibleReferenceParser.findReferences(text);
     if (references.isEmpty) {
       return TextSpan(
         text: text,
-        style: const TextStyle(fontSize: 16, color: AppColors.text, height: 1.45),
+        style: TextStyle(fontSize: bodySize, color: AppColors.text, height: 1.45),
       );
     }
 
-    const bodyStyle = TextStyle(
-      fontSize: 16,
+    final bodyStyle = TextStyle(
+      fontSize: bodySize,
       color: AppColors.text,
       height: 1.45,
     );
-    const linkStyle = TextStyle(
-      fontSize: 16,
+    final linkStyle = TextStyle(
+      fontSize: bodySize,
       color: AppColors.text,
       height: 1.45,
       fontWeight: FontWeight.bold,
@@ -165,10 +168,10 @@ class _LinkedScriptureFieldState extends State<LinkedScriptureField> {
           children: [
             Text(
               widget.labelText,
-              style: const TextStyle(
+              style: TextStyle(
                 color: AppColors.text,
                 fontWeight: FontWeight.bold,
-                fontSize: 16,
+                fontSize: 16 * widget.fontScale,
               ),
             ),
             const Spacer(),
@@ -202,7 +205,10 @@ class _LinkedScriptureFieldState extends State<LinkedScriptureField> {
                   maxLines: null,
                   expands: true,
                   textAlignVertical: TextAlignVertical.top,
-                  style: const TextStyle(fontSize: 16, color: AppColors.text),
+                  style: TextStyle(
+                    fontSize: 16 * widget.fontScale,
+                    color: AppColors.text,
+                  ),
                   onSubmitted: (_) => widget.focusNode.unfocus(),
                 )
               : SingleChildScrollView(

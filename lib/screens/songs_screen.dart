@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../models/entry.dart';
 import '../models/song.dart';
 import '../services/entry_storage.dart';
+import '../services/journal_context.dart';
 import '../services/song_storage.dart';
 import '../theme/app_colors.dart';
 import 'song_detail_screen.dart';
@@ -63,11 +65,22 @@ class _SongsScreenState extends State<SongsScreen> {
   }
 
   Future<void> _addToNotes(Song song) async {
-    await _entryStorage.addSongToTodayNotes(song);
+    final journal = JournalContext.instance;
+    await _entryStorage.addSongToTodayNotes(
+      song,
+      date: journal.date,
+      period: journal.period,
+    );
 
     if (!mounted) return;
+    final dateLabel =
+        '${journal.date.month}/${journal.date.day}/${journal.date.year}';
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('"${song.title}" added to today\'s notes')),
+      SnackBar(
+        content: Text(
+          '"${song.title}" added to ${journal.period.label} worship on $dateLabel',
+        ),
+      ),
     );
     widget.onAddedToNotes();
   }

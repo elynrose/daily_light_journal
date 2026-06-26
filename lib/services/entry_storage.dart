@@ -11,6 +11,8 @@ class EntryStorage {
 
   static const _boxName = 'entries';
 
+  static String get boxName => _boxName;
+
   Box<Map>? _box;
 
   static DateTime normalizeDate(DateTime date) {
@@ -357,5 +359,43 @@ class EntryStorage {
       period: targetPeriod,
       songItems: items,
     ));
+  }
+
+  Future<void> clearAll() async {
+    await _box?.clear();
+  }
+
+  Future<void> putRawRecord(String key, Map<String, dynamic> value) async {
+    await _box?.put(key, value);
+  }
+
+  Map<String, Map<String, dynamic>> exportAllRawRecords() {
+    final box = _box;
+    if (box == null) return {};
+    final records = <String, Map<String, dynamic>>{};
+    for (final key in box.keys) {
+      final value = box.get(key);
+      if (value == null) continue;
+      records[key.toString()] = _normalizeRawMap(value);
+    }
+    return records;
+  }
+
+  Map<String, dynamic> _normalizeRawMap(Map<dynamic, dynamic> map) {
+    return map.map((key, value) {
+      if (value is Map) {
+        return MapEntry(key.toString(), _normalizeRawMap(value));
+      }
+      if (value is List) {
+        return MapEntry(
+          key.toString(),
+          value.map((item) {
+            if (item is Map) return _normalizeRawMap(item);
+            return item;
+          }).toList(),
+        );
+      }
+      return MapEntry(key.toString(), value);
+    });
   }
 }

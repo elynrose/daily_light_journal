@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 
 import '../models/entry.dart';
 import '../models/song.dart';
+import '../services/app_preferences_service.dart';
 import '../services/entry_storage.dart';
+import '../services/journal_context.dart';
 import '../services/song_storage.dart';
 import '../theme/app_colors.dart';
 import '../widgets/linked_scripture_field.dart';
@@ -67,6 +69,10 @@ class _JournalScreenState extends State<JournalScreen> {
     _selectedCategory = widget.initialCategory;
     _selectedPeriod =
         widget.initialPeriod ?? servicePeriodFromTime(DateTime.now());
+    JournalContext.instance.update(
+      date: _selectedDate,
+      period: _selectedPeriod,
+    );
     _titleController.addListener(_scheduleAutosave);
     _preachedByController.addListener(_scheduleAutosave);
     _notesController.addListener(_scheduleAutosave);
@@ -421,6 +427,10 @@ class _JournalScreenState extends State<JournalScreen> {
         _selectedPeriod = period;
       }
     });
+    JournalContext.instance.update(
+      date: _selectedDate,
+      period: _selectedPeriod,
+    );
     _loadEntryForCurrentSelection();
   }
 
@@ -455,6 +465,22 @@ class _JournalScreenState extends State<JournalScreen> {
       period: period,
     );
   }
+
+  Future<void> _goToToday() async {
+    final today = EntryStorage.normalizeDate(DateTime.now());
+    if (EntryStorage.isSameDate(today, _selectedDate)) return;
+    await _switchContext(
+      category: _selectedCategory,
+      date: today,
+      period: _selectedPeriod,
+    );
+  }
+
+  bool get _isToday =>
+      EntryStorage.isSameDate(_selectedDate, EntryStorage.normalizeDate(DateTime.now()));
+
+  double get _notesFontSize =>
+      16 * AppPreferencesService.instance.prefs.notesFontScale;
 
   Future<void> _pickDate() async {
     final picked = await showDatePicker(
@@ -501,6 +527,13 @@ class _JournalScreenState extends State<JournalScreen> {
 
   @override
   Widget build(BuildContext context) {
+    return ListenableBuilder(
+      listenable: AppPreferencesService.instance,
+      builder: (context, _) => _buildJournal(context),
+    );
+  }
+
+  Widget _buildJournal(BuildContext context) {
     final categoryBg = _selectedCategory.backgroundColor;
     final categoryAccent = _selectedCategory.accentColor;
 
@@ -520,9 +553,11 @@ class _JournalScreenState extends State<JournalScreen> {
                 children: [
                   _DateNavBar(
                     dateLabel: _formatDate(_selectedDate),
+                    isToday: _isToday,
                     onPrevious: () => unawaited(_changeDate(-1)),
                     onNext: () => unawaited(_changeDate(1)),
                     onDateTap: () => unawaited(_pickDate()),
+                    onTodayTap: () => unawaited(_goToToday()),
                     accentColor: categoryAccent,
                   ),
                   _ServicePeriodBar(
@@ -539,9 +574,9 @@ class _JournalScreenState extends State<JournalScreen> {
                         children: [
                           Text(
                             _isSermonTab ? 'Sermon:' : 'Title:',
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              fontSize: 16,
+                              fontSize: _notesFontSize,
                               color: AppColors.text,
                             ),
                           ),
@@ -559,7 +594,10 @@ class _JournalScreenState extends State<JournalScreen> {
                                 border: InputBorder.none,
                                 hintText: '',
                               ),
-                              style: const TextStyle(fontSize: 16, color: AppColors.text),
+                              style: TextStyle(
+                                fontSize: _notesFontSize,
+                                color: AppColors.text,
+                              ),
                               onSubmitted: (_) {
                                 _titleFocusNode.unfocus();
                               },
@@ -606,8 +644,8 @@ class _JournalScreenState extends State<JournalScreen> {
                                   border: InputBorder.none,
                                   hintText: '',
                                 ),
-                                style: const TextStyle(
-                                  fontSize: 16,
+                                style: TextStyle(
+                                  fontSize: _notesFontSize,
                                   color: AppColors.text,
                                 ),
                                 onSubmitted: (_) {
@@ -645,6 +683,8 @@ class _JournalScreenState extends State<JournalScreen> {
                             ? QuotePagesField(
                                 key: ValueKey('quote-pages-$_fieldSlotId'),
                                 initialPages: _quotePages,
+                                fontScale: AppPreferencesService
+                                    .instance.prefs.notesFontScale,
                                 onPagesChanged: _onQuotePagesChanged,
                                 onReferenceTap: (reference) {
                                   widget.onScriptureReferenceTap?.call(reference);
@@ -655,6 +695,8 @@ class _JournalScreenState extends State<JournalScreen> {
                                 controller: _notesController,
                                 focusNode: _notesFocusNode,
                                 labelText: _selectedCategory.listTitle,
+                                fontScale: AppPreferencesService
+                                    .instance.prefs.notesFontScale,
                                 onReferenceTap: (reference) {
                                   widget.onScriptureReferenceTap?.call(reference);
                                 },
@@ -778,16 +820,20 @@ class _ServicePeriodBar extends StatelessWidget {
 
 class _DateNavBar extends StatelessWidget {
   final String dateLabel;
+  final bool isToday;
   final VoidCallback onPrevious;
   final VoidCallback onNext;
   final VoidCallback onDateTap;
+  final VoidCallback onTodayTap;
   final Color accentColor;
 
   const _DateNavBar({
     required this.dateLabel,
+    required this.isToday,
     required this.onPrevious,
     required this.onNext,
     required this.onDateTap,
+    required this.onTodayTap,
     required this.accentColor,
   });
 
@@ -832,14 +878,35 @@ class _DateNavBar extends StatelessWidget {
                   ),
                   child: Container(
                     alignment: Alignment.center,
-                    padding: const EdgeInsets.symmetric(vertical: 12),
-                    child: Text(
-                      dateLabel,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                        color: AppColors.text,
-                      ),
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          dateLabel,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            color: AppColors.text,
+                          ),
+                        ),
+                        if (!isToday)
+                          TextButton(
+                            onPressed: onTodayTap,
+                            style: TextButton.styleFrom(
+                              padding: EdgeInsets.zero,
+                              minimumSize: Size.zero,
+                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                            ),
+                            child: const Text(
+                              'Today',
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                      ],
                     ),
                   ),
                 ),

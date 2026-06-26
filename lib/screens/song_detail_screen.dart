@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import '../models/song.dart';
+import '../services/app_preferences_service.dart';
 import '../services/song_storage.dart';
 import '../theme/app_colors.dart';
 
@@ -74,89 +75,101 @@ class _SongDetailScreenState extends State<SongDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return PopScope(
-      canPop: false,
-      onPopInvokedWithResult: (didPop, result) async {
-        if (didPop) return;
-        await _saveAndPop();
-      },
-      child: Scaffold(
-        backgroundColor: AppColors.offWhite,
-        appBar: AppBar(
-          title: Text(
-            widget.song.title.isEmpty ? '(Untitled)' : widget.song.title,
-          ),
-          backgroundColor: AppColors.dustyBlue,
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: () => unawaited(_saveAndPop()),
-          ),
-        ),
-        body: SafeArea(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    if (widget.song.key.isNotEmpty)
-                      Text(
-                        'Key: ${widget.song.key}',
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: AppColors.text,
-                        ),
-                      ),
-                    if (widget.song.songbookRef.isNotEmpty) ...[
-                      if (widget.song.key.isNotEmpty) const SizedBox(height: 4),
-                      Text(
-                        widget.song.songbookRef,
-                        style: const TextStyle(
-                          fontSize: 14,
-                          color: AppColors.text,
-                        ),
-                      ),
-                    ],
-                    const SizedBox(height: 8),
-                    const Text(
-                      'Lyrics',
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.text,
-                        letterSpacing: 0.5,
-                      ),
-                    ),
-                  ],
-                ),
+    return ListenableBuilder(
+      listenable: AppPreferencesService.instance,
+      builder: (context, _) {
+        final fontScale =
+            AppPreferencesService.instance.prefs.lyricsFontScale;
+        return PopScope(
+          canPop: false,
+          onPopInvokedWithResult: (didPop, result) async {
+            if (didPop) return;
+            await _saveAndPop();
+          },
+          child: Scaffold(
+            backgroundColor: AppColors.offWhite,
+            appBar: AppBar(
+              title: Text(
+                widget.song.title.isEmpty ? '(Untitled)' : widget.song.title,
               ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-                  child: TextField(
-                    controller: _lyricsController,
-                    maxLines: null,
-                    expands: true,
-                    textAlignVertical: TextAlignVertical.top,
-                    decoration: const InputDecoration(
-                      hintText: 'Tap to add lyrics…',
-                      hintStyle: TextStyle(
-                        color: AppColors.text,
-                        fontStyle: FontStyle.italic,
-                      ),
-                      border: InputBorder.none,
+              backgroundColor: AppColors.dustyBlue,
+              leading: IconButton(
+                icon: const Icon(Icons.arrow_back),
+                onPressed: () => unawaited(_saveAndPop()),
+              ),
+            ),
+            body: SafeArea(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        if (widget.song.key.isNotEmpty)
+                          Text(
+                            'Key: ${widget.song.key}',
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.text,
+                            ),
+                          ),
+                        if (widget.song.songbookRef.isNotEmpty) ...[
+                          if (widget.song.key.isNotEmpty)
+                            const SizedBox(height: 4),
+                          Text(
+                            widget.song.songbookRef,
+                            style: const TextStyle(
+                              fontSize: 14,
+                              color: AppColors.text,
+                            ),
+                          ),
+                        ],
+                        const SizedBox(height: 8),
+                        const Text(
+                          'Lyrics',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.text,
+                            letterSpacing: 0.5,
+                          ),
+                        ),
+                      ],
                     ),
-                    style: const TextStyle(fontSize: 16, height: 1.5, color: AppColors.text),
                   ),
-                ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                      child: TextField(
+                        controller: _lyricsController,
+                        maxLines: null,
+                        expands: true,
+                        textAlignVertical: TextAlignVertical.top,
+                        decoration: const InputDecoration(
+                          hintText: 'Tap to add lyrics…',
+                          hintStyle: TextStyle(
+                            color: AppColors.text,
+                            fontStyle: FontStyle.italic,
+                          ),
+                          border: InputBorder.none,
+                        ),
+                        style: TextStyle(
+                          fontSize: 16 * fontScale,
+                          height: 1.5,
+                          color: AppColors.text,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

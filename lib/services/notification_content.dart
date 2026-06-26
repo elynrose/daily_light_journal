@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import '../models/app_preferences.dart';
+import 'app_preferences_service.dart';
 import 'bible_storage.dart';
 import 'entry_storage.dart';
 
@@ -11,8 +13,15 @@ class NotificationContent {
 
   static String pickBody({Random? random}) {
     final rng = random ?? Random();
-    final snippet = EntryStorage.instance.pickRandomJournalSnippet();
-    final verse = BibleStorage.instance.pickRandomVerse(random: rng);
+    final prefs = AppPreferencesService.instance.prefs;
+    final source = prefs.notificationSource;
+
+    final snippet = source == NotificationSource.bible
+        ? null
+        : EntryStorage.instance.pickRandomJournalSnippet();
+    final verse = source == NotificationSource.notes
+        ? null
+        : BibleStorage.instance.pickRandomVerse(random: rng);
 
     if (snippet == null && verse == null) return fallbackBody;
     if (snippet == null) return verse!.toNotificationBody();

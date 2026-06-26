@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 import '../models/bible_verse.dart';
+import '../services/app_preferences_service.dart';
 import '../services/bible_storage.dart';
 import '../services/entry_storage.dart';
+import '../services/journal_context.dart';
 import '../theme/app_colors.dart';
 
 class BibleScreen extends StatefulWidget {
@@ -112,34 +114,34 @@ class _BibleScreenState extends State<BibleScreen> {
     return _verseKeys.putIfAbsent(reference, GlobalKey.new);
   }
 
-  static const _bookStyle = TextStyle(
-    fontSize: 26,
-    fontWeight: FontWeight.w800,
-    color: AppColors.text,
-    height: 1.15,
-    letterSpacing: 0.3,
-  );
+  static TextStyle _bookStyle(double scale) => TextStyle(
+        fontSize: 26 * scale,
+        fontWeight: FontWeight.w800,
+        color: AppColors.text,
+        height: 1.15,
+        letterSpacing: 0.3,
+      );
 
-  static const _chapterStyle = TextStyle(
-    fontSize: 18,
-    fontWeight: FontWeight.w700,
-    color: AppColors.text,
-    height: 1.25,
-  );
+  static TextStyle _chapterStyle(double scale) => TextStyle(
+        fontSize: 18 * scale,
+        fontWeight: FontWeight.w700,
+        color: AppColors.text,
+        height: 1.25,
+      );
 
-  static const _verseNumberStyle = TextStyle(
-    fontSize: 14,
-    fontWeight: FontWeight.w600,
-    color: AppColors.text,
-    height: 1.5,
-  );
+  static TextStyle _verseNumberStyle(double scale) => TextStyle(
+        fontSize: 14 * scale,
+        fontWeight: FontWeight.w600,
+        color: AppColors.text,
+        height: 1.5,
+      );
 
-  static const _verseTextStyle = TextStyle(
-    fontSize: 15,
-    fontWeight: FontWeight.w300,
-    color: Color(0xFF3A3A3A),
-    height: 1.55,
-  );
+  static TextStyle _verseTextStyle(double scale) => TextStyle(
+        fontSize: 15 * scale,
+        fontWeight: FontWeight.w300,
+        color: const Color(0xFF3A3A3A),
+        height: 1.55,
+      );
 
   (String book, String chapter) _parseChapterKey(String chapterKey) {
     final parts = chapterKey.trim().split(RegExp(r'\s+'));
@@ -168,7 +170,12 @@ class _BibleScreenState extends State<BibleScreen> {
   }
 
   Future<void> _addVerseToNotes(BibleVerse verse) async {
-    await _entryStorage.appendScriptureNotes(verse.toNotesLine());
+    final journal = JournalContext.instance;
+    await _entryStorage.appendScriptureNotes(
+      verse.toNotesLine(),
+      date: journal.date,
+      period: journal.period,
+    );
 
     if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
@@ -178,6 +185,16 @@ class _BibleScreenState extends State<BibleScreen> {
 
   @override
   Widget build(BuildContext context) {
+    return ListenableBuilder(
+      listenable: AppPreferencesService.instance,
+      builder: (context, _) {
+        final fontScale = AppPreferencesService.instance.prefs.bibleFontScale;
+        return _buildScaffold(fontScale);
+      },
+    );
+  }
+
+  Widget _buildScaffold(double fontScale) {
     return ColoredBox(
       color: AppColors.mintGreen,
       child: SafeArea(
@@ -216,14 +233,14 @@ class _BibleScreenState extends State<BibleScreen> {
               ),
             ),
             const SizedBox(height: 8),
-            Expanded(child: _buildBody()),
+            Expanded(child: _buildBody(fontScale)),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildBody() {
+  Widget _buildBody(double fontScale) {
     if (_loading) {
       return const Center(child: CircularProgressIndicator());
     }
@@ -269,10 +286,16 @@ class _BibleScreenState extends State<BibleScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(book, style: _bookStyle),
+                  Center(
+                    child: Text(
+                      book,
+                      style: _bookStyle(fontScale),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
                   if (chapter.isNotEmpty) ...[
                     const SizedBox(height: 2),
-                    Text('Chapter $chapter', style: _chapterStyle),
+                    Text('Chapter $chapter', style: _chapterStyle(fontScale)),
                   ],
                 ],
               ),
@@ -300,13 +323,13 @@ class _BibleScreenState extends State<BibleScreen> {
                           width: 28,
                           child: Text(
                             _verseNumber(verse.reference),
-                            style: _verseNumberStyle,
+                            style: _verseNumberStyle(fontScale),
                           ),
                         ),
                         Expanded(
                           child: Text(
                             verse.text,
-                            style: _verseTextStyle,
+                            style: _verseTextStyle(fontScale),
                           ),
                         ),
                         IconButton(

@@ -4,6 +4,8 @@ import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:timezone/data/latest.dart' as tz_data;
 import 'package:timezone/timezone.dart' as tz;
 
+import '../models/app_preferences.dart';
+import 'app_preferences_service.dart';
 import 'notification_content.dart';
 
 class NotificationService {
@@ -13,8 +15,6 @@ class NotificationService {
 
   static const _channelId = 'church_journal_reminders';
   static const _channelName = 'Church Journal Reminders';
-  static const _morningHour = 7;
-  static const _eveningHour = 19;
   static const _daysAhead = 7;
 
   final FlutterLocalNotificationsPlugin _plugin =
@@ -108,42 +108,63 @@ class NotificationService {
   Future<void> _refreshScheduledReminders() async {
     await _plugin.cancelAll();
 
+    final prefs = AppPreferencesService.instance.prefs;
+    if (prefs.notificationFrequency == NotificationFrequency.none) {
+      return;
+    }
+
     final now = tz.TZDateTime.now(tz.local);
     var notificationId = 0;
 
     for (var dayOffset = 0; dayOffset < _daysAhead; dayOffset++) {
       final day = now.add(Duration(days: dayOffset));
 
-      final morning = tz.TZDateTime(
-        tz.local,
-        day.year,
-        day.month,
-        day.day,
-        _morningHour,
-      );
-      if (morning.isAfter(now)) {
-        await _scheduleReminder(
-          id: notificationId++,
-          scheduledAt: morning,
-          isMorning: true,
+      if (_shouldScheduleMorning(prefs)) {
+        final morning = tz.TZDateTime(
+          tz.local,
+          day.year,
+          day.month,
+          day.day,
+          prefs.morningHour,
+          prefs.morningMinute,
         );
+        if (morning.isAfter(now)) {
+          await _scheduleReminder(
+            id: notificationId++,
+            scheduledAt: morning,
+            isMorning: true,
+          );
+        }
       }
 
-      final evening = tz.TZDateTime(
-        tz.local,
-        day.year,
-        day.month,
-        day.day,
-        _eveningHour,
-      );
-      if (evening.isAfter(now)) {
-        await _scheduleReminder(
-          id: notificationId++,
-          scheduledAt: evening,
-          isMorning: false,
+      if (_shouldScheduleEvening(prefs)) {
+        final evening = tz.TZDateTime(
+          tz.local,
+          day.year,
+          day.month,
+          day.day,
+          prefs.eveningHour,
+          prefs.eveningMinute,
         );
+        if (evening.isAfter(now)) {
+          await _scheduleReminder(
+            id: notificationId++,
+            scheduledAt: evening,
+            isMorning: false,
+          );
+        }
       }
     }
+  }
+
+  bool _shouldScheduleMorning(AppPreferences prefs) {
+    return prefs.notificationFrequency == NotificationFrequency.twiceDaily ||
+        prefs.notificationFrequency == NotificationFrequency.morningOnly;
+  }
+
+  bool _shouldScheduleEvening(AppPreferences prefs) {
+    return prefs.notificationFrequency == NotificationFrequency.twiceDaily ||
+        prefs.notificationFrequency == NotificationFrequency.eveningOnly;
   }
 
   Future<void> _scheduleReminder({

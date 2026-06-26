@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../theme/app_colors.dart';
 
-enum AppTab { notes, songs, bible }
+enum AppTab { notes, songs, bible, gallery, settings }
 
 class AppBottomNav extends StatelessWidget {
   final AppTab selectedTab;
@@ -57,6 +57,26 @@ class AppBottomNav extends StatelessWidget {
                     onTap: () => onTabSelected(AppTab.bible),
                   ),
                 ),
+                Container(width: AppColors.borderWidth, color: AppColors.border),
+                Expanded(
+                  child: _TabButton(
+                    label: 'PHOTOS',
+                    icon: Icons.photo_library,
+                    selected: selectedTab == AppTab.gallery,
+                    selectedColor: AppColors.peach,
+                    onTap: () => onTabSelected(AppTab.gallery),
+                  ),
+                ),
+                Container(width: AppColors.borderWidth, color: AppColors.border),
+                Expanded(
+                  child: _TabButton(
+                    label: 'SETTINGS',
+                    icon: Icons.settings,
+                    selected: selectedTab == AppTab.settings,
+                    selectedColor: AppColors.dustyBlue,
+                    onTap: () => onTabSelected(AppTab.settings),
+                  ),
+                ),
               ],
             ),
           ),
@@ -92,15 +112,15 @@ class _TabButton extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, color: iconColor, size: 22),
+            Icon(icon, color: iconColor, size: 20),
             const SizedBox(height: 2),
             Text(
               label,
               style: TextStyle(
                 color: iconColor,
                 fontWeight: selected ? FontWeight.bold : FontWeight.normal,
-                fontSize: 11,
-                letterSpacing: 0.3,
+                fontSize: 9,
+                letterSpacing: 0.2,
               ),
             ),
           ],

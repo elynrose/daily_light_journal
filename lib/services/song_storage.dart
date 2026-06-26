@@ -12,6 +12,8 @@ class SongStorage {
   static final SongStorage instance = SongStorage._();
 
   static const _boxName = 'songs';
+
+  static String get boxName => _boxName;
   static const _assetPath = 'assets/songs.json';
 
   Box<Map>? _box;
@@ -177,5 +179,25 @@ class SongStorage {
 
   Future<void> deleteSong(String id) async {
     await _box?.delete(id);
+  }
+
+  Future<void> clearAll() async {
+    await _box?.clear();
+  }
+
+  Future<void> putRawRecord(String key, Map<String, dynamic> value) async {
+    await _box?.put(key, value);
+  }
+
+  Map<String, Map<String, dynamic>> exportAllRawRecords() {
+    final box = _box;
+    if (box == null) return {};
+    final records = <String, Map<String, dynamic>>{};
+    for (final key in box.keys) {
+      final value = box.get(key);
+      if (value == null) continue;
+      records[key.toString()] = Song.fromMap(value).toMap();
+    }
+    return records;
   }
 }
