@@ -34,10 +34,11 @@ class NotificationContent {
 
     final snippet = source == NotificationSource.bible
         ? null
-        : EntryStorage.instance.pickRandomJournalSnippet();
-    final verse = source == NotificationSource.notes
-        ? null
-        : BibleStorage.instance.pickRandomVerse(random: rng);
+        : EntryStorage.instance.pickRandomJournalSnippet(random: rng);
+
+    final verse = (snippet == null || source != NotificationSource.notes)
+        ? BibleStorage.instance.pickRandomVerse(random: rng)
+        : null;
 
     if (snippet == null && verse == null) {
       return const NotificationReminder(body: fallbackBody);
@@ -45,7 +46,7 @@ class NotificationContent {
     if (snippet == null) {
       return _fromVerse(verse!);
     }
-    if (verse == null) {
+    if (verse == null || source == NotificationSource.notes) {
       return _fromSnippet(snippet);
     }
 

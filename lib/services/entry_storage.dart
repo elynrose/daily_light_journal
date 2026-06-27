@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:hive_flutter/hive_flutter.dart';
 
 import '../models/entry.dart';
@@ -279,26 +281,28 @@ class EntryStorage {
       ..sort((a, b) => a.title.toLowerCase().compareTo(b.title.toLowerCase()));
   }
 
-  JournalSnippet? pickRandomJournalSnippet() {
-    final withNotes = _entries.where((entry) {
-      return entry.combinedNotes.trim().isNotEmpty;
-    }).toList();
-    if (withNotes.isEmpty) return null;
+  JournalSnippet? pickRandomJournalSnippet({Random? random}) {
+    final rng = random ?? Random();
+    final candidates = <JournalSnippet>[];
 
-    withNotes.shuffle();
-    final entry = withNotes.first;
-    final pages = entry.resolvedNotePages.where((page) => page.trim().isNotEmpty);
-    final note = pages.isEmpty
-        ? entry.combinedNotes.trim()
-        : (pages.toList()..shuffle()).first.trim();
-    return JournalSnippet(
-      date: normalizeDate(entry.date),
-      period: entry.period,
-      category: entry.category,
-      title: getSermonTitleSync(entry.date, period: entry.period),
-      preachedBy: getSermonPreachedBySync(entry.date, period: entry.period),
-      note: note,
-    );
+    for (final entry in _entries) {
+      final paragraphs = JournalSnippet.collectParagraphs(entry.resolvedNotePages);
+      if (paragraphs.isEmpty) continue;
+
+      candidates.add(
+        JournalSnippet(
+          date: normalizeDate(entry.date),
+          period: entry.period,
+          category: entry.category,
+          title: getSermonTitleSync(entry.date, period: entry.period),
+          preachedBy: getSermonPreachedBySync(entry.date, period: entry.period),
+          note: paragraphs[rng.nextInt(paragraphs.length)],
+        ),
+      );
+    }
+
+    if (candidates.isEmpty) return null;
+    return candidates[rng.nextInt(candidates.length)];
   }
 
   Future<void> appendScriptureNotes(

@@ -9,6 +9,7 @@ import 'package:church_journal/models/entry.dart';
 import 'package:church_journal/services/bible_storage.dart';
 import 'package:church_journal/services/entry_storage.dart';
 import 'package:church_journal/services/notification_content.dart';
+import 'package:church_journal/utils/ink_storage.dart';
 
 void main() {
   late Directory tempDir;
@@ -90,5 +91,51 @@ void main() {
     final body = NotificationContent.pickBody();
 
     expect(body, NotificationContent.fallbackBody);
+  });
+
+  test('skips ink-only notes and uses scripture instead', () async {
+    final day = DateTime(2026, 6, 26);
+    await storage.saveEntry(Entry(
+      id: 'quote',
+      date: day,
+      title: '',
+      notes: '',
+      category: EntryCategory.quote,
+      period: ServicePeriod.pm,
+      notePages: [encodeInkStrokes([])],
+    ));
+
+    final reminder = NotificationContent.pickReminder(random: Random(0));
+
+    expect(reminder.body, 'John 3:16\nFor God so loved the world');
+    expect(reminder.payload, isNotNull);
+  });
+
+  test('uses a single random paragraph from multi-paragraph notes', () async {
+    bibleStorage.setVersesForTest([]);
+
+    final day = DateTime(2026, 6, 26);
+    await storage.saveEntry(Entry(
+      id: 'quote',
+      date: day,
+      title: '',
+      notes: '',
+      category: EntryCategory.quote,
+      period: ServicePeriod.pm,
+      notePages: [
+        'First paragraph about grace.\n\nSecond paragraph about peace.',
+      ],
+    ));
+
+    final reminder = NotificationContent.pickReminder(random: Random(0));
+
+    expect(reminder.body, contains('6/26/2026 · PM'));
+    expect(
+      reminder.body.contains('First paragraph about grace.') ||
+          reminder.body.contains('Second paragraph about peace.'),
+      isTrue,
+    );
+    expect(reminder.body, isNot(contains('[[INK:')));
+    expect(reminder.payload, isNotNull);
   });
 }

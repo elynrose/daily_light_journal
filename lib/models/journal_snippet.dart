@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'entry.dart';
+import '../utils/ink_storage.dart';
 
 class JournalSnippet {
   final DateTime date;
@@ -22,15 +25,43 @@ class JournalSnippet {
     return '${d.month}/${d.day.toString().padLeft(2, '0')}/${d.year}';
   }
 
-  String toNotificationBody({int maxNoteLength = 200}) {
+  String toNotificationBody({int maxNoteLength = 220}) {
     final excerpt = _truncate(note, maxNoteLength);
-    final lines = <String>[
-      '${formatDate()} · ${period.label}',
-      if (title.isNotEmpty) title,
-      if (preachedBy.isNotEmpty) 'Preached by: $preachedBy',
-      excerpt,
-    ];
-    return lines.join('\n');
+    return '${formatDate()} · ${period.label}\n$excerpt';
+  }
+
+  /// Returns a random non-empty paragraph from [text], skipping ink-only pages.
+  static String? pickRandomParagraph(String text, {Random? random}) {
+    final trimmed = text.trim();
+    if (trimmed.isEmpty || isInkPage(trimmed)) return null;
+
+    final paragraphs = trimmed
+        .split(RegExp(r'\n\s*\n'))
+        .map((paragraph) => paragraph.trim())
+        .where((paragraph) => paragraph.isNotEmpty && !isInkPage(paragraph))
+        .toList();
+
+    if (paragraphs.isEmpty) return null;
+
+    final rng = random ?? Random();
+    return paragraphs[rng.nextInt(paragraphs.length)];
+  }
+
+  /// Collects readable paragraphs from journal note pages.
+  static List<String> collectParagraphs(Iterable<String> pages) {
+    final paragraphs = <String>[];
+    for (final page in pages) {
+      final trimmed = page.trim();
+      if (trimmed.isEmpty || isInkPage(trimmed)) continue;
+
+      final pageParagraphs = trimmed
+          .split(RegExp(r'\n\s*\n'))
+          .map((paragraph) => paragraph.trim())
+          .where((paragraph) => paragraph.isNotEmpty && !isInkPage(paragraph));
+
+      paragraphs.addAll(pageParagraphs);
+    }
+    return paragraphs;
   }
 
   static String _truncate(String text, int maxLength) {
