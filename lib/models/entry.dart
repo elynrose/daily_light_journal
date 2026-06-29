@@ -1,4 +1,4 @@
-enum EntryCategory { song, quote, scripture }
+enum EntryCategory { song, quote, scripture, feed }
 
 enum ServicePeriod { am, pm }
 
@@ -26,6 +26,7 @@ extension EntryCategoryLabel on EntryCategory {
     EntryCategory.song,
     EntryCategory.scripture,
     EntryCategory.quote,
+    EntryCategory.feed,
   ];
 
   String get tabLabel {
@@ -36,6 +37,8 @@ extension EntryCategoryLabel on EntryCategory {
         return 'NOTES';
       case EntryCategory.scripture:
         return 'SCRIPTURES';
+      case EntryCategory.feed:
+        return 'FEED';
     }
   }
 
@@ -47,6 +50,8 @@ extension EntryCategoryLabel on EntryCategory {
         return 'Notes';
       case EntryCategory.scripture:
         return 'Scriptures';
+      case EntryCategory.feed:
+        return 'Feed';
     }
   }
 }

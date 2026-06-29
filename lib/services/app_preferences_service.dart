@@ -88,4 +88,7 @@ class AppPreferencesService extends ChangeNotifier {
 
   Future<void> updateLyricsFontScale(double scale) =>
       _save(_prefs.copyWith(lyricsFontScale: scale));
+
+  Future<void> updateSermonFeedUrl(String url) =>
+      _save(_prefs.copyWith(sermonFeedUrl: url.trim()));
 }

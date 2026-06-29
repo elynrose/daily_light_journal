@@ -21,20 +21,29 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   final _prefsService = AppPreferencesService.instance;
+  late final TextEditingController _feedUrlController;
 
   @override
   void initState() {
     super.initState();
+    _feedUrlController = TextEditingController(
+      text: _prefsService.prefs.sermonFeedUrl,
+    );
     _prefsService.addListener(_onPrefsChanged);
   }
 
   @override
   void dispose() {
     _prefsService.removeListener(_onPrefsChanged);
+    _feedUrlController.dispose();
     super.dispose();
   }
 
   void _onPrefsChanged() {
+    final url = _prefsService.prefs.sermonFeedUrl;
+    if (_feedUrlController.text != url) {
+      _feedUrlController.text = url;
+    }
     if (mounted) setState(() {});
   }
 
@@ -264,6 +273,44 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         onSave: _prefsService.updateEveningTime,
                       ),
                     ),
+                ],
+              ),
+            ),
+            _SectionCard(
+              title: 'Sermon feed',
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'RSS feed URL with sermon_title, preached_by, audio_url, pin, category, and order_by fields.',
+                    style: TextStyle(fontSize: 13, color: AppColors.text),
+                  ),
+                  const SizedBox(height: 8),
+                  TextField(
+                    controller: _feedUrlController,
+                    decoration: const InputDecoration(
+                      hintText: 'https://example.com/sermons.xml',
+                      border: AppColors.outlineInputBorder,
+                      isDense: true,
+                    ),
+                    keyboardType: TextInputType.url,
+                    autocorrect: false,
+                    onSubmitted: (value) => unawaited(
+                      _prefsService.updateSermonFeedUrl(value),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: TextButton(
+                      onPressed: () => unawaited(
+                        _prefsService.updateSermonFeedUrl(
+                          _feedUrlController.text,
+                        ),
+                      ),
+                      child: const Text('Save feed URL'),
+                    ),
+                  ),
                 ],
               ),
             ),

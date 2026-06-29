@@ -36,6 +36,8 @@ class AppColors {
         return peach;
       case EntryCategory.scripture:
         return mintGreen;
+      case EntryCategory.feed:
+        return const Color(0xFFE8E4F0);
     }
   }
 
@@ -47,6 +49,8 @@ class AppColors {
         return const Color(0xFFEACABD);
       case EntryCategory.scripture:
         return dustyBlue;
+      case EntryCategory.feed:
+        return const Color(0xFFC9C0DC);
     }
   }
 }

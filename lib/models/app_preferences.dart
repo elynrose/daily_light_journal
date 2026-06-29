@@ -78,6 +78,7 @@ class AppPreferences {
   final double bibleFontScale;
   final double notesFontScale;
   final double lyricsFontScale;
+  final String sermonFeedUrl;
 
   const AppPreferences({
     this.onboardingComplete = false,
@@ -91,6 +92,7 @@ class AppPreferences {
     this.bibleFontScale = 1.0,
     this.notesFontScale = 1.0,
     this.lyricsFontScale = 1.0,
+    this.sermonFeedUrl = '',
   });
 
   AppPreferences copyWith({
@@ -105,6 +107,7 @@ class AppPreferences {
     double? bibleFontScale,
     double? notesFontScale,
     double? lyricsFontScale,
+    String? sermonFeedUrl,
   }) {
     return AppPreferences(
       onboardingComplete: onboardingComplete ?? this.onboardingComplete,
@@ -119,6 +122,7 @@ class AppPreferences {
       bibleFontScale: bibleFontScale ?? this.bibleFontScale,
       notesFontScale: notesFontScale ?? this.notesFontScale,
       lyricsFontScale: lyricsFontScale ?? this.lyricsFontScale,
+      sermonFeedUrl: sermonFeedUrl ?? this.sermonFeedUrl,
     );
   }
 
@@ -135,6 +139,7 @@ class AppPreferences {
       'bibleFontScale': bibleFontScale,
       'notesFontScale': notesFontScale,
       'lyricsFontScale': lyricsFontScale,
+      'sermonFeedUrl': sermonFeedUrl,
     };
   }
 
@@ -155,6 +160,7 @@ class AppPreferences {
       bibleFontScale: (map['bibleFontScale'] as num?)?.toDouble() ?? 1.0,
       notesFontScale: (map['notesFontScale'] as num?)?.toDouble() ?? 1.0,
       lyricsFontScale: (map['lyricsFontScale'] as num?)?.toDouble() ?? 1.0,
+      sermonFeedUrl: map['sermonFeedUrl'] as String? ?? '',
     );
   }
 }

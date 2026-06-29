@@ -12,6 +12,7 @@ import '../theme/app_colors.dart';
 import '../widgets/linked_scripture_field.dart';
 import '../widgets/quote_pages_field.dart';
 import '../widgets/side_category_tabs.dart';
+import 'feed_list_screen.dart';
 import 'song_detail_screen.dart';
 
 class JournalScreen extends StatefulWidget {
@@ -56,6 +57,7 @@ class _JournalScreenState extends State<JournalScreen> {
 
   bool get _isSongTab => _selectedCategory == EntryCategory.song;
   bool get _isQuoteTab => _selectedCategory == EntryCategory.quote;
+  bool get _isFeedTab => _selectedCategory == EntryCategory.feed;
   bool get _isSermonTab =>
       _selectedCategory == EntryCategory.quote ||
       _selectedCategory == EntryCategory.scripture;
@@ -131,7 +133,7 @@ class _JournalScreenState extends State<JournalScreen> {
   }
 
   void _scheduleAutosave() {
-    if (_isLoading || _isSongTab) return;
+    if (_isLoading || _isSongTab || _isFeedTab) return;
     _autosaveTimer?.cancel();
     _autosaveTimer = Timer(_autosaveDelay, () {
       unawaited(_flushSave());
@@ -202,6 +204,9 @@ class _JournalScreenState extends State<JournalScreen> {
 
     if (saveCategory == EntryCategory.song) {
       await _saveSongList(saveDate, savePeriod);
+      return;
+    }
+    if (saveCategory == EntryCategory.feed) {
       return;
     }
 
@@ -394,6 +399,13 @@ class _JournalScreenState extends State<JournalScreen> {
     _isLoading = true;
     _autosaveTimer?.cancel();
 
+    if (_isFeedTab) {
+      setState(() {
+        _isLoading = false;
+      });
+      return;
+    }
+
     final existing = _storage.getEntrySync(
       _selectedDate,
       _selectedCategory,
@@ -551,6 +563,9 @@ class _JournalScreenState extends State<JournalScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
+                  if (_isFeedTab) ...[
+                    const Expanded(child: FeedListScreen()),
+                  ] else ...[
                   _DateNavBar(
                     dateLabel: _formatDate(_selectedDate),
                     isToday: _isToday,
@@ -703,6 +718,7 @@ class _JournalScreenState extends State<JournalScreen> {
                               ),
                       ),
                     ),
+                  ],
                   ],
                 ],
               ),

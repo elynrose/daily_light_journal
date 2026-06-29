@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"
+     xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd">
+  <channel>
+    <title>Grace Community Sermons</title>
+    <link>https://example.org/sermons</link>
+    <description>Sample sermon feed for Church Journal</description>
+    <language>en-us</language>
+
+    <!-- Feed-wide PIN (required before playing any sermon) -->
+    <pin>2468</pin>
+
+    <!-- Default sort for the feed (optional) -->
+    <order_by>date_preached</order_by>
+    <order_direction>desc</order_direction>
+
+    <item>
+      <sermon_title>Walking in Faith</sermon_title>
+      <preached_by>Pastor John Miller</preached_by>
+      <audio_url>https://example.org/audio/walking-in-faith.mp3</audio_url>
+      <category>Sunday Sermon</category>
+      <date_preached>2024-06-15</date_preached>
+      <cover_image>https://example.org/images/walking-in-faith.jpg</cover_image>
+      <language>English</language>
+      <published_date>2024-06-16T10:00:00Z</published_date>
+      <guid>sermon-walking-in-faith</guid>
+    </item>
+
+    <item>
+      <sermon_title>The Good Shepherd</sermon_title>
+      <preached_by>Rev. Sarah Chen</preached_by>
+      <audio_url>https://example.org/audio/good-shepherd.mp3</audio_url>
+      <category>Sunday Sermon</category>
+      <date_preached>2024-06-08</date_preached>
+      <cover_image>https://example.org/images/good-shepherd.jpg</cover_image>
+      <language>English</language>
+      <published_date>2024-06-09T12:30:00Z</published_date>
+      <guid>sermon-good-shepherd</guid>
+    </item>
+
+    <item>
+      <sermon_title>Esperanza en Cristo</sermon_title>
+      <preached_by>Pastor Ana Ruiz</preached_by>
+      <audio_url>https://example.org/audio/esperanza-en-cristo.mp3</audio_url>
+      <category>Bible Study</category>
+      <date_preached>2024-05-26</date_preached>
+      <cover_image>https://example.org/images/esperanza.jpg</cover_image>
+      <language>Spanish</language>
+      <published_date>2024-05-27T18:00:00Z</published_date>
+      <guid>sermon-esperanza-en-cristo</guid>
+    </item>
+
+    <!-- Item with its own PIN (overrides the channel PIN for this sermon only) -->
+    <item>
+      <sermon_title>Members-Only Teaching</sermon_title>
+      <preached_by>Pastor John Miller</preached_by>
+      <audio_url>https://example.org/audio/members-only.mp3</audio_url>
+      <category>Leadership</category>
+      <date_preached>2024-05-19</date_preached>
+      <language>English</language>
+      <published_date>2024-05-20T09:00:00Z</published_date>
+      <pin>9999</pin>
+      <guid>sermon-members-only</guid>
+    </item>
+
+    <!-- Standard podcast-style fields also work -->
+    <item>
+      <title>Sunday Morning Message</title>
+      <author>Rev. David Brooks</author>
+      <category>Midweek Service</category>
+      <pubDate>Sun, 12 May 2024 11:00:00 GMT</pubDate>
+      <enclosure url="https://example.org/audio/sunday-morning.mp3" type="audio/mpeg" length="18432000"/>
+      <itunes:image href="https://example.org/images/sunday-morning.jpg"/>
+      <guid>sermon-sunday-morning</guid>
+    </item>
+
+  </channel>
+</rss>
