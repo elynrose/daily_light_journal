@@ -76,6 +76,7 @@ class AppPreferences {
   final int eveningHour;
   final int eveningMinute;
   final double bibleFontScale;
+  final String bibleTranslationId;
   final double notesFontScale;
   final double lyricsFontScale;
   final List<String> podcastFeedUrls;
@@ -92,6 +93,7 @@ class AppPreferences {
     this.eveningHour = 19,
     this.eveningMinute = 0,
     this.bibleFontScale = 1.0,
+    this.bibleTranslationId = 'kjv',
     this.notesFontScale = 1.0,
     this.lyricsFontScale = 1.0,
     this.podcastFeedUrls = const [],
@@ -109,6 +111,7 @@ class AppPreferences {
     int? eveningHour,
     int? eveningMinute,
     double? bibleFontScale,
+    String? bibleTranslationId,
     double? notesFontScale,
     double? lyricsFontScale,
     List<String>? podcastFeedUrls,
@@ -127,6 +130,7 @@ class AppPreferences {
       eveningHour: eveningHour ?? this.eveningHour,
       eveningMinute: eveningMinute ?? this.eveningMinute,
       bibleFontScale: bibleFontScale ?? this.bibleFontScale,
+      bibleTranslationId: bibleTranslationId ?? this.bibleTranslationId,
       notesFontScale: notesFontScale ?? this.notesFontScale,
       lyricsFontScale: lyricsFontScale ?? this.lyricsFontScale,
       podcastFeedUrls: podcastFeedUrls ?? this.podcastFeedUrls,
@@ -149,6 +153,7 @@ class AppPreferences {
       'eveningHour': eveningHour,
       'eveningMinute': eveningMinute,
       'bibleFontScale': bibleFontScale,
+      'bibleTranslationId': bibleTranslationId,
       'notesFontScale': notesFontScale,
       'lyricsFontScale': lyricsFontScale,
       'podcastFeedUrls': podcastFeedUrls,
@@ -172,6 +177,7 @@ class AppPreferences {
       eveningHour: map['eveningHour'] as int? ?? 19,
       eveningMinute: map['eveningMinute'] as int? ?? 0,
       bibleFontScale: (map['bibleFontScale'] as num?)?.toDouble() ?? 1.0,
+      bibleTranslationId: map['bibleTranslationId'] as String? ?? 'kjv',
       notesFontScale: (map['notesFontScale'] as num?)?.toDouble() ?? 1.0,
       lyricsFontScale: (map['lyricsFontScale'] as num?)?.toDouble() ?? 1.0,
       podcastFeedUrls: _readPodcastFeedUrls(map),

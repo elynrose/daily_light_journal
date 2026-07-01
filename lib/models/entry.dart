@@ -1,3 +1,7 @@
+import 'app_preferences.dart';
+
+import 'study_audio_attachment.dart';
+
 enum EntryCategory { song, quote, scripture, feed }
 
 enum ServicePeriod { am, pm }
@@ -23,11 +27,32 @@ ServicePeriod servicePeriodFromTime(DateTime time) {
 
 extension EntryCategoryLabel on EntryCategory {
   static const sideTabOrder = [
-    EntryCategory.song,
     EntryCategory.scripture,
+    EntryCategory.song,
     EntryCategory.quote,
     EntryCategory.feed,
   ];
+
+  static List<EntryCategory> sideTabOrderFor(UserRole role) {
+    if (role == UserRole.musician) {
+      return sideTabOrder;
+    }
+    return const [
+      EntryCategory.scripture,
+      EntryCategory.quote,
+      EntryCategory.feed,
+    ];
+  }
+
+  static bool showsWorshipTab(UserRole role) => role == UserRole.musician;
+
+  static bool showsSongsLibraryTab(UserRole role) => role != UserRole.musician;
+
+  static EntryCategory defaultJournalCategory(UserRole role) {
+    return role == UserRole.musician
+        ? EntryCategory.song
+        : EntryCategory.scripture;
+  }
 
   String get tabLabel {
     switch (this) {
@@ -36,7 +61,7 @@ extension EntryCategoryLabel on EntryCategory {
       case EntryCategory.quote:
         return 'NOTES';
       case EntryCategory.scripture:
-        return 'SCRIPTURES';
+        return 'DEVOTIONAL';
       case EntryCategory.feed:
         return 'PODCAST';
     }
@@ -49,7 +74,7 @@ extension EntryCategoryLabel on EntryCategory {
       case EntryCategory.quote:
         return 'Notes';
       case EntryCategory.scripture:
-        return 'Scriptures';
+        return 'Devotional';
       case EntryCategory.feed:
         return 'Podcast';
     }
@@ -91,6 +116,9 @@ class Entry {
   final String number;
   final List<DailySongItem> songItems;
   final List<String> notePages;
+  final String prayerTopics;
+  final String gratitude;
+  final StudyAudioAttachment? studyAudio;
 
   Entry({
     required this.id,
@@ -103,6 +131,9 @@ class Entry {
     this.number = '',
     this.songItems = const [],
     this.notePages = const [],
+    this.prayerTopics = '',
+    this.gratitude = '',
+    this.studyAudio,
   });
 
   List<String> get resolvedNotePages {
@@ -129,6 +160,10 @@ class Entry {
     String? number,
     List<DailySongItem>? songItems,
     List<String>? notePages,
+    String? prayerTopics,
+    String? gratitude,
+    StudyAudioAttachment? studyAudio,
+    bool clearStudyAudio = false,
   }) {
     return Entry(
       id: id ?? this.id,
@@ -141,6 +176,9 @@ class Entry {
       number: number ?? this.number,
       songItems: songItems ?? this.songItems,
       notePages: notePages ?? this.notePages,
+      prayerTopics: prayerTopics ?? this.prayerTopics,
+      gratitude: gratitude ?? this.gratitude,
+      studyAudio: clearStudyAudio ? null : (studyAudio ?? this.studyAudio),
     );
   }
 
@@ -156,6 +194,9 @@ class Entry {
       'number': number,
       'songItems': songItems.map((item) => item.toMap()).toList(),
       'notePages': notePages,
+      'prayerTopics': prayerTopics,
+      'gratitude': gratitude,
+      if (studyAudio != null) 'studyAudio': studyAudio!.toMap(),
     };
   }
 
@@ -170,6 +211,7 @@ class Entry {
     final pages = rawPages is List
         ? rawPages.map((page) => page as String? ?? '').toList()
         : <String>[];
+    final rawStudyAudio = map['studyAudio'];
 
     return Entry(
       id: map['id'] as String,
@@ -184,6 +226,11 @@ class Entry {
       number: map['number'] as String? ?? '',
       songItems: items,
       notePages: pages,
+      prayerTopics: map['prayerTopics'] as String? ?? '',
+      gratitude: map['gratitude'] as String? ?? '',
+      studyAudio: rawStudyAudio is Map
+          ? StudyAudioAttachment.fromMap(rawStudyAudio)
+          : null,
     );
   }
 }

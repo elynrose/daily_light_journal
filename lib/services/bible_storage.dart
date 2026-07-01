@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
+import '../models/bible_translation.dart';
 import '../models/bible_verse.dart';
 import '../utils/bible_reference_range.dart';
 
@@ -12,30 +13,43 @@ class BibleStorage {
 
   static final BibleStorage instance = BibleStorage._();
 
-  static const _assetPath = 'Bible.json';
+  final Map<String, List<BibleVerse>> _cache = {};
 
   List<BibleVerse> _verses = [];
+  String _currentTranslationId = BibleTranslation.kjv.id;
   bool _loaded = false;
   final Map<String, BibleVerse> _versesByNormalizedReference = {};
 
   bool get isLoaded => _loaded;
 
+  String get currentTranslationId => _currentTranslationId;
+
+  BibleTranslation get currentTranslation =>
+      BibleTranslation.fromId(_currentTranslationId);
+
   List<BibleVerse> get allVerses => List.unmodifiable(_verses);
 
-  Future<void> load() async {
-    if (_loaded) return;
+  Future<void> load({String? translationId}) async {
+    final id = BibleTranslation.fromId(
+      translationId ?? _currentTranslationId,
+    ).id;
 
-    final raw = await rootBundle.loadString(_assetPath);
-    final decoded = jsonDecode(raw) as Map<String, dynamic>;
+    if (!_cache.containsKey(id)) {
+      final translation = BibleTranslation.fromId(id);
+      final raw = await rootBundle.loadString(translation.assetPath);
+      final decoded = jsonDecode(raw) as Map<String, dynamic>;
+      _cache[id] = decoded.entries
+          .map(
+            (entry) => BibleVerse(
+              reference: entry.key,
+              text: entry.value as String? ?? '',
+            ),
+          )
+          .toList();
+    }
 
-    _verses = decoded.entries
-        .map(
-          (entry) => BibleVerse(
-            reference: entry.key,
-            text: entry.value as String? ?? '',
-          ),
-        )
-        .toList();
+    _currentTranslationId = id;
+    _verses = _cache[id]!;
     _rebuildReferenceIndex();
     _loaded = true;
   }

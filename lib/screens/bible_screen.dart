@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
+import '../models/bible_translation.dart';
 import '../models/bible_verse.dart';
 import '../services/app_preferences_service.dart';
 import '../services/bible_storage.dart';
@@ -23,6 +26,7 @@ class BibleScreen extends StatefulWidget {
 
 class _BibleScreenState extends State<BibleScreen> {
   final BibleStorage _bibleStorage = BibleStorage.instance;
+  final _prefsService = AppPreferencesService.instance;
   final EntryStorage _entryStorage = EntryStorage.instance;
   final TextEditingController _searchController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
@@ -31,12 +35,14 @@ class _BibleScreenState extends State<BibleScreen> {
   List<BibleVerse> _verses = [];
   bool _loading = true;
   String? _error;
+  String? _loadedTranslationId;
   final Set<String> _highlightedReferences = {};
 
   @override
   void initState() {
     super.initState();
-    _loadBible();
+    _prefsService.addListener(_onPrefsChanged);
+    unawaited(_loadBible());
   }
 
   @override
@@ -51,17 +57,39 @@ class _BibleScreenState extends State<BibleScreen> {
 
   @override
   void dispose() {
+    _prefsService.removeListener(_onPrefsChanged);
     _searchController.dispose();
     _scrollController.dispose();
     super.dispose();
   }
 
+  void _onPrefsChanged() {
+    final translationId = _prefsService.prefs.bibleTranslationId;
+    if (translationId != _loadedTranslationId && mounted) {
+      unawaited(_reloadForTranslation(translationId));
+    }
+  }
+
   Future<void> _loadBible() async {
+    await _reloadForTranslation(_prefsService.prefs.bibleTranslationId);
+  }
+
+  Future<void> _reloadForTranslation(String translationId) async {
+    setState(() {
+      _loading = true;
+      _error = null;
+    });
+
     try {
-      await _bibleStorage.load();
+      await _bibleStorage.load(translationId: translationId);
       if (!mounted) return;
+
+      final query = _searchController.text.trim();
       setState(() {
-        _verses = _bibleStorage.allVerses;
+        _verses = query.isEmpty
+            ? _bibleStorage.allVerses
+            : _bibleStorage.search(query);
+        _loadedTranslationId = translationId;
         _loading = false;
       });
 
@@ -76,6 +104,11 @@ class _BibleScreenState extends State<BibleScreen> {
         _loading = false;
       });
     }
+  }
+
+  Future<void> _changeTranslation(String? translationId) async {
+    if (translationId == null) return;
+    await _prefsService.updateBibleTranslation(translationId);
   }
 
   void _applyInitialReference(String reference) {
@@ -195,28 +228,67 @@ class _BibleScreenState extends State<BibleScreen> {
       listenable: AppPreferencesService.instance,
       builder: (context, _) {
         final fontScale = AppPreferencesService.instance.prefs.bibleFontScale;
-        return _buildScaffold(fontScale);
+        final translationId =
+            AppPreferencesService.instance.prefs.bibleTranslationId;
+        return _buildScaffold(fontScale, translationId);
       },
     );
   }
 
-  Widget _buildScaffold(double fontScale) {
+  Widget _buildScaffold(double fontScale, String translationId) {
     return ColoredBox(
       color: AppColors.mintGreen,
       child: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Padding(
-              padding: EdgeInsets.fromLTRB(16, 12, 16, 8),
-              child: Text(
-                'Bible',
-                style: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.text,
-                  letterSpacing: 1,
-                ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
+              child: Row(
+                children: [
+                  const Expanded(
+                    child: Text(
+                      'Bible',
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.text,
+                        letterSpacing: 1,
+                      ),
+                    ),
+                  ),
+                  DecoratedBox(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(color: AppColors.border),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton<String>(
+                          value: translationId,
+                          style: const TextStyle(
+                            fontSize: 14,
+                            color: AppColors.text,
+                          ),
+                          dropdownColor: Colors.white,
+                          items: BibleTranslation.all
+                              .map(
+                                (translation) => DropdownMenuItem(
+                                  value: translation.id,
+                                  child: Text(translation.label),
+                                ),
+                              )
+                              .toList(),
+                          onChanged: _loading
+                              ? null
+                              : (value) => unawaited(_changeTranslation(value)),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
             Padding(

@@ -9,6 +9,7 @@ class LinkedScriptureField extends StatefulWidget {
   final String labelText;
   final ValueChanged<String> onReferenceTap;
   final double fontScale;
+  final bool shrinkWrap;
 
   const LinkedScriptureField({
     super.key,
@@ -17,6 +18,7 @@ class LinkedScriptureField extends StatefulWidget {
     required this.labelText,
     required this.onReferenceTap,
     this.fontScale = 1.0,
+    this.shrinkWrap = false,
   });
 
   @override
@@ -80,6 +82,37 @@ class _LinkedScriptureFieldState extends State<LinkedScriptureField> {
   }
 
   bool get _showTextField => _isEditing || widget.controller.text.isEmpty;
+
+  Widget _buildEditor() {
+    if (_showTextField) {
+      return TextField(
+        controller: widget.controller,
+        focusNode: widget.focusNode,
+        readOnly: !_isEditing,
+        decoration: const InputDecoration(
+          isDense: true,
+          border: InputBorder.none,
+          contentPadding: EdgeInsets.zero,
+        ),
+        maxLines: widget.shrinkWrap ? null : null,
+        minLines: widget.shrinkWrap ? 3 : null,
+        expands: !widget.shrinkWrap,
+        textAlignVertical: TextAlignVertical.top,
+        style: TextStyle(
+          fontSize: 16 * widget.fontScale,
+          color: AppColors.text,
+        ),
+        onSubmitted: (_) => widget.focusNode.unfocus(),
+      );
+    }
+
+    return SingleChildScrollView(
+      child: Text.rich(
+        _buildLinkedSpan(widget.controller.text),
+        textAlign: TextAlign.left,
+      ),
+    );
+  }
 
   TextSpan _buildLinkedSpan(String text) {
     final bodySize = 16 * widget.fontScale;
@@ -159,8 +192,6 @@ class _LinkedScriptureFieldState extends State<LinkedScriptureField> {
 
   @override
   Widget build(BuildContext context) {
-    final text = widget.controller.text;
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -191,33 +222,10 @@ class _LinkedScriptureFieldState extends State<LinkedScriptureField> {
             ),
           ],
         ),
-        Expanded(
-          child: _showTextField
-              ? TextField(
-                  controller: widget.controller,
-                  focusNode: widget.focusNode,
-                  readOnly: !_isEditing,
-                  decoration: const InputDecoration(
-                    isDense: true,
-                    border: InputBorder.none,
-                    contentPadding: EdgeInsets.zero,
-                  ),
-                  maxLines: null,
-                  expands: true,
-                  textAlignVertical: TextAlignVertical.top,
-                  style: TextStyle(
-                    fontSize: 16 * widget.fontScale,
-                    color: AppColors.text,
-                  ),
-                  onSubmitted: (_) => widget.focusNode.unfocus(),
-                )
-              : SingleChildScrollView(
-                  child: Text.rich(
-                    _buildLinkedSpan(text),
-                    textAlign: TextAlign.left,
-                  ),
-                ),
-        ),
+        if (widget.shrinkWrap)
+          _buildEditor()
+        else
+          Expanded(child: _buildEditor()),
       ],
     );
   }

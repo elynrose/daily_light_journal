@@ -2,6 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import '../models/app_preferences.dart';
+import '../models/bible_translation.dart';
+import 'bible_storage.dart';
 
 class AppPreferencesService extends ChangeNotifier {
   AppPreferencesService._();
@@ -82,6 +84,12 @@ class AppPreferencesService extends ChangeNotifier {
 
   Future<void> updateBibleFontScale(double scale) =>
       _save(_prefs.copyWith(bibleFontScale: scale));
+
+  Future<void> updateBibleTranslation(String translationId) async {
+    final id = BibleTranslation.fromId(translationId).id;
+    await _save(_prefs.copyWith(bibleTranslationId: id));
+    await BibleStorage.instance.load(translationId: id);
+  }
 
   Future<void> updateNotesFontScale(double scale) =>
       _save(_prefs.copyWith(notesFontScale: scale));

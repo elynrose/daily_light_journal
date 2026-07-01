@@ -44,13 +44,15 @@ void main() {
 
     expect(find.text('Prev'), findsOneWidget);
     expect(find.text('Next'), findsOneWidget);
-    expect(find.textContaining('No songs for this'), findsOneWidget);
+    expect(find.textContaining('No songs for this'), findsNothing);
     expect(find.text('AM'), findsOneWidget);
     expect(find.text('PM'), findsOneWidget);
     expect(find.text('HOME'), findsOneWidget);
     expect(find.text('NOTES'), findsOneWidget);
     expect(find.text('PODCAST'), findsOneWidget);
-    expect(find.text('WORSHIP'), findsOneWidget);
+    expect(find.text('SONGS'), findsOneWidget);
+    expect(find.text('WORSHIP'), findsNothing);
+    expect(find.text('DEVOTIONAL'), findsOneWidget);
     expect(find.text('BIBLE'), findsOneWidget);
     expect(find.text('MOOD'), findsOneWidget);
     expect(find.text('PHOTOS'), findsOneWidget);

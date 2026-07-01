@@ -2,14 +2,18 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import '../models/app_preferences.dart';
 import '../models/entry.dart';
 import '../models/song.dart';
+import '../models/study_audio_attachment.dart';
 import '../services/app_preferences_service.dart';
 import '../services/entry_storage.dart';
 import '../services/journal_context.dart';
 import '../services/song_storage.dart';
 import '../theme/app_colors.dart';
+import '../widgets/embedded_audio_player.dart';
 import '../widgets/linked_scripture_field.dart';
+import '../widgets/podcast_episode_picker_sheet.dart';
 import '../widgets/quote_pages_field.dart';
 import '../widgets/side_category_tabs.dart';
 import 'feed_list_screen.dart';
@@ -17,14 +21,14 @@ import 'song_detail_screen.dart';
 import 'songs_screen.dart';
 
 class JournalScreen extends StatefulWidget {
-  final EntryCategory initialCategory;
+  final EntryCategory? initialCategory;
   final DateTime? initialDate;
   final ServicePeriod? initialPeriod;
   final ValueChanged<String>? onScriptureReferenceTap;
 
   const JournalScreen({
     super.key,
-    this.initialCategory = EntryCategory.song,
+    this.initialCategory,
     this.initialDate,
     this.initialPeriod,
     this.onScriptureReferenceTap,
@@ -41,6 +45,8 @@ class _JournalScreenState extends State<JournalScreen> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _preachedByController = TextEditingController();
   final TextEditingController _notesController = TextEditingController();
+  final TextEditingController _prayerTopicsController = TextEditingController();
+  final TextEditingController _gratitudeController = TextEditingController();
   final FocusNode _titleFocusNode = FocusNode();
   final FocusNode _preachedByFocusNode = FocusNode();
   final FocusNode _notesFocusNode = FocusNode();
@@ -55,13 +61,24 @@ class _JournalScreenState extends State<JournalScreen> {
   bool _isEditingPreachedBy = false;
   List<DailySongItem> _songItems = [];
   List<String> _quotePages = [''];
+  StudyAudioAttachment? _studyAudio;
 
   bool get _isSongTab => _selectedCategory == EntryCategory.song;
   bool get _isQuoteTab => _selectedCategory == EntryCategory.quote;
+  bool get _isDevotionalTab => _selectedCategory == EntryCategory.scripture;
   bool get _isFeedTab => _selectedCategory == EntryCategory.feed;
-  bool get _isSermonTab =>
-      _selectedCategory == EntryCategory.quote ||
-      _selectedCategory == EntryCategory.scripture;
+
+  UserRole get _userRole => AppPreferencesService.instance.prefs.userRole;
+
+  EntryCategory _normalizeCategory(EntryCategory? category) {
+    final resolved =
+        category ?? EntryCategoryLabel.defaultJournalCategory(_userRole);
+    if (!EntryCategoryLabel.showsWorshipTab(_userRole) &&
+        resolved == EntryCategory.song) {
+      return EntryCategory.scripture;
+    }
+    return resolved;
+  }
 
   @override
   void initState() {
@@ -69,7 +86,7 @@ class _JournalScreenState extends State<JournalScreen> {
     _selectedDate = EntryStorage.normalizeDate(
       widget.initialDate ?? DateTime.now(),
     );
-    _selectedCategory = widget.initialCategory;
+    _selectedCategory = _normalizeCategory(widget.initialCategory);
     _selectedPeriod =
         widget.initialPeriod ?? servicePeriodFromTime(DateTime.now());
     JournalContext.instance.update(
@@ -79,10 +96,20 @@ class _JournalScreenState extends State<JournalScreen> {
     _titleController.addListener(_scheduleAutosave);
     _preachedByController.addListener(_scheduleAutosave);
     _notesController.addListener(_scheduleAutosave);
+    _prayerTopicsController.addListener(_scheduleAutosave);
+    _gratitudeController.addListener(_scheduleAutosave);
     _titleFocusNode.addListener(_onTitleFocusChange);
     _preachedByFocusNode.addListener(_onPreachedByFocusChange);
     _notesFocusNode.addListener(_onNotesFocusChange);
+    AppPreferencesService.instance.addListener(_onPrefsChanged);
     _loadEntryForCurrentSelection();
+  }
+
+  void _onPrefsChanged() {
+    if (!EntryCategoryLabel.showsWorshipTab(_userRole) &&
+        _selectedCategory == EntryCategory.song) {
+      unawaited(_changeCategory(EntryCategory.scripture));
+    }
   }
 
   void _onNotesFocusChange() {
@@ -126,7 +153,7 @@ class _JournalScreenState extends State<JournalScreen> {
         oldWidget.initialDate != widget.initialDate ||
         oldWidget.initialPeriod != widget.initialPeriod) {
       _switchContext(
-        category: widget.initialCategory,
+        category: _normalizeCategory(widget.initialCategory),
         date: widget.initialDate ?? _selectedDate,
         period: widget.initialPeriod ?? _selectedPeriod,
       );
@@ -151,16 +178,19 @@ class _JournalScreenState extends State<JournalScreen> {
     _titleController.removeListener(_scheduleAutosave);
     _preachedByController.removeListener(_scheduleAutosave);
     _notesController.removeListener(_scheduleAutosave);
+    _prayerTopicsController.removeListener(_scheduleAutosave);
+    _gratitudeController.removeListener(_scheduleAutosave);
 
-    final sermonTitle = _isSermonTab
+    final sermonTitle = _isQuoteTab
         ? _storage.getSermonTitleSync(_selectedDate, period: _selectedPeriod)
         : entry?.title ?? '';
-    final preachedBy = _isSermonTab
+    final preachedBy = _isQuoteTab
         ? _storage.getSermonPreachedBySync(_selectedDate, period: _selectedPeriod)
         : '';
-    final notes = _selectedCategory == EntryCategory.scripture
-        ? entry?.notes ?? ''
-        : '';
+    final notes = _isDevotionalTab ? entry?.notes ?? '' : '';
+    final prayerTopics =
+        _isDevotionalTab ? entry?.prayerTopics ?? '' : '';
+    final gratitude = _isDevotionalTab ? entry?.gratitude ?? '' : '';
     final quotePages = _selectedCategory == EntryCategory.quote
         ? _pagesFromEntry(entry)
         : [''];
@@ -177,12 +207,23 @@ class _JournalScreenState extends State<JournalScreen> {
       text: notes,
       selection: TextSelection.collapsed(offset: notes.length),
     );
+    _prayerTopicsController.value = TextEditingValue(
+      text: prayerTopics,
+      selection: TextSelection.collapsed(offset: prayerTopics.length),
+    );
+    _gratitudeController.value = TextEditingValue(
+      text: gratitude,
+      selection: TextSelection.collapsed(offset: gratitude.length),
+    );
     _songItems = List<DailySongItem>.from(entry?.songItems ?? []);
     _quotePages = quotePages;
+    _studyAudio = _isDevotionalTab ? entry?.studyAudio : null;
 
     _titleController.addListener(_scheduleAutosave);
     _preachedByController.addListener(_scheduleAutosave);
     _notesController.addListener(_scheduleAutosave);
+    _prayerTopicsController.addListener(_scheduleAutosave);
+    _gratitudeController.addListener(_scheduleAutosave);
   }
 
   List<String> _pagesFromEntry(Entry? entry) {
@@ -211,27 +252,23 @@ class _JournalScreenState extends State<JournalScreen> {
       return;
     }
 
-    final sermonTitle = _titleController.text.trim();
-    final notes = _isQuoteTab
-        ? ''
-        : _notesController.text.trim();
-    final quotePages = _isQuoteTab ? List<String>.from(_quotePages) : const <String>[];
-    final hasQuoteContent =
-        quotePages.any((page) => page.trim().isNotEmpty);
-    final hasScriptureContent = notes.isNotEmpty;
+    if (saveCategory == EntryCategory.quote) {
+      final sermonTitle = _titleController.text.trim();
+      final quotePages = List<String>.from(_quotePages);
+      final hasQuoteContent =
+          quotePages.any((page) => page.trim().isNotEmpty);
 
-    await _storage.setSermonTitle(
-      saveDate,
-      sermonTitle,
-      period: savePeriod,
-    );
-    await _storage.setSermonPreachedBy(
-      saveDate,
-      _preachedByController.text.trim(),
-      period: savePeriod,
-    );
+      await _storage.setSermonTitle(
+        saveDate,
+        sermonTitle,
+        period: savePeriod,
+      );
+      await _storage.setSermonPreachedBy(
+        saveDate,
+        _preachedByController.text.trim(),
+        period: savePeriod,
+      );
 
-    if (_isQuoteTab) {
       if (!hasQuoteContent) {
         await _storage.deleteEntryForDateCategoryAndPeriod(
           saveDate,
@@ -278,47 +315,60 @@ class _JournalScreenState extends State<JournalScreen> {
       return;
     }
 
-    if (!hasScriptureContent) {
-      await _storage.deleteEntryForDateCategoryAndPeriod(
-        saveDate,
-        saveCategory,
+    if (saveCategory == EntryCategory.scripture) {
+      final notes = _notesController.text.trim();
+      final prayerTopics = _prayerTopicsController.text.trim();
+      final gratitude = _gratitudeController.text.trim();
+      final hasDevotionalContent = notes.isNotEmpty ||
+          prayerTopics.isNotEmpty ||
+          gratitude.isNotEmpty ||
+          _studyAudio != null;
+
+      if (!hasDevotionalContent) {
+        await _storage.deleteEntryForDateCategoryAndPeriod(
+          saveDate,
+          saveCategory,
+          period: savePeriod,
+        );
+        if (mounted &&
+            saveCategory == _selectedCategory &&
+            savePeriod == _selectedPeriod &&
+            EntryStorage.isSameDate(saveDate, _selectedDate)) {
+          setState(() {
+            _currentEntryId = null;
+          });
+        }
+        return;
+      }
+
+      final entry = Entry(
+        id: EntryStorage.dateCategoryKey(
+          saveDate,
+          saveCategory,
+          period: savePeriod,
+        ),
+        date: saveDate,
+        title: '',
+        notes: notes,
+        category: saveCategory,
         period: savePeriod,
+        prayerTopics: prayerTopics,
+        gratitude: gratitude,
+        studyAudio: _studyAudio,
       );
-      if (mounted &&
-          saveCategory == _selectedCategory &&
+
+      await _storage.saveEntry(entry);
+
+      if (!mounted) return;
+
+      if (saveCategory == _selectedCategory &&
           savePeriod == _selectedPeriod &&
-          EntryStorage.isSameDate(saveDate, _selectedDate)) {
+          EntryStorage.isSameDate(saveDate, _selectedDate) &&
+          _currentEntryId != entry.id) {
         setState(() {
-          _currentEntryId = null;
+          _currentEntryId = entry.id;
         });
       }
-      return;
-    }
-
-    final entry = Entry(
-      id: EntryStorage.dateCategoryKey(
-        saveDate,
-        saveCategory,
-        period: savePeriod,
-      ),
-      date: saveDate,
-      title: '',
-      notes: notes,
-      category: saveCategory,
-      period: savePeriod,
-    );
-
-    await _storage.saveEntry(entry);
-
-    if (!mounted) return;
-
-    if (saveCategory == _selectedCategory &&
-        savePeriod == _selectedPeriod &&
-        EntryStorage.isSameDate(saveDate, _selectedDate) &&
-        _currentEntryId != entry.id) {
-      setState(() {
-        _currentEntryId = entry.id;
-      });
     }
   }
 
@@ -457,6 +507,8 @@ class _JournalScreenState extends State<JournalScreen> {
 
   Future<void> _changeCategory(EntryCategory category) async {
     if (category == _selectedCategory) return;
+    final resolved = _normalizeCategory(category);
+    if (resolved == _selectedCategory) return;
 
     _isLoading = true;
     _autosaveTimer?.cancel();
@@ -464,7 +516,7 @@ class _JournalScreenState extends State<JournalScreen> {
     if (!mounted) return;
 
     setState(() {
-      _selectedCategory = category;
+      _selectedCategory = resolved;
     });
     _loadEntryForCurrentSelection();
   }
@@ -519,6 +571,22 @@ class _JournalScreenState extends State<JournalScreen> {
     return '${date.month}/${date.day.toString().padLeft(2, '0')}/${date.year}';
   }
 
+  Future<void> _pickStudyAudio() async {
+    final picked = await showPodcastEpisodePicker(context);
+    if (picked == null || !mounted) return;
+    setState(() {
+      _studyAudio = StudyAudioAttachment.fromPodcastItem(picked);
+    });
+    await _flushSave();
+  }
+
+  void _removeStudyAudio() {
+    setState(() {
+      _studyAudio = null;
+    });
+    _scheduleAutosave();
+  }
+
   Future<void> _openSongsLibrary() async {
     await Navigator.of(context).push(
       MaterialPageRoute(
@@ -537,15 +605,20 @@ class _JournalScreenState extends State<JournalScreen> {
   void dispose() {
     _autosaveTimer?.cancel();
     unawaited(_flushSave());
+    AppPreferencesService.instance.removeListener(_onPrefsChanged);
     _titleController.removeListener(_scheduleAutosave);
     _preachedByController.removeListener(_scheduleAutosave);
     _notesController.removeListener(_scheduleAutosave);
+    _prayerTopicsController.removeListener(_scheduleAutosave);
+    _gratitudeController.removeListener(_scheduleAutosave);
     _titleFocusNode.removeListener(_onTitleFocusChange);
     _preachedByFocusNode.removeListener(_onPreachedByFocusChange);
     _notesFocusNode.removeListener(_onNotesFocusChange);
     _titleController.dispose();
     _preachedByController.dispose();
     _notesController.dispose();
+    _prayerTopicsController.dispose();
+    _gratitudeController.dispose();
     _titleFocusNode.dispose();
     _preachedByFocusNode.dispose();
     _notesFocusNode.dispose();
@@ -571,6 +644,8 @@ class _JournalScreenState extends State<JournalScreen> {
           SideCategoryTabs(
             selectedCategory: _selectedCategory,
             onCategoryChanged: _changeCategory,
+            userRole: _userRole,
+            onSongsTap: () => unawaited(_openSongsLibrary()),
           ),
           Expanded(
             child: ColoredBox(
@@ -614,25 +689,132 @@ class _JournalScreenState extends State<JournalScreen> {
                         ],
                       ),
                     ),
+                  ] else if (_isDevotionalTab) ...[
+                    Expanded(
+                      child: SingleChildScrollView(
+                        padding: const EdgeInsets.fromLTRB(12, 8, 12, 12),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            LinkedScriptureField(
+                              key: ValueKey('devotional-scriptures-$_fieldSlotId'),
+                              controller: _notesController,
+                              focusNode: _notesFocusNode,
+                              labelText: 'Scriptures',
+                              shrinkWrap: true,
+                              fontScale: AppPreferencesService
+                                  .instance.prefs.notesFontScale,
+                              onReferenceTap: (reference) {
+                                widget.onScriptureReferenceTap?.call(reference);
+                              },
+                            ),
+                            const SizedBox(height: 16),
+                            Text(
+                              'Prayer Topics',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: _notesFontSize,
+                                color: AppColors.text,
+                              ),
+                            ),
+                            TextField(
+                              key: ValueKey('prayer-topics-$_fieldSlotId'),
+                              controller: _prayerTopicsController,
+                              decoration: const InputDecoration(
+                                isDense: true,
+                                border: InputBorder.none,
+                                contentPadding: EdgeInsets.only(top: 4),
+                              ),
+                              maxLines: null,
+                              minLines: 2,
+                              style: TextStyle(
+                                fontSize: _notesFontSize,
+                                color: AppColors.text,
+                              ),
+                            ),
+                            const SizedBox(height: 16),
+                            Text(
+                              'Gratitude',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: _notesFontSize,
+                                color: AppColors.text,
+                              ),
+                            ),
+                            TextField(
+                              key: ValueKey('gratitude-$_fieldSlotId'),
+                              controller: _gratitudeController,
+                              decoration: const InputDecoration(
+                                isDense: true,
+                                border: InputBorder.none,
+                                contentPadding: EdgeInsets.only(top: 4),
+                              ),
+                              maxLines: null,
+                              minLines: 2,
+                              style: TextStyle(
+                                fontSize: _notesFontSize,
+                                color: AppColors.text,
+                              ),
+                            ),
+                            const SizedBox(height: 16),
+                            Row(
+                              children: [
+                                Text(
+                                  'Study',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: _notesFontSize,
+                                    color: AppColors.text,
+                                  ),
+                                ),
+                                const Spacer(),
+                                IconButton(
+                                  onPressed: () => unawaited(_pickStudyAudio()),
+                                  padding: EdgeInsets.zero,
+                                  constraints: const BoxConstraints(
+                                    minWidth: 32,
+                                    minHeight: 32,
+                                  ),
+                                  tooltip: 'Add podcast audio',
+                                  icon: const Icon(
+                                    Icons.add,
+                                    color: AppColors.text,
+                                    size: 22,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            if (_studyAudio != null) ...[
+                              const SizedBox(height: 4),
+                              EmbeddedAudioPlayer(
+                                key: ValueKey(
+                                  'study-audio-${_studyAudio!.enclosureUrl}',
+                                ),
+                                audio: _studyAudio!,
+                                onRemove: _removeStudyAudio,
+                              ),
+                            ],
+                          ],
+                        ),
+                      ),
+                    ),
                   ] else ...[
                     Padding(
                       padding: const EdgeInsets.fromLTRB(12, 8, 12, 0),
                       child: Row(
                         children: [
-                          Text(
-                            _isSermonTab ? 'Sermon:' : 'Title:',
+                          const Text(
+                            'Sermon:',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              fontSize: _notesFontSize,
+                              fontSize: 16,
                               color: AppColors.text,
                             ),
                           ),
                           const SizedBox(width: 8),
                           Expanded(
                             child: TextField(
-                              key: ValueKey(
-                                'title-$_fieldSlotId-${_isSermonTab ? 'sermon' : 'title'}',
-                              ),
+                              key: ValueKey('title-$_fieldSlotId-sermon'),
                               controller: _titleController,
                               focusNode: _titleFocusNode,
                               readOnly: !_isEditingTitle,
@@ -666,56 +848,55 @@ class _JournalScreenState extends State<JournalScreen> {
                         ],
                       ),
                     ),
-                    if (_isSermonTab)
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(12, 4, 12, 0),
-                        child: Row(
-                          children: [
-                            const Text(
-                              'Preached by:',
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(12, 4, 12, 0),
+                      child: Row(
+                        children: [
+                          const Text(
+                            'Preached by:',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                              color: AppColors.text,
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: TextField(
+                              key: ValueKey('preached-by-$_fieldSlotId'),
+                              controller: _preachedByController,
+                              focusNode: _preachedByFocusNode,
+                              readOnly: !_isEditingPreachedBy,
+                              decoration: const InputDecoration(
+                                isDense: true,
+                                border: InputBorder.none,
+                                hintText: '',
+                              ),
                               style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
+                                fontSize: _notesFontSize,
                                 color: AppColors.text,
                               ),
+                              onSubmitted: (_) {
+                                _preachedByFocusNode.unfocus();
+                              },
                             ),
-                            const SizedBox(width: 8),
-                            Expanded(
-                              child: TextField(
-                                key: ValueKey('preached-by-$_fieldSlotId'),
-                                controller: _preachedByController,
-                                focusNode: _preachedByFocusNode,
-                                readOnly: !_isEditingPreachedBy,
-                                decoration: const InputDecoration(
-                                  isDense: true,
-                                  border: InputBorder.none,
-                                  hintText: '',
-                                ),
-                                style: TextStyle(
-                                  fontSize: _notesFontSize,
-                                  color: AppColors.text,
-                                ),
-                                onSubmitted: (_) {
-                                  _preachedByFocusNode.unfocus();
-                                },
-                              ),
+                          ),
+                          IconButton(
+                            onPressed: _startEditingPreachedBy,
+                            padding: EdgeInsets.zero,
+                            constraints: const BoxConstraints(
+                              minWidth: 32,
+                              minHeight: 32,
                             ),
-                            IconButton(
-                              onPressed: _startEditingPreachedBy,
-                              padding: EdgeInsets.zero,
-                              constraints: const BoxConstraints(
-                                minWidth: 32,
-                                minHeight: 32,
-                              ),
-                              icon: const Icon(
-                                Icons.edit,
-                                color: AppColors.text,
-                                size: 20,
-                              ),
+                            icon: const Icon(
+                              Icons.edit,
+                              color: AppColors.text,
+                              size: 20,
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
+                    ),
                     const Divider(
                       height: AppColors.borderWidth,
                       thickness: AppColors.borderWidth,
@@ -726,28 +907,16 @@ class _JournalScreenState extends State<JournalScreen> {
                     Expanded(
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(12, 4, 12, 12),
-                        child: _isQuoteTab
-                            ? QuotePagesField(
-                                key: ValueKey('quote-pages-$_fieldSlotId'),
-                                initialPages: _quotePages,
-                                fontScale: AppPreferencesService
-                                    .instance.prefs.notesFontScale,
-                                onPagesChanged: _onQuotePagesChanged,
-                                onReferenceTap: (reference) {
-                                  widget.onScriptureReferenceTap?.call(reference);
-                                },
-                              )
-                            : LinkedScriptureField(
-                                key: ValueKey('linked-notes-$_fieldSlotId'),
-                                controller: _notesController,
-                                focusNode: _notesFocusNode,
-                                labelText: _selectedCategory.listTitle,
-                                fontScale: AppPreferencesService
-                                    .instance.prefs.notesFontScale,
-                                onReferenceTap: (reference) {
-                                  widget.onScriptureReferenceTap?.call(reference);
-                                },
-                              ),
+                        child: QuotePagesField(
+                          key: ValueKey('quote-pages-$_fieldSlotId'),
+                          initialPages: _quotePages,
+                          fontScale:
+                              AppPreferencesService.instance.prefs.notesFontScale,
+                          onPagesChanged: _onQuotePagesChanged,
+                          onReferenceTap: (reference) {
+                            widget.onScriptureReferenceTap?.call(reference);
+                          },
+                        ),
                       ),
                     ),
                   ],

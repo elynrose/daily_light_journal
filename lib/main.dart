@@ -27,7 +27,9 @@ void main() async {
   await SongStorage.instance.init();
   await PhotoStorage.instance.init();
   await AppPreferencesService.instance.init();
-  await BibleStorage.instance.load();
+  await BibleStorage.instance.load(
+    translationId: AppPreferencesService.instance.prefs.bibleTranslationId,
+  );
   await MoodStorage.instance.load();
   await NotificationService.instance.init();
   await NotificationService.instance.refreshScheduledReminders();
@@ -83,7 +85,10 @@ class AppShell extends StatefulWidget {
 
 class _AppShellState extends State<AppShell> with WidgetsBindingObserver {
   AppTab _selectedTab = AppTab.notes;
-  EntryCategory _journalCategory = EntryCategory.song;
+  EntryCategory _journalCategory =
+      EntryCategoryLabel.defaultJournalCategory(
+    AppPreferencesService.instance.prefs.userRole,
+  );
   DateTime? _journalDate;
   ServicePeriod? _journalPeriod;
   int _journalRefreshToken = 0;

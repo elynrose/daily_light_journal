@@ -7,6 +7,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../models/app_preferences.dart';
+import '../models/bible_translation.dart';
 import '../services/app_preferences_service.dart';
 import '../services/backup_service.dart';
 import '../services/notification_service.dart';
@@ -268,15 +269,69 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
             ),
             _SectionCard(
-              title: 'Font size',
+              title: 'Bible',
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  const Text(
+                    'Translation',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.text,
+                    ),
+                  ),
+                  const SizedBox(height: 6),
+                  DecoratedBox(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(color: AppColors.border),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton<String>(
+                          isExpanded: true,
+                          value: BibleTranslation.fromId(
+                            _prefs.bibleTranslationId,
+                          ).id,
+                          style: const TextStyle(
+                            fontSize: 14,
+                            color: AppColors.text,
+                          ),
+                          dropdownColor: Colors.white,
+                          items: BibleTranslation.all
+                              .map(
+                                (translation) => DropdownMenuItem(
+                                  value: translation.id,
+                                  child: Text(translation.label),
+                                ),
+                              )
+                              .toList(),
+                          onChanged: (value) {
+                            if (value == null) return;
+                            unawaited(
+                              _prefsService.updateBibleTranslation(value),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
                   _FontSlider(
-                    label: 'Bible',
+                    label: 'Font size',
                     value: _prefs.bibleFontScale,
                     onChanged: (value) =>
                         unawaited(_prefsService.updateBibleFontScale(value)),
                   ),
+                ],
+              ),
+            ),
+            _SectionCard(
+              title: 'Font size',
+              child: Column(
+                children: [
                   _FontSlider(
                     label: 'Notes & scriptures',
                     value: _prefs.notesFontScale,

@@ -51,3 +51,6 @@ app.*.map.json
 /android/KEYSTORE_BACKUP.txt
 **/*.jks
 **/*.keystore
+
+# Bible translation build artifacts (bundled JSON only)
+/translations/_work/
