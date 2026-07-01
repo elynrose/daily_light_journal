@@ -10,6 +10,7 @@ import '../models/app_preferences.dart';
 import '../services/app_preferences_service.dart';
 import '../services/backup_service.dart';
 import '../services/notification_service.dart';
+import '../services/song_storage.dart';
 import '../theme/app_colors.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -138,6 +139,85 @@ class _SettingsScreenState extends State<SettingsScreen> {
         'Church Journal helps you record worship songs, sermon notes, and scriptures by date. '
         'https://elynrose.github.io/church-journal-legal/';
     await Share.share(message, subject: 'Church Journal');
+  }
+
+  Future<void> _exportSongLibrary() async {
+    try {
+      final songs = SongStorage.instance.getAllSongs();
+      if (songs.isEmpty) {
+        if (!mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('No songs to export yet')),
+        );
+        return;
+      }
+
+      final json = SongStorage.instance.exportLibraryJson();
+      final dir = await getTemporaryDirectory();
+      final file = File(
+        '${dir.path}/church_journal_songs_${DateTime.now().millisecondsSinceEpoch}.json',
+      );
+      await file.writeAsString(json);
+
+      await Share.shareXFiles(
+        [XFile(file.path)],
+        subject: 'Church Journal song library',
+        text: 'Church Journal song library export',
+      );
+    } catch (error) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Export failed: $error')),
+      );
+    }
+  }
+
+  Future<void> _importSongLibrary() async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Import song library?'),
+        content: const Text(
+          'This will replace all songs currently on this device.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: const Text('Import'),
+          ),
+        ],
+      ),
+    );
+    if (confirmed != true) return;
+
+    try {
+      final result = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: const ['json'],
+      );
+      final path = result?.files.single.path;
+      if (path == null) return;
+
+      final json = await File(path).readAsString();
+      final imported = await SongStorage.instance.importFromLibraryJson(
+        json,
+        replace: true,
+      );
+
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Imported $imported songs')),
+      );
+    } catch (error) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Import failed: $error')),
+      );
+    }
   }
 
   @override
@@ -277,12 +357,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
             ),
             _SectionCard(
-              title: 'Sermon feed',
+              title: 'Podcast feed',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
-                    'RSS feed URL with sermon_title, preached_by, audio_url, pin, category, and order_by fields.',
+                    'Standard RSS 2.0 / podcast feed URL (title, author, pubDate, enclosure, category). '
+                    'Optional channel fields: pin, order_by, order_direction.',
                     style: TextStyle(fontSize: 13, color: AppColors.text),
                   ),
                   const SizedBox(height: 8),
@@ -308,8 +389,27 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           _feedUrlController.text,
                         ),
                       ),
-                      child: const Text('Save feed URL'),
+                      child: const Text('Save podcast URL'),
                     ),
+                  ),
+                ],
+              ),
+            ),
+            _SectionCard(
+              title: 'Song library',
+              child: Column(
+                children: [
+                  ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    leading: const Icon(Icons.file_upload_outlined, color: AppColors.text),
+                    title: const Text('Import'),
+                    onTap: () => unawaited(_importSongLibrary()),
+                  ),
+                  ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    leading: const Icon(Icons.ios_share, color: AppColors.text),
+                    title: const Text('Export'),
+                    onTap: _exportSongLibrary,
                   ),
                 ],
               ),

@@ -1,15 +1,14 @@
-"""Append worship songs 401+ to assets/songs.json."""
+"""Append worship songs 401+ to samples/songs_library_template.json."""
 import json
 import os
 
-SONGS_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), "assets", "songs.json")
+SONGS_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), "samples", "songs_library_template.json")
 
 
-def song(number: str, key: str, title: str, lyrics: str, songbook_ref: str = "") -> dict:
+def song(number: str, key: str, title: str, lyrics: str) -> dict:
     return {
         "number": number,
         "key": key,
-        "songbookRef": songbook_ref,
         "title": title,
         "lyrics": lyrics.strip(),
     }

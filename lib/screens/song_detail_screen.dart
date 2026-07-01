@@ -57,7 +57,6 @@ class _SongDetailScreenState extends State<SongDetailScreen> {
       key: widget.song.key,
       lyrics: _lyricsController.text,
       number: widget.song.number,
-      songbookRef: widget.song.songbookRef,
     );
 
     if (!mounted) return;
@@ -116,17 +115,6 @@ class _SongDetailScreenState extends State<SongDetailScreen> {
                               color: AppColors.text,
                             ),
                           ),
-                        if (widget.song.songbookRef.isNotEmpty) ...[
-                          if (widget.song.key.isNotEmpty)
-                            const SizedBox(height: 4),
-                          Text(
-                            widget.song.songbookRef,
-                            style: const TextStyle(
-                              fontSize: 14,
-                              color: AppColors.text,
-                            ),
-                          ),
-                        ],
                         const SizedBox(height: 8),
                         const Text(
                           'Lyrics',

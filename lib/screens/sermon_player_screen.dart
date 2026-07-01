@@ -4,11 +4,11 @@ import 'package:audio_session/audio_session.dart';
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 
-import '../models/sermon_feed_item.dart';
+import '../models/podcast_feed_item.dart';
 import '../theme/app_colors.dart';
 
 class SermonPlayerScreen extends StatefulWidget {
-  final SermonFeedItem item;
+  final PodcastFeedItem item;
 
   const SermonPlayerScreen({
     super.key,
@@ -81,7 +81,7 @@ class _SermonPlayerScreenState extends State<SermonPlayerScreen> {
 
     try {
       await session.setActive(true);
-      await _player.setUrl(widget.item.audioUrl);
+      await _player.setUrl(widget.item.enclosureUrl);
       await _player.play();
     } catch (error) {
       if (!mounted) return;
@@ -135,7 +135,7 @@ class _SermonPlayerScreenState extends State<SermonPlayerScreen> {
       appBar: AppBar(
         backgroundColor: AppColors.dustyBlue,
         foregroundColor: AppColors.text,
-        title: const Text('Sermon'),
+        title: const Text('Podcast'),
       ),
       body: SafeArea(
         child: Padding(
@@ -153,9 +153,9 @@ class _SermonPlayerScreenState extends State<SermonPlayerScreen> {
                   ),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(16),
-                    child: item.coverImage != null && item.coverImage!.isNotEmpty
+                    child: item.imageUrl != null && item.imageUrl!.isNotEmpty
                         ? Image.network(
-                            item.coverImage!,
+                            item.imageUrl!,
                             fit: BoxFit.cover,
                             errorBuilder: (_, __, ___) => _coverPlaceholder(),
                           )
@@ -165,7 +165,7 @@ class _SermonPlayerScreenState extends State<SermonPlayerScreen> {
               ),
               const SizedBox(height: 20),
               Text(
-                item.sermonTitle,
+                item.title,
                 style: const TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
@@ -173,13 +173,14 @@ class _SermonPlayerScreenState extends State<SermonPlayerScreen> {
                 ),
               ),
               const SizedBox(height: 8),
-              Text(
-                item.preachedBy,
-                style: const TextStyle(
-                  fontSize: 16,
-                  color: AppColors.text,
+              if (item.author.isNotEmpty)
+                Text(
+                  item.author,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    color: AppColors.text,
+                  ),
                 ),
-              ),
               if (item.displayDateLabel != null) ...[
                 const SizedBox(height: 4),
                 Text(

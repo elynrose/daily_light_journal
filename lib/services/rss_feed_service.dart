@@ -2,8 +2,8 @@ import 'package:http/http.dart' as http;
 import 'package:xml/xml.dart';
 
 import '../models/feed_sort.dart';
-import '../models/sermon_feed_data.dart';
-import '../models/sermon_feed_item.dart';
+import '../models/podcast_feed_data.dart';
+import '../models/podcast_feed_item.dart';
 
 class RssFeedService {
   RssFeedService._();
@@ -20,10 +20,25 @@ class RssFeedService {
     '.opus',
   };
 
-  Future<SermonFeedData> fetchFeed(String feedUrl) async {
+  static const _monthNames = {
+    'jan': 1,
+    'feb': 2,
+    'mar': 3,
+    'apr': 4,
+    'may': 5,
+    'jun': 6,
+    'jul': 7,
+    'aug': 8,
+    'sep': 9,
+    'oct': 10,
+    'nov': 11,
+    'dec': 12,
+  };
+
+  Future<PodcastFeedData> fetchFeed(String feedUrl) async {
     final trimmed = feedUrl.trim();
     if (trimmed.isEmpty) {
-      return const SermonFeedData(items: []);
+      return const PodcastFeedData(items: []);
     }
 
     final uri = Uri.tryParse(trimmed);
@@ -42,16 +57,33 @@ class RssFeedService {
     return parseFeedXml(response.body);
   }
 
-  SermonFeedData parseFeedXml(String xmlBody) {
+  PodcastFeedData parseFeedXml(String xmlBody) {
     final document = XmlDocument.parse(xmlBody);
     final channel = _findChannel(document);
-    final feedPin = channel == null ? null : _childText(channel, 'pin');
+    final feedPin = channel == null ? null : _childText(channel, {'pin'});
     final sortOption = FeedSortOptionLabel.fromFeedFields(
-      orderBy: channel == null ? null : _childText(channel, 'order_by'),
+      orderBy: channel == null ? null : _childText(channel, {'order_by'}),
       orderDirection:
-          channel == null ? null : _childText(channel, 'order_direction'),
+          channel == null ? null : _childText(channel, {'order_direction'}),
     );
-    final items = <SermonFeedItem>[];
+    final channelAuthor = channel == null
+        ? null
+        : _firstNonEmpty([
+            _childText(channel, {'author'}),
+            _childText(channel, {'itunes:author'}),
+          ]);
+    final channelLanguage = channel == null
+        ? null
+        : _childText(channel, {'language'});
+    final channelImage = channel == null
+        ? null
+        : _firstNonEmpty([
+            _attributeValue(channel, 'image', 'href'),
+            _attributeValue(channel, 'itunes:image', 'href'),
+            _childText(channel, {'image'}),
+          ]);
+
+    final items = <PodcastFeedItem>[];
 
     for (final element in document.descendants.whereType<XmlElement>()) {
       final localName = element.localName.toLowerCase();
@@ -59,13 +91,18 @@ class RssFeedService {
         continue;
       }
 
-      final parsed = _parseFeedElement(element);
+      final parsed = _parseFeedElement(
+        element,
+        channelAuthor: channelAuthor,
+        channelLanguage: channelLanguage,
+        channelImage: channelImage,
+      );
       if (parsed != null) {
         items.add(parsed);
       }
     }
 
-    return SermonFeedData(
+    return PodcastFeedData(
       pin: feedPin,
       sortOption: sortOption,
       items: sortFeedItems(items, sortOption),
@@ -81,86 +118,112 @@ class RssFeedService {
     return null;
   }
 
-  SermonFeedItem? _parseFeedElement(XmlElement element) {
-    final sermonTitle = _firstNonEmpty([
-      _childText(element, 'sermon_title'),
-      _childText(element, 'title'),
+  PodcastFeedItem? _parseFeedElement(
+    XmlElement element, {
+    String? channelAuthor,
+    String? channelLanguage,
+    String? channelImage,
+  }) {
+    final title = _firstNonEmpty([
+      _childText(element, {'title'}),
     ]);
-    final preachedBy = _firstNonEmpty([
-      _childText(element, 'preached_by'),
-      _childText(element, 'author'),
-      _childText(element, 'creator'),
-      _childText(element, 'itunes:author'),
-    ]);
-    final audioUrl = _firstNonEmpty([
-      _childText(element, 'audio_url'),
-      _childText(element, 'audio'),
+    final enclosureUrl = _firstNonEmpty([
       _enclosureAudioUrl(element),
       _linkAudioUrl(element),
     ]);
 
-    if (sermonTitle == null || preachedBy == null || audioUrl == null) {
+    if (title == null || enclosureUrl == null) {
       return null;
     }
 
-    final datePreached = _parseDate(_childText(element, 'date_preached'));
-    final publishedDate = _parseDate(
+    final author = _firstNonEmpty([
+      _childText(element, {'author'}),
+      _childText(element, {'itunes:author'}),
+      _childText(element, {'creator'}),
+      _childText(element, {'dc:creator'}),
+      channelAuthor,
+    ]) ??
+        '';
+
+    final pubDate = _parseDate(
       _firstNonEmpty([
-        _childText(element, 'published_date'),
-        _childText(element, 'pubDate'),
-        _childText(element, 'published'),
-        _childText(element, 'updated'),
+        _childText(element, {'pubdate'}),
+        _childText(element, {'published'}),
+        _childText(element, {'updated'}),
       ]),
     );
 
-    return SermonFeedItem(
-      sermonTitle: sermonTitle,
-      preachedBy: preachedBy,
-      audioUrl: audioUrl,
-      datePreached: datePreached,
-      coverImage: _firstNonEmpty([
-        _childText(element, 'cover_image'),
-        _childText(element, 'image'),
+    return PodcastFeedItem(
+      title: title,
+      author: author,
+      enclosureUrl: enclosureUrl,
+      pubDate: pubDate,
+      imageUrl: _firstNonEmpty([
+        _attributeValue(element, 'image', 'href'),
         _attributeValue(element, 'itunes:image', 'href'),
+        _childText(element, {'image'}),
         _mediaThumbnailUrl(element),
+        channelImage,
       ]),
-      language: _childText(element, 'language'),
+      language: _firstNonEmpty([
+        _childText(element, {'language'}),
+        channelLanguage,
+      ]),
       category: _parseCategory(element),
-      publishedDate: publishedDate,
-      pin: _childText(element, 'pin'),
-      id: _firstNonEmpty([
-        _childText(element, 'guid'),
-        _childText(element, 'id'),
-        audioUrl,
-        sermonTitle,
+      pin: _childText(element, {'pin'}),
+      guid: _firstNonEmpty([
+        _childText(element, {'guid'}),
+        _childText(element, {'id'}),
+        enclosureUrl,
+        title,
       ]),
     );
   }
 
   String? _parseCategory(XmlElement element) {
     for (final child in element.children.whereType<XmlElement>()) {
-      if (child.localName.toLowerCase() == 'category') {
-        final text = child.innerText.trim();
-        if (text.isNotEmpty) {
-          return text;
-        }
-        final label = child.getAttribute('text')?.trim();
-        if (label != null && label.isNotEmpty) {
-          return label;
-        }
+      if (!_matchesLocalName(child, 'category')) {
+        continue;
+      }
+      final text = child.innerText.trim();
+      if (text.isNotEmpty) {
+        return text;
+      }
+      final label = child.getAttribute('text')?.trim();
+      if (label != null && label.isNotEmpty) {
+        return label;
       }
     }
     return null;
   }
 
-  String? _childText(XmlElement parent, String name) {
+  bool _matchesLocalName(XmlElement element, String name) {
     final target = name.toLowerCase();
+    final local = element.localName.toLowerCase();
+    if (local == target) {
+      return true;
+    }
+    final qualified = element.name.qualified.toLowerCase();
+    return qualified == target || qualified.endsWith(':$target');
+  }
+
+  String? _childText(XmlElement parent, Set<String> names) {
+    final targets = names.map((name) => name.toLowerCase()).toSet();
     for (final child in parent.children.whereType<XmlElement>()) {
-      if (child.localName.toLowerCase() == target) {
-        final text = child.innerText.trim();
-        if (text.isNotEmpty) {
-          return text;
-        }
+      final local = child.localName.toLowerCase();
+      final qualified = child.name.qualified.toLowerCase();
+      final matches = targets.contains(local) ||
+          targets.contains(qualified) ||
+          targets.any(
+            (target) =>
+                target.contains(':') && qualified.endsWith(target.split(':').last),
+          );
+      if (!matches) {
+        continue;
+      }
+      final text = child.innerText.trim();
+      if (text.isNotEmpty) {
+        return text;
       }
     }
     return null;
@@ -169,11 +232,16 @@ class RssFeedService {
   String? _attributeValue(XmlElement parent, String name, String attribute) {
     final target = name.toLowerCase();
     for (final child in parent.children.whereType<XmlElement>()) {
-      if (child.localName.toLowerCase() == target) {
-        final value = child.getAttribute(attribute)?.trim();
-        if (value != null && value.isNotEmpty) {
-          return value;
-        }
+      final local = child.localName.toLowerCase();
+      final qualified = child.name.qualified.toLowerCase();
+      if (local != target &&
+          qualified != target &&
+          !qualified.endsWith(':$target')) {
+        continue;
+      }
+      final value = child.getAttribute(attribute)?.trim();
+      if (value != null && value.isNotEmpty) {
+        return value;
       }
     }
     return null;
@@ -181,7 +249,7 @@ class RssFeedService {
 
   String? _enclosureAudioUrl(XmlElement element) {
     for (final child in element.children.whereType<XmlElement>()) {
-      if (child.localName.toLowerCase() != 'enclosure') {
+      if (!_matchesLocalName(child, 'enclosure')) {
         continue;
       }
       final url = child.getAttribute('url')?.trim();
@@ -198,7 +266,7 @@ class RssFeedService {
 
   String? _linkAudioUrl(XmlElement element) {
     for (final child in element.children.whereType<XmlElement>()) {
-      if (child.localName.toLowerCase() != 'link') {
+      if (!_matchesLocalName(child, 'link')) {
         continue;
       }
       final href = child.getAttribute('href')?.trim() ??
@@ -220,7 +288,7 @@ class RssFeedService {
   String? _mediaThumbnailUrl(XmlElement element) {
     for (final child in element.descendants.whereType<XmlElement>()) {
       final name = child.localName.toLowerCase();
-      if (name == 'thumbnail' || name == 'media:thumbnail') {
+      if (name == 'thumbnail' || name.endsWith(':thumbnail')) {
         final url = child.getAttribute('url')?.trim();
         if (url != null && url.isNotEmpty) {
           return url;
@@ -240,7 +308,39 @@ class RssFeedService {
     if (raw == null || raw.trim().isEmpty) {
       return null;
     }
-    return DateTime.tryParse(raw.trim());
+    final trimmed = raw.trim();
+    final iso = DateTime.tryParse(trimmed);
+    if (iso != null) {
+      return iso;
+    }
+    return _parseRfc822Date(trimmed);
+  }
+
+  DateTime? _parseRfc822Date(String raw) {
+    final parts = raw.split(RegExp(r'\s+'));
+    if (parts.length < 4) {
+      return null;
+    }
+
+    final day = int.tryParse(parts[1].replaceAll(RegExp(r'\D'), ''));
+    final month = _monthNames[parts[2].toLowerCase().substring(0, 3)];
+    final year = int.tryParse(parts[3]);
+    if (day == null || month == null || year == null) {
+      return null;
+    }
+
+    var hour = 0;
+    var minute = 0;
+    var second = 0;
+    if (parts.length > 4 && parts[4].contains(':')) {
+      final timeParts = parts[4].split(':');
+      hour = int.tryParse(timeParts.elementAtOrNull(0) ?? '') ?? 0;
+      minute = int.tryParse(timeParts.elementAtOrNull(1) ?? '') ?? 0;
+      second = int.tryParse(timeParts.elementAtOrNull(2) ?? '') ?? 0;
+    }
+
+    final normalizedYear = year < 100 ? 2000 + year : year;
+    return DateTime.utc(normalizedYear, month, day, hour, minute, second);
   }
 
   String? _firstNonEmpty(Iterable<String?> values) {

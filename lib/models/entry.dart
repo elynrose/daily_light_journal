@@ -38,7 +38,7 @@ extension EntryCategoryLabel on EntryCategory {
       case EntryCategory.scripture:
         return 'SCRIPTURES';
       case EntryCategory.feed:
-        return 'FEED';
+        return 'PODCAST';
     }
   }
 
@@ -51,7 +51,7 @@ extension EntryCategoryLabel on EntryCategory {
       case EntryCategory.scripture:
         return 'Scriptures';
       case EntryCategory.feed:
-        return 'Feed';
+        return 'Podcast';
     }
   }
 }

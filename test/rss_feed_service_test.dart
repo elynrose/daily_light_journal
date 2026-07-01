@@ -1,5 +1,5 @@
 import 'package:church_journal/models/feed_sort.dart';
-import 'package:church_journal/models/sermon_feed_item.dart';
+import 'package:church_journal/models/podcast_feed_item.dart';
 import 'package:church_journal/services/feed_pin_session.dart';
 import 'package:church_journal/services/rss_feed_service.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -9,23 +9,24 @@ void main() {
 
   setUp(FeedPinSession.instance.clearAll);
 
-  test('parses custom sermon RSS fields', () {
+  test('parses standard podcast RSS fields', () {
     const xml = '''
 <?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0">
+<rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd">
   <channel>
     <pin>2468</pin>
-    <order_by>sermon_title</order_by>
+    <order_by>title</order_by>
     <order_direction>asc</order_direction>
+    <language>en-us</language>
+    <itunes:author>Grace Community</itunes:author>
     <item>
-      <sermon_title>Walking in Faith</sermon_title>
-      <preached_by>Pastor John</preached_by>
-      <audio_url>https://example.com/sermon.mp3</audio_url>
+      <title>Walking in Faith</title>
+      <itunes:author>Pastor John</itunes:author>
+      <pubDate>Sat, 15 Jun 2024 18:00:00 GMT</pubDate>
+      <enclosure url="https://example.com/sermon.mp3" type="audio/mpeg"/>
+      <itunes:image href="https://example.com/cover.jpg"/>
       <category>Sunday Sermon</category>
-      <date_preached>2024-06-15</date_preached>
-      <cover_image>https://example.com/cover.jpg</cover_image>
-      <language>English</language>
-      <published_date>2024-06-16T10:00:00Z</published_date>
+      <guid>episode-1</guid>
     </item>
   </channel>
 </rss>
@@ -35,14 +36,14 @@ void main() {
     expect(feed.pin, '2468');
     expect(feed.sortOption, FeedSortOption.titleAz);
     expect(feed.items, hasLength(1));
-    expect(feed.items.first.sermonTitle, 'Walking in Faith');
-    expect(feed.items.first.preachedBy, 'Pastor John');
-    expect(feed.items.first.audioUrl, 'https://example.com/sermon.mp3');
-    expect(feed.items.first.datePreached, DateTime.parse('2024-06-15'));
-    expect(feed.items.first.coverImage, 'https://example.com/cover.jpg');
+    expect(feed.items.first.title, 'Walking in Faith');
+    expect(feed.items.first.author, 'Pastor John');
+    expect(feed.items.first.enclosureUrl, 'https://example.com/sermon.mp3');
+    expect(feed.items.first.pubDate, DateTime.utc(2024, 6, 15, 18));
+    expect(feed.items.first.imageUrl, 'https://example.com/cover.jpg');
     expect(feed.items.first.category, 'Sunday Sermon');
-    expect(feed.items.first.language, 'English');
-    expect(feed.items.first.publishedDate, DateTime.parse('2024-06-16T10:00:00Z'));
+    expect(feed.items.first.language, 'en-us');
+    expect(feed.items.first.guid, 'episode-1');
     expect(feed.items.first.effectivePin(feed.pin), '2468');
   });
 
@@ -52,9 +53,9 @@ void main() {
   <channel>
     <pin>1111</pin>
     <item>
-      <sermon_title>Special Sermon</sermon_title>
-      <preached_by>Pastor Lee</preached_by>
-      <audio_url>https://example.com/special.mp3</audio_url>
+      <title>Special Episode</title>
+      <author>Pastor Lee</author>
+      <enclosure url="https://example.com/special.mp3" type="audio/mpeg"/>
       <pin>9999</pin>
     </item>
   </channel>
@@ -67,7 +68,7 @@ void main() {
     expect(feed.items.first.effectivePin(feed.pin), '9999');
   });
 
-  test('parses standard podcast RSS with enclosure', () {
+  test('parses enclosure and RFC 822 pubDate', () {
     const xml = '''
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
@@ -84,19 +85,37 @@ void main() {
 
     final feed = service.parseFeedXml(xml);
     expect(feed.items, hasLength(1));
-    expect(feed.items.first.sermonTitle, 'Sunday Message');
-    expect(feed.items.first.preachedBy, 'Rev. Smith');
-    expect(feed.items.first.audioUrl, 'https://example.com/audio.mp3');
+    expect(feed.items.first.title, 'Sunday Message');
+    expect(feed.items.first.author, 'Rev. Smith');
+    expect(feed.items.first.enclosureUrl, 'https://example.com/audio.mp3');
+    expect(feed.items.first.pubDate, DateTime.utc(2024, 6, 16, 12));
+  });
+
+  test('uses channel author when item has no author', () {
+    const xml = '''
+<rss xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd">
+  <channel>
+    <itunes:author>Church Media Team</itunes:author>
+    <item>
+      <title>Weekly Update</title>
+      <enclosure url="https://example.com/update.mp3" type="audio/mpeg"/>
+    </item>
+  </channel>
+</rss>
+''';
+
+    final feed = service.parseFeedXml(xml);
+    expect(feed.items.first.author, 'Church Media Team');
   });
 
   test('filters items by search query and language', () {
-    final item = SermonFeedItem(
-      sermonTitle: 'Hope in Christ',
-      preachedBy: 'Pastor Ana',
-      audioUrl: 'https://example.com/hope.mp3',
+    final item = PodcastFeedItem(
+      title: 'Hope in Christ',
+      author: 'Pastor Ana',
+      enclosureUrl: 'https://example.com/hope.mp3',
       language: 'Spanish',
       category: 'Bible Study',
-      datePreached: DateTime(2024, 3, 10),
+      pubDate: DateTime(2024, 3, 10),
     );
 
     expect(item.matchesFilter(query: 'hope', language: null), isTrue);
@@ -129,25 +148,25 @@ void main() {
 
   test('sorts feed items by selected option', () {
     final items = [
-      SermonFeedItem(
-        sermonTitle: 'Zion',
-        preachedBy: 'Pastor A',
-        audioUrl: 'https://example.com/z.mp3',
-        datePreached: DateTime(2024, 1, 1),
+      PodcastFeedItem(
+        title: 'Zion',
+        author: 'Pastor A',
+        enclosureUrl: 'https://example.com/z.mp3',
+        pubDate: DateTime(2024, 1, 1),
       ),
-      SermonFeedItem(
-        sermonTitle: 'Alpha',
-        preachedBy: 'Pastor B',
-        audioUrl: 'https://example.com/a.mp3',
-        datePreached: DateTime(2024, 6, 1),
+      PodcastFeedItem(
+        title: 'Alpha',
+        author: 'Pastor B',
+        enclosureUrl: 'https://example.com/a.mp3',
+        pubDate: DateTime(2024, 6, 1),
       ),
     ];
 
-    final newest = sortFeedItems(items, FeedSortOption.datePreachedNewest);
-    expect(newest.first.sermonTitle, 'Alpha');
+    final newest = sortFeedItems(items, FeedSortOption.publishedNewest);
+    expect(newest.first.title, 'Alpha');
 
     final titleAz = sortFeedItems(items, FeedSortOption.titleAz);
-    expect(titleAz.first.sermonTitle, 'Alpha');
+    expect(titleAz.first.title, 'Alpha');
   });
 
   test('skips items missing required fields', () {
@@ -155,12 +174,11 @@ void main() {
 <rss>
   <channel>
     <item>
-      <sermon_title>Missing Audio</sermon_title>
-      <preached_by>Someone</preached_by>
+      <title>Missing Audio</title>
+      <author>Someone</author>
     </item>
     <item>
-      <title>Missing Preacher</title>
-      <audio_url>https://example.com/a.mp3</audio_url>
+      <enclosure url="https://example.com/a.mp3" type="audio/mpeg"/>
     </item>
   </channel>
 </rss>

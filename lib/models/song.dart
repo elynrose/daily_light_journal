@@ -4,7 +4,6 @@ class Song {
   final String key;
   final String lyrics;
   final String number;
-  final String songbookRef;
 
   const Song({
     required this.id,
@@ -12,7 +11,6 @@ class Song {
     required this.key,
     required this.lyrics,
     this.number = '',
-    this.songbookRef = '',
   });
 
   Song copyWith({
@@ -21,7 +19,6 @@ class Song {
     String? key,
     String? lyrics,
     String? number,
-    String? songbookRef,
   }) {
     return Song(
       id: id ?? this.id,
@@ -29,7 +26,6 @@ class Song {
       key: key ?? this.key,
       lyrics: lyrics ?? this.lyrics,
       number: number ?? this.number,
-      songbookRef: songbookRef ?? this.songbookRef,
     );
   }
 
@@ -40,7 +36,6 @@ class Song {
       'key': key,
       'lyrics': lyrics,
       'number': number,
-      'songbookRef': songbookRef,
     };
   }
 
@@ -51,7 +46,6 @@ class Song {
       key: map['key'] as String? ?? '',
       lyrics: map['lyrics'] as String? ?? '',
       number: map['number'] as String? ?? '',
-      songbookRef: map['songbookRef'] as String? ?? '',
     );
   }
 
@@ -63,7 +57,6 @@ class Song {
       key: json['key'] as String? ?? '',
       lyrics: json['lyrics'] as String? ?? '',
       number: number,
-      songbookRef: json['songbookRef'] as String? ?? '',
     );
   }
 }

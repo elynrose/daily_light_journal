@@ -1,25 +1,23 @@
-class SermonFeedItem {
-  final String sermonTitle;
-  final String preachedBy;
-  final String audioUrl;
-  final DateTime? datePreached;
-  final String? coverImage;
+class PodcastFeedItem {
+  final String title;
+  final String author;
+  final String enclosureUrl;
+  final DateTime? pubDate;
+  final String? imageUrl;
   final String? language;
   final String? category;
-  final DateTime? publishedDate;
-  final String? id;
+  final String? guid;
   final String? pin;
 
-  const SermonFeedItem({
-    required this.sermonTitle,
-    required this.preachedBy,
-    required this.audioUrl,
-    this.datePreached,
-    this.coverImage,
+  const PodcastFeedItem({
+    required this.title,
+    required this.author,
+    required this.enclosureUrl,
+    this.pubDate,
+    this.imageUrl,
     this.language,
     this.category,
-    this.publishedDate,
-    this.id,
+    this.guid,
     this.pin,
   });
 
@@ -36,7 +34,7 @@ class SermonFeedItem {
   }
 
   String? get displayDateLabel {
-    final date = datePreached ?? publishedDate;
+    final date = pubDate;
     if (date == null) return null;
     final month = date.month.toString().padLeft(2, '0');
     final day = date.day.toString().padLeft(2, '0');
@@ -68,13 +66,12 @@ class SermonFeedItem {
     }
 
     final searchable = [
-      sermonTitle,
-      preachedBy,
+      title,
+      author,
       this.language ?? '',
       this.category ?? '',
       displayDateLabel ?? '',
-      if (datePreached != null) datePreached!.toIso8601String(),
-      if (publishedDate != null) publishedDate!.toIso8601String(),
+      if (pubDate != null) pubDate!.toIso8601String(),
     ].join(' ').toLowerCase();
 
     return searchable.contains(trimmed);

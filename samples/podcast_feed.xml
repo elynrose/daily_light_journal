@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"
+     xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd"
+     xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Grace Community Podcast</title>
+    <link>https://example.org/podcast</link>
+    <description>Sample podcast feed for Church Journal</description>
+    <language>en-us</language>
+    <itunes:author>Grace Community Church</itunes:author>
+    <itunes:image href="https://example.org/images/podcast-cover.jpg"/>
+
+    <!-- Optional feed-wide PIN (required before playing any episode) -->
+    <pin>2468</pin>
+
+    <!-- Optional default sort (order_by: pubdate | title | author | category) -->
+    <order_by>pubdate</order_by>
+    <order_direction>desc</order_direction>
+
+    <item>
+      <title>Walking in Faith</title>
+      <itunes:author>Pastor John Miller</itunes:author>
+      <pubDate>Sat, 15 Jun 2024 18:00:00 GMT</pubDate>
+      <enclosure url="https://example.org/audio/walking-in-faith.mp3" type="audio/mpeg" length="18432000"/>
+      <itunes:image href="https://example.org/images/walking-in-faith.jpg"/>
+      <category>Sunday Sermon</category>
+      <guid isPermaLink="false">episode-walking-in-faith</guid>
+    </item>
+
+    <item>
+      <title>The Good Shepherd</title>
+      <itunes:author>Rev. Sarah Chen</itunes:author>
+      <pubDate>Sat, 08 Jun 2024 18:00:00 GMT</pubDate>
+      <enclosure url="https://example.org/audio/good-shepherd.mp3" type="audio/mpeg" length="16200000"/>
+      <itunes:image href="https://example.org/images/good-shepherd.jpg"/>
+      <category>Sunday Sermon</category>
+      <guid isPermaLink="false">episode-good-shepherd</guid>
+    </item>
+
+    <item>
+      <title>Esperanza en Cristo</title>
+      <itunes:author>Pastor Ana Ruiz</itunes:author>
+      <pubDate>Sun, 26 May 2024 11:00:00 GMT</pubDate>
+      <enclosure url="https://example.org/audio/esperanza-en-cristo.mp3" type="audio/mpeg" length="15000000"/>
+      <itunes:image href="https://example.org/images/esperanza.jpg"/>
+      <category>Bible Study</category>
+      <language>es</language>
+      <guid isPermaLink="false">episode-esperanza-en-cristo</guid>
+    </item>
+
+    <!-- Item with its own PIN (overrides the channel PIN for this episode only) -->
+    <item>
+      <title>Members-Only Teaching</title>
+      <itunes:author>Pastor John Miller</itunes:author>
+      <pubDate>Sun, 19 May 2024 09:00:00 GMT</pubDate>
+      <enclosure url="https://example.org/audio/members-only.mp3" type="audio/mpeg" length="12000000"/>
+      <category>Leadership</category>
+      <pin>9999</pin>
+      <guid isPermaLink="false">episode-members-only</guid>
+    </item>
+
+    <item>
+      <title>Sunday Morning Message</title>
+      <author>Rev. David Brooks</author>
+      <pubDate>Sun, 12 May 2024 11:00:00 GMT</pubDate>
+      <enclosure url="https://example.org/audio/sunday-morning.mp3" type="audio/mpeg" length="18432000"/>
+      <itunes:image href="https://example.org/images/sunday-morning.jpg"/>
+      <category>Midweek Service</category>
+      <guid isPermaLink="false">episode-sunday-morning</guid>
+    </item>
+
+  </channel>
+</rss>

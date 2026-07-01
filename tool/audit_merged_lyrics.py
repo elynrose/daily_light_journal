@@ -3,7 +3,7 @@ import json
 import os
 import re
 
-SONGS_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), "assets", "songs.json")
+SONGS_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), "samples", "songs_library_template.json")
 
 KNOWN_SECOND_SONG_STARTS = [
     r"^Do Lord,",

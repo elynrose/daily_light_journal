@@ -2,7 +2,7 @@
 import json
 import os
 
-SONGS_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), "assets", "songs.json")
+SONGS_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), "samples", "songs_library_template.json")
 
 BLESSED_BE_LYRICS = """Blessed be the name of the Lord
 Blessed be the name of the Lord
@@ -59,7 +59,6 @@ NEW_SONGS = [
     {
         "number": "376",
         "key": "B",
-        "songbookRef": "",
         "title": "Way Maker",
         "lyrics": """You are here, moving in our midst
 I worship You, I worship You
@@ -88,7 +87,6 @@ You never stop, You never stop working""",
     {
         "number": "377",
         "key": "A",
-        "songbookRef": "",
         "title": "Goodness of God",
         "lyrics": """I love You, Lord, for Your mercy never fails me
 All my days I've been held in Your hand
@@ -107,7 +105,6 @@ And I have lived in the goodness of God""",
     {
         "number": "378",
         "key": "D",
-        "songbookRef": "",
         "title": "What a Beautiful Name",
         "lyrics": """You were the Word at the beginning
 One with God the Lord Most High
@@ -133,7 +130,6 @@ For You are raised to life again""",
     {
         "number": "379",
         "key": "G",
-        "songbookRef": "",
         "title": "Shout to the Lord",
         "lyrics": """My Jesus, my Saviour
 Lord, there is none like You
@@ -155,7 +151,6 @@ Nothing compares to the promise I have in You""",
     {
         "number": "380",
         "key": "D",
-        "songbookRef": "",
         "title": "Here I Am to Worship",
         "lyrics": """Light of the world, You stepped down into darkness
 Opened my eyes, let me see
@@ -176,7 +171,6 @@ Lord, I love to bring You all that I am""",
     {
         "number": "381",
         "key": "A",
-        "songbookRef": "",
         "title": "Mighty to Save",
         "lyrics": """Everyone needs compassion
 Love that's never failing
@@ -201,7 +195,6 @@ To be used for Your glory""",
     {
         "number": "382",
         "key": "D",
-        "songbookRef": "",
         "title": "In Christ Alone",
         "lyrics": """In Christ alone my hope is found
 He is my light, my strength, my song
@@ -223,7 +216,6 @@ Here in the death of Christ I live""",
     {
         "number": "383",
         "key": "D",
-        "songbookRef": "",
         "title": "Great Is Thy Faithfulness",
         "lyrics": """Great is Thy faithfulness, O God my Father
 There is no shadow of turning with Thee
@@ -247,7 +239,6 @@ Blessings all mine, with ten thousand beside""",
     {
         "number": "384",
         "key": "D",
-        "songbookRef": "",
         "title": "Blessed Assurance",
         "lyrics": """Blessed assurance, Jesus is mine
 Oh, what a foretaste of glory divine
@@ -270,7 +261,6 @@ Filled with His goodness, lost in His love""",
     {
         "number": "385",
         "key": "G",
-        "songbookRef": "",
         "title": "I'll Fly Away",
         "lyrics": """Some glad morning when this life is o'er
 I'll fly away
@@ -289,7 +279,6 @@ I'll fly away""",
     {
         "number": "386",
         "key": "G",
-        "songbookRef": "",
         "title": "Rock of Ages",
         "lyrics": """Rock of Ages, cleft for me
 Let me hide myself in Thee
@@ -313,7 +302,6 @@ Let me hide myself in Thee""",
     {
         "number": "387",
         "key": "D",
-        "songbookRef": "",
         "title": "Come Thou Fount",
         "lyrics": """Come Thou Fount of every blessing
 Tune my heart to sing Thy grace
@@ -343,7 +331,6 @@ Seal it for Thy courts above""",
     {
         "number": "388",
         "key": "E",
-        "songbookRef": "",
         "title": "Be Thou My Vision",
         "lyrics": """Be Thou my Vision, O Lord of my heart
 Naught be all else to me, save that Thou art
@@ -365,7 +352,6 @@ Still be my Vision, O Ruler of all""",
     {
         "number": "389",
         "key": "D",
-        "songbookRef": "",
         "title": "Holy, Holy, Holy",
         "lyrics": """Holy, holy, holy! Lord God Almighty
 Early in the morning our song shall rise to Thee
@@ -383,7 +369,6 @@ Perfect in power, in love, and purity""",
     {
         "number": "390",
         "key": "D",
-        "songbookRef": "",
         "title": "Open the Eyes of My Heart",
         "lyrics": """Open the eyes of my heart, Lord
 Open the eyes of my heart
@@ -400,7 +385,6 @@ I want to see You""",
     {
         "number": "391",
         "key": "C",
-        "songbookRef": "",
         "title": "Revelation Song",
         "lyrics": """Worthy is the Lamb who was slain
 Holy, holy is He
@@ -423,7 +407,6 @@ Such a marvelous mystery""",
     {
         "number": "392",
         "key": "G",
-        "songbookRef": "",
         "title": "Build My Life",
         "lyrics": """Worthy of every song we could ever sing
 Worthy of all the praise we could ever bring
@@ -448,7 +431,6 @@ And I will not be shaken""",
     {
         "number": "393",
         "key": "G",
-        "songbookRef": "",
         "title": "Living Hope",
         "lyrics": """How great the chasm that lay between us
 How high the mountain I could not climb
@@ -472,7 +454,6 @@ To wear my sin and bear my shame""",
     {
         "number": "394",
         "key": "G",
-        "songbookRef": "",
         "title": "10,000 Reasons (Bless the Lord)",
         "lyrics": """Bless the Lord, O my soul
 O my soul
@@ -496,7 +477,6 @@ Ten thousand years and then forevermore""",
     {
         "number": "395",
         "key": "A",
-        "songbookRef": "",
         "title": "Good Good Father",
         "lyrics": """I've heard a thousand stories of what they think You're like
 But I've heard the tender whisper of love in the dead of night
@@ -521,7 +501,6 @@ As You call me deeper still into love, love, love""",
     {
         "number": "396",
         "key": "G",
-        "songbookRef": "",
         "title": "The Old Rugged Cross",
         "lyrics": """On a hill far away stood an old rugged cross
 The emblem of suffering and shame
@@ -544,7 +523,6 @@ To pardon and sanctify me""",
     {
         "number": "397",
         "key": "G",
-        "songbookRef": "",
         "title": "Nothing But the Blood",
         "lyrics": """What can wash away my sin?
 Nothing but the blood of Jesus
@@ -567,7 +545,6 @@ Nothing but the blood of Jesus""",
     {
         "number": "398",
         "key": "F",
-        "songbookRef": "",
         "title": "Just As I Am",
         "lyrics": """Just as I am, without one plea
 But that Thy blood was shed for me
@@ -593,7 +570,6 @@ O Lamb of God, I come, I come""",
     {
         "number": "399",
         "key": "G",
-        "songbookRef": "",
         "title": "Who You Say I Am",
         "lyrics": """Who am I that the highest King
 Would welcome me
@@ -621,7 +597,6 @@ I am who You say I am""",
     {
         "number": "400",
         "key": "G",
-        "songbookRef": "",
         "title": "King of Kings",
         "lyrics": """In the darkness we were waiting
 Without hope without light
@@ -661,7 +636,6 @@ def main() -> None:
         {
             "number": "375",
             "key": "F",
-            "songbookRef": "",
             "title": "Be not afraid, put fear aside",
             "lyrics": BE_NOT_AFRAID_LYRICS,
         }

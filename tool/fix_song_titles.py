@@ -1,9 +1,9 @@
-"""Clean song titles and lyrics in assets/songs.json."""
+"""Clean song titles and lyrics in samples/songs_library_template.json."""
 import json
 import os
 import re
 
-SONGS_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), "assets", "songs.json")
+SONGS_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), "samples", "songs_library_template.json")
 
 REF_TITLE_RE = re.compile(
     r"^(?:(?:RH|MP|SP|OB|SK)\s*[\d\-]+(?:\s+(?:RH|MP|SP|OB|SK)\s*[\d\-]+)*(?:\s+OB)?\s*)+$",
@@ -152,8 +152,6 @@ def fix_song(song: dict) -> list[str]:
     if title_was_bad:
         replacement = first_content_line(song["lyrics"])
         if replacement:
-            if not song.get("songbookRef", "").strip() and is_ref_title(title):
-                song["songbookRef"] = title
             title = replacement
             changes.append("title_from_lyric")
 

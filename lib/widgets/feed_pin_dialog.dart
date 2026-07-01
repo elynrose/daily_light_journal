@@ -39,13 +39,13 @@ class _FeedPinDialogState extends State<_FeedPinDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Feed PIN'),
+      title: const Text('Podcast PIN'),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const Text(
-            'Enter the PIN for this sermon feed to play audio.',
+            'Enter the PIN for this podcast to play audio.',
             style: TextStyle(color: AppColors.text),
           ),
           const SizedBox(height: 12),

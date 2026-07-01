@@ -26,7 +26,6 @@ void main() async {
   await SongStorage.instance.init();
   await PhotoStorage.instance.init();
   await AppPreferencesService.instance.init();
-  await SongStorage.instance.seedFromAssetIfEmpty();
   await BibleStorage.instance.load();
   await NotificationService.instance.init();
   await NotificationService.instance.refreshScheduledReminders();

@@ -178,6 +178,20 @@ class _SongsScreenState extends State<SongsScreen> {
                             'No songs in your list yet',
                             style: const TextStyle(color: AppColors.text),
                           ),
+                          const SizedBox(height: 8),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 24),
+                            child: Text(
+                              'Add songs here, or download the song library JSON from '
+                              'church-journal-legal and import it in Settings. '
+                              'Only add lyrics you are licensed or permitted to use.',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: AppColors.text,
+                                fontSize: 13,
+                              ),
+                            ),
+                          ),
                           const SizedBox(height: 12),
                           TextButton.icon(
                             onPressed: _openAddPage,
@@ -205,9 +219,9 @@ class _SongsScreenState extends State<SongsScreen> {
                               color: AppColors.text,
                             ),
                           ),
-                          subtitle: song.songbookRef.isNotEmpty
-                              ? Text('${song.key.isNotEmpty ? '${song.key} · ' : ''}${song.songbookRef}')
-                              : (song.key.isNotEmpty ? Text(song.key) : null),
+                          subtitle: song.key.isNotEmpty
+                              ? Text(song.key)
+                              : null,
                           onTap: () => _openDetailPage(song),
                           trailing: Row(
                             mainAxisSize: MainAxisSize.min,

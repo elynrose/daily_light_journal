@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import '../models/feed_sort.dart';
-import '../models/sermon_feed_item.dart';
+import '../models/podcast_feed_item.dart';
 import '../services/app_preferences_service.dart';
 import '../services/feed_pin_session.dart';
 import '../services/rss_feed_service.dart';
@@ -23,13 +23,13 @@ class _FeedListScreenState extends State<FeedListScreen> {
   final _prefsService = AppPreferencesService.instance;
   final _searchController = TextEditingController();
 
-  List<SermonFeedItem> _items = const [];
+  List<PodcastFeedItem> _items = const [];
   String? _feedPin;
   bool _isLoading = false;
   String? _errorMessage;
   String? _selectedLanguage;
   String? _selectedCategory;
-  FeedSortOption _sortOption = FeedSortOption.datePreachedNewest;
+  FeedSortOption _sortOption = FeedSortOption.publishedNewest;
 
   @override
   void initState() {
@@ -50,7 +50,7 @@ class _FeedListScreenState extends State<FeedListScreen> {
     unawaited(_loadFeed());
   }
 
-  List<String> _uniqueValues(String? Function(SermonFeedItem item) pick) {
+  List<String> _uniqueValues(String? Function(PodcastFeedItem item) pick) {
     final values = <String>{};
     for (final item in _items) {
       final value = pick(item)?.trim();
@@ -68,7 +68,7 @@ class _FeedListScreenState extends State<FeedListScreen> {
   List<String> get _availableCategories =>
       _uniqueValues((item) => item.category);
 
-  List<SermonFeedItem> get _filteredItems {
+  List<PodcastFeedItem> get _filteredItems {
     final query = _searchController.text;
     final filtered = _items
         .where(
@@ -141,7 +141,7 @@ class _FeedListScreenState extends State<FeedListScreen> {
     }
   }
 
-  Future<void> _openPlayer(SermonFeedItem item) async {
+  Future<void> _openPlayer(PodcastFeedItem item) async {
     final feedUrl = _prefsService.prefs.sermonFeedUrl.trim();
     final requiredPin = item.effectivePin(_feedPin);
 
@@ -293,7 +293,7 @@ class _FeedListScreenState extends State<FeedListScreen> {
       child: TextField(
         controller: _searchController,
         decoration: InputDecoration(
-          hintText: 'Search sermons',
+          hintText: 'Search episodes',
           filled: true,
           fillColor: Colors.white,
           prefixIcon: const Icon(Icons.search, color: AppColors.text),
@@ -336,7 +336,7 @@ class _FeedListScreenState extends State<FeedListScreen> {
     );
   }
 
-  Widget _buildSermonList(List<SermonFeedItem> items) {
+  Widget _buildEpisodeList(List<PodcastFeedItem> items) {
     return RefreshIndicator(
       onRefresh: _loadFeed,
       child: ListView.separated(
@@ -353,28 +353,30 @@ class _FeedListScreenState extends State<FeedListScreen> {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _FeedCoverThumbnail(coverUrl: item.coverImage),
+                  _FeedCoverThumbnail(coverUrl: item.imageUrl),
                   const SizedBox(width: 12),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          item.sermonTitle,
+                          item.title,
                           style: const TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w600,
                             color: AppColors.text,
                           ),
                         ),
-                        const SizedBox(height: 4),
-                        Text(
-                          item.preachedBy,
-                          style: const TextStyle(
-                            fontSize: 14,
-                            color: AppColors.text,
+                        if (item.author.isNotEmpty) ...[
+                          const SizedBox(height: 4),
+                          Text(
+                            item.author,
+                            style: const TextStyle(
+                              fontSize: 14,
+                              color: AppColors.text,
+                            ),
                           ),
-                        ),
+                        ],
                         if (item.displayDateLabel != null) ...[
                           const SizedBox(height: 2),
                           Text(
@@ -429,7 +431,7 @@ class _FeedListScreenState extends State<FeedListScreen> {
         child: Padding(
           padding: EdgeInsets.all(24),
           child: Text(
-            'Add a sermon feed URL in Settings to load sermons here.',
+            'Add a podcast feed URL in Settings to load episodes here.',
             textAlign: TextAlign.center,
             style: TextStyle(color: AppColors.text, fontSize: 15),
           ),
@@ -472,7 +474,7 @@ class _FeedListScreenState extends State<FeedListScreen> {
             mainAxisSize: MainAxisSize.min,
             children: [
               const Text(
-                'No sermons found in this feed.',
+                'No episodes found in this podcast.',
                 textAlign: TextAlign.center,
                 style: TextStyle(color: AppColors.text),
               ),
@@ -513,7 +515,7 @@ class _FeedListScreenState extends State<FeedListScreen> {
                       ),
                       Text(
                         hasActiveFilter
-                            ? 'No sermons match your search.'
+                            ? 'No episodes match your search.'
                             : 'No sermons found in this feed.',
                         textAlign: TextAlign.center,
                         style: const TextStyle(color: AppColors.text),
@@ -521,7 +523,7 @@ class _FeedListScreenState extends State<FeedListScreen> {
                     ],
                   ),
                 )
-              : _buildSermonList(filteredItems),
+              : _buildEpisodeList(filteredItems),
         ),
       ],
     );

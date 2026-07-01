@@ -39,13 +39,11 @@ def main() -> None:
 
         book = match.group(3) or ""
         book_num = match.group(4) or ""
-        songbook_ref = f"{book} {book_num}".strip() if book else ""
 
         songs.append(
             {
                 "number": match.group(1),
                 "key": match.group(2).strip(),
-                "songbookRef": songbook_ref,
                 "title": title,
                 "lyrics": lyrics,
             }

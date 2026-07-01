@@ -3,7 +3,7 @@ import json
 import os
 import re
 
-SONGS_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), "assets", "songs.json")
+SONGS_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), "samples", "songs_library_template.json")
 
 REF = re.compile(r"^(RH|MP|SP|OB|SK)\b", re.IGNORECASE)
 GARBAGE = re.compile(r"^PP PPaa|^\d+\s*\([A-G#b]?m?\)", re.IGNORECASE)

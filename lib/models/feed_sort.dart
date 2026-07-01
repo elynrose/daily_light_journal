@@ -1,23 +1,17 @@
-import 'sermon_feed_item.dart';
+import 'podcast_feed_item.dart';
 
 enum FeedSortOption {
-  datePreachedNewest,
-  datePreachedOldest,
   publishedNewest,
   publishedOldest,
   titleAz,
   titleZa,
-  preacherAz,
+  authorAz,
   categoryAz,
 }
 
 extension FeedSortOptionLabel on FeedSortOption {
   String get label {
     switch (this) {
-      case FeedSortOption.datePreachedNewest:
-        return 'Date preached (newest)';
-      case FeedSortOption.datePreachedOldest:
-        return 'Date preached (oldest)';
       case FeedSortOption.publishedNewest:
         return 'Published (newest)';
       case FeedSortOption.publishedOldest:
@@ -26,8 +20,8 @@ extension FeedSortOptionLabel on FeedSortOption {
         return 'Title (A–Z)';
       case FeedSortOption.titleZa:
         return 'Title (Z–A)';
-      case FeedSortOption.preacherAz:
-        return 'Preacher (A–Z)';
+      case FeedSortOption.authorAz:
+        return 'Author (A–Z)';
       case FeedSortOption.categoryAz:
         return 'Category (A–Z)';
     }
@@ -41,28 +35,21 @@ extension FeedSortOptionLabel on FeedSortOption {
     final descending = _isDescending(orderDirection);
 
     switch (field) {
-      case 'date_preached':
-      case 'date':
-        return descending
-            ? FeedSortOption.datePreachedNewest
-            : FeedSortOption.datePreachedOldest;
-      case 'published_date':
-      case 'published':
       case 'pubdate':
+      case 'pub_date':
+      case 'published':
+      case 'date':
         return descending
             ? FeedSortOption.publishedNewest
             : FeedSortOption.publishedOldest;
-      case 'sermon_title':
       case 'title':
         return descending ? FeedSortOption.titleZa : FeedSortOption.titleAz;
-      case 'preached_by':
-      case 'preacher':
       case 'author':
-        return FeedSortOption.preacherAz;
+        return FeedSortOption.authorAz;
       case 'category':
         return FeedSortOption.categoryAz;
       default:
-        return FeedSortOption.datePreachedNewest;
+        return FeedSortOption.publishedNewest;
     }
   }
 
@@ -75,23 +62,19 @@ extension FeedSortOptionLabel on FeedSortOption {
   }
 }
 
-List<SermonFeedItem> sortFeedItems(
-  List<SermonFeedItem> items,
+List<PodcastFeedItem> sortFeedItems(
+  List<PodcastFeedItem> items,
   FeedSortOption sortOption,
 ) {
-  final sorted = List<SermonFeedItem>.from(items);
+  final sorted = List<PodcastFeedItem>.from(items);
   sorted.sort((a, b) {
     final comparison = switch (sortOption) {
-      FeedSortOption.datePreachedNewest ||
-      FeedSortOption.datePreachedOldest =>
-        _compareDates(a.datePreached, b.datePreached),
       FeedSortOption.publishedNewest ||
       FeedSortOption.publishedOldest =>
-        _compareDates(a.publishedDate, b.publishedDate),
+        _compareDates(a.pubDate, b.pubDate),
       FeedSortOption.titleAz || FeedSortOption.titleZa =>
-        _compareText(a.sermonTitle, b.sermonTitle),
-      FeedSortOption.preacherAz =>
-        _compareText(a.preachedBy, b.preachedBy),
+        _compareText(a.title, b.title),
+      FeedSortOption.authorAz => _compareText(a.author, b.author),
       FeedSortOption.categoryAz =>
         _compareText(a.category ?? '', b.category ?? ''),
     };
@@ -100,21 +83,17 @@ List<SermonFeedItem> sortFeedItems(
       return _applyDirection(comparison, sortOption);
     }
 
-    return _compareText(a.sermonTitle, b.sermonTitle);
+    return _compareText(a.title, b.title);
   });
   return sorted;
 }
 
 bool _isDescendingOption(FeedSortOption sortOption) {
   return switch (sortOption) {
-    FeedSortOption.datePreachedNewest ||
-    FeedSortOption.publishedNewest ||
-    FeedSortOption.titleZa =>
-      true,
-    FeedSortOption.datePreachedOldest ||
+    FeedSortOption.publishedNewest || FeedSortOption.titleZa => true,
     FeedSortOption.publishedOldest ||
     FeedSortOption.titleAz ||
-    FeedSortOption.preacherAz ||
+    FeedSortOption.authorAz ||
     FeedSortOption.categoryAz =>
       false,
   };

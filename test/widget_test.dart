@@ -49,7 +49,7 @@ void main() {
     expect(find.text('PM'), findsOneWidget);
     expect(find.text('HOME'), findsOneWidget);
     expect(find.text('NOTES'), findsOneWidget);
-    expect(find.text('FEED'), findsOneWidget);
+    expect(find.text('PODCAST'), findsOneWidget);
     expect(find.text('WORSHIP'), findsOneWidget);
     expect(find.text('SONGS'), findsOneWidget);
     expect(find.text('BIBLE'), findsOneWidget);
