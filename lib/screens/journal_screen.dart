@@ -14,6 +14,7 @@ import '../widgets/quote_pages_field.dart';
 import '../widgets/side_category_tabs.dart';
 import 'feed_list_screen.dart';
 import 'song_detail_screen.dart';
+import 'songs_screen.dart';
 
 class JournalScreen extends StatefulWidget {
   final EntryCategory initialCategory;
@@ -518,6 +519,20 @@ class _JournalScreenState extends State<JournalScreen> {
     return '${date.month}/${date.day.toString().padLeft(2, '0')}/${date.year}';
   }
 
+  Future<void> _openSongsLibrary() async {
+    await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => SongsScreen(
+          onAddedToNotes: () {
+            Navigator.of(context).pop();
+          },
+        ),
+      ),
+    );
+    if (!mounted) return;
+    _loadEntryForCurrentSelection();
+  }
+
   @override
   void dispose() {
     _autosaveTimer?.cancel();
@@ -581,7 +596,24 @@ class _JournalScreenState extends State<JournalScreen> {
                     accentColor: categoryAccent,
                   ),
                   if (_isSongTab) ...[
-                    Expanded(child: _buildSongList()),
+                    Expanded(
+                      child: Stack(
+                        children: [
+                          _buildSongList(),
+                          Positioned(
+                            right: 16,
+                            bottom: 16,
+                            child: FloatingActionButton(
+                              onPressed: () => unawaited(_openSongsLibrary()),
+                              backgroundColor: categoryAccent,
+                              foregroundColor: AppColors.text,
+                              tooltip: 'Add songs',
+                              child: const Icon(Icons.add),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ] else ...[
                     Padding(
                       padding: const EdgeInsets.fromLTRB(12, 8, 12, 0),

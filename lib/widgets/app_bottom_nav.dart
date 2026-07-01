@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../theme/app_colors.dart';
 
-enum AppTab { notes, songs, bible, mood, gallery, settings }
+enum AppTab { notes, bible, mood, gallery, settings }
 
 class AppBottomNav extends StatelessWidget {
   final AppTab selectedTab;
@@ -35,16 +35,6 @@ class AppBottomNav extends StatelessWidget {
                     selected: selectedTab == AppTab.notes,
                     selectedColor: AppColors.offWhite,
                     onTap: () => onTabSelected(AppTab.notes),
-                  ),
-                ),
-                Container(width: AppColors.borderWidth, color: AppColors.border),
-                Expanded(
-                  child: _TabButton(
-                    label: 'SONGS',
-                    icon: Icons.music_note,
-                    selected: selectedTab == AppTab.songs,
-                    selectedColor: AppColors.seafoam,
-                    onTap: () => onTabSelected(AppTab.songs),
                   ),
                 ),
                 Container(width: AppColors.borderWidth, color: AppColors.border),

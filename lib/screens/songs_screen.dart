@@ -127,6 +127,13 @@ class _SongsScreenState extends State<SongsScreen> {
               padding: const EdgeInsets.fromLTRB(16, 12, 8, 8),
               child: Row(
                 children: [
+                  if (Navigator.of(context).canPop())
+                    IconButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      icon: const Icon(Icons.arrow_back),
+                      color: AppColors.text,
+                      tooltip: 'Back',
+                    ),
                   const Expanded(
                     child: Text(
                       'Songs',

@@ -51,7 +51,6 @@ void main() {
     expect(find.text('NOTES'), findsOneWidget);
     expect(find.text('PODCAST'), findsOneWidget);
     expect(find.text('WORSHIP'), findsOneWidget);
-    expect(find.text('SONGS'), findsOneWidget);
     expect(find.text('BIBLE'), findsOneWidget);
     expect(find.text('MOOD'), findsOneWidget);
     expect(find.text('PHOTOS'), findsOneWidget);

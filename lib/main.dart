@@ -10,7 +10,6 @@ import 'screens/journal_screen.dart';
 import 'screens/mood_screen.dart';
 import 'screens/onboarding_screen.dart';
 import 'screens/settings_screen.dart';
-import 'screens/songs_screen.dart';
 import 'services/app_preferences_service.dart';
 import 'services/bible_storage.dart';
 import 'services/entry_storage.dart';
@@ -143,8 +142,6 @@ class _AppShellState extends State<AppShell> with WidgetsBindingObserver {
     });
   }
 
-  void _onAddedSongToJournal() => _onAddedToJournal(EntryCategory.song);
-
   void _onAddedScriptureToJournal() =>
       _onAddedToJournal(EntryCategory.scripture);
 
@@ -209,11 +206,6 @@ class _AppShellState extends State<AppShell> with WidgetsBindingObserver {
           initialDate: _journalDate,
           initialPeriod: _journalPeriod,
           onScriptureReferenceTap: _onOpenBibleReference,
-        );
-      case AppTab.songs:
-        return SongsScreen(
-          key: const ValueKey('songs'),
-          onAddedToNotes: _onAddedSongToJournal,
         );
       case AppTab.bible:
         return BibleScreen(
