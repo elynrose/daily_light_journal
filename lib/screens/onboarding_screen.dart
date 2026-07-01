@@ -182,24 +182,30 @@ class _RoleStep extends StatelessWidget {
             style: TextStyle(color: AppColors.text),
           ),
           const SizedBox(height: 24),
-          ...UserRole.values.map(
-            (role) => Padding(
-              padding: const EdgeInsets.only(bottom: 10),
-              child: RadioListTile<UserRole>(
-                value: role,
-                groupValue: selected,
-                onChanged: (value) {
-                  if (value != null) onChanged(value);
-                },
-                title: Text(role.label),
-                tileColor: selected == role
-                    ? AppColors.creamyYellow
-                    : AppColors.offWhite,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  side: const BorderSide(color: AppColors.border),
-                ),
-              ),
+          RadioGroup<UserRole>(
+            groupValue: selected,
+            onChanged: (value) {
+              if (value != null) onChanged(value);
+            },
+            child: Column(
+              children: UserRole.values
+                  .map(
+                    (role) => Padding(
+                      padding: const EdgeInsets.only(bottom: 10),
+                      child: RadioListTile<UserRole>(
+                        value: role,
+                        title: Text(role.label),
+                        tileColor: selected == role
+                            ? AppColors.creamyYellow
+                            : AppColors.offWhite,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          side: const BorderSide(color: AppColors.border),
+                        ),
+                      ),
+                    ),
+                  )
+                  .toList(),
             ),
           ),
         ],
@@ -269,28 +275,44 @@ class _NotificationStep extends StatelessWidget {
           ),
           const SizedBox(height: 20),
           const Text('How often?', style: TextStyle(fontWeight: FontWeight.bold)),
-          ...NotificationFrequency.values.map(
-            (item) => RadioListTile<NotificationFrequency>(
-              value: item,
-              groupValue: frequency,
-              onChanged: (value) {
-                if (value != null) onFrequencyChanged(value);
-              },
-              title: Text(item.label),
+          RadioGroup<NotificationFrequency>(
+            groupValue: frequency,
+            onChanged: (value) {
+              if (value != null) onFrequencyChanged(value);
+            },
+            child: Column(
+              children: NotificationFrequency.values
+                  .map(
+                    (item) => RadioListTile<NotificationFrequency>(
+                      value: item,
+                      title: Text(item.label),
+                    ),
+                  )
+                  .toList(),
             ),
           ),
           const SizedBox(height: 12),
           const Text('Show content from', style: TextStyle(fontWeight: FontWeight.bold)),
-          ...NotificationSource.values.map(
-            (item) => RadioListTile<NotificationSource>(
-              value: item,
-              groupValue: source,
-              onChanged: frequency == NotificationFrequency.none
-                  ? null
-                  : (value) {
-                      if (value != null) onSourceChanged(value);
-                    },
-              title: Text(item.label),
+          IgnorePointer(
+            ignoring: frequency == NotificationFrequency.none,
+            child: Opacity(
+              opacity: frequency == NotificationFrequency.none ? 0.5 : 1,
+              child: RadioGroup<NotificationSource>(
+                groupValue: source,
+                onChanged: (value) {
+                  if (value != null) onSourceChanged(value);
+                },
+                child: Column(
+                  children: NotificationSource.values
+                      .map(
+                        (item) => RadioListTile<NotificationSource>(
+                          value: item,
+                          title: Text(item.label),
+                        ),
+                      )
+                      .toList(),
+                ),
+              ),
             ),
           ),
           if (showMorning) ...[

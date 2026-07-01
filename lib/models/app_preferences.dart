@@ -78,7 +78,7 @@ class AppPreferences {
   final double bibleFontScale;
   final double notesFontScale;
   final double lyricsFontScale;
-  final String sermonFeedUrl;
+  final List<String> podcastFeedUrls;
   final bool moodNotificationsEnabled;
   final String? selectedMoodName;
 
@@ -94,7 +94,7 @@ class AppPreferences {
     this.bibleFontScale = 1.0,
     this.notesFontScale = 1.0,
     this.lyricsFontScale = 1.0,
-    this.sermonFeedUrl = '',
+    this.podcastFeedUrls = const [],
     this.moodNotificationsEnabled = false,
     this.selectedMoodName,
   });
@@ -111,7 +111,7 @@ class AppPreferences {
     double? bibleFontScale,
     double? notesFontScale,
     double? lyricsFontScale,
-    String? sermonFeedUrl,
+    List<String>? podcastFeedUrls,
     bool? moodNotificationsEnabled,
     String? selectedMoodName,
     bool clearSelectedMoodName = false,
@@ -129,7 +129,7 @@ class AppPreferences {
       bibleFontScale: bibleFontScale ?? this.bibleFontScale,
       notesFontScale: notesFontScale ?? this.notesFontScale,
       lyricsFontScale: lyricsFontScale ?? this.lyricsFontScale,
-      sermonFeedUrl: sermonFeedUrl ?? this.sermonFeedUrl,
+      podcastFeedUrls: podcastFeedUrls ?? this.podcastFeedUrls,
       moodNotificationsEnabled:
           moodNotificationsEnabled ?? this.moodNotificationsEnabled,
       selectedMoodName: clearSelectedMoodName
@@ -151,7 +151,7 @@ class AppPreferences {
       'bibleFontScale': bibleFontScale,
       'notesFontScale': notesFontScale,
       'lyricsFontScale': lyricsFontScale,
-      'sermonFeedUrl': sermonFeedUrl,
+      'podcastFeedUrls': podcastFeedUrls,
       'moodNotificationsEnabled': moodNotificationsEnabled,
       'selectedMoodName': selectedMoodName,
     };
@@ -174,10 +174,32 @@ class AppPreferences {
       bibleFontScale: (map['bibleFontScale'] as num?)?.toDouble() ?? 1.0,
       notesFontScale: (map['notesFontScale'] as num?)?.toDouble() ?? 1.0,
       lyricsFontScale: (map['lyricsFontScale'] as num?)?.toDouble() ?? 1.0,
-      sermonFeedUrl: map['sermonFeedUrl'] as String? ?? '',
+      podcastFeedUrls: _readPodcastFeedUrls(map),
       moodNotificationsEnabled:
           map['moodNotificationsEnabled'] as bool? ?? false,
       selectedMoodName: map['selectedMoodName'] as String?,
     );
+  }
+
+  static List<String> _readPodcastFeedUrls(Map<dynamic, dynamic> map) {
+    final stored = map['podcastFeedUrls'];
+    if (stored is List) {
+      final urls = <String>[];
+      final seen = <String>{};
+      for (final entry in stored) {
+        final url = entry.toString().trim();
+        if (url.isEmpty || seen.contains(url)) continue;
+        seen.add(url);
+        urls.add(url);
+      }
+      return urls;
+    }
+
+    final legacy = map['sermonFeedUrl'] as String? ?? '';
+    final trimmed = legacy.trim();
+    if (trimmed.isEmpty) {
+      return const [];
+    }
+    return [trimmed];
   }
 }

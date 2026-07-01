@@ -117,14 +117,16 @@ class _SongsScreenState extends State<SongsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ColoredBox(
-      color: AppColors.seafoam,
-      child: SafeArea(
+    final worshipBg = EntryCategory.song.backgroundColor;
+
+    return Scaffold(
+      backgroundColor: worshipBg,
+      body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(16, 12, 8, 8),
+              padding: const EdgeInsets.fromLTRB(8, 12, 8, 8),
               child: Row(
                 children: [
                   if (Navigator.of(context).canPop())
@@ -175,6 +177,7 @@ class _SongsScreenState extends State<SongsScreen> {
               ),
             ),
             const SizedBox(height: 8),
+            AppColors.listSeparator(),
             Expanded(
               child: _songs.isEmpty
                   ? Center(
@@ -189,9 +192,7 @@ class _SongsScreenState extends State<SongsScreen> {
                           const Padding(
                             padding: EdgeInsets.symmetric(horizontal: 24),
                             child: Text(
-                              'Add songs here, or download the song library JSON from '
-                              'church-journal-legal and import it in Settings. '
-                              'Only add lyrics you are licensed or permitted to use.',
+                              'Add songs here, or download the song library JSON.',
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: AppColors.text,
@@ -217,49 +218,74 @@ class _SongsScreenState extends State<SongsScreen> {
                       separatorBuilder: (_, __) => AppColors.listSeparator(),
                       itemBuilder: (context, index) {
                         final song = _songs[index];
-                        return ListTile(
-                          contentPadding: const EdgeInsets.only(left: 8, right: 0),
-                          title: Text(
-                            song.title.isEmpty ? '(Untitled)' : song.title,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.w500,
-                              color: AppColors.text,
-                            ),
-                          ),
-                          subtitle: song.key.isNotEmpty
-                              ? Text(song.key)
-                              : null,
-                          onTap: () => _openDetailPage(song),
-                          trailing: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              if (song.number.isNotEmpty)
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 4),
-                                  child: Text(
-                                    song.number,
-                                    style: const TextStyle(color: AppColors.text),
+                        return Material(
+                          color: Colors.transparent,
+                          child: InkWell(
+                            onTap: () => _openDetailPage(song),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 8,
+                                vertical: 8,
+                              ),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          song.title.isEmpty
+                                              ? '(Untitled)'
+                                              : song.title,
+                                          style: const TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 15,
+                                            color: AppColors.text,
+                                          ),
+                                        ),
+                                        if (song.key.isNotEmpty)
+                                          Text(
+                                            song.key,
+                                            style: const TextStyle(
+                                              fontSize: 14,
+                                              color: AppColors.text,
+                                            ),
+                                          ),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              IconButton(
-                                icon: const Icon(Icons.note_add_outlined),
-                                color: AppColors.text,
-                                tooltip: 'Add to Notes',
-                                onPressed: () => _addToNotes(song),
+                                  if (song.number.isNotEmpty)
+                                    Padding(
+                                      padding: const EdgeInsets.only(right: 4),
+                                      child: Text(
+                                        song.number,
+                                        style: const TextStyle(
+                                          color: AppColors.text,
+                                        ),
+                                      ),
+                                    ),
+                                  IconButton(
+                                    icon: const Icon(Icons.note_add_outlined),
+                                    color: AppColors.text,
+                                    tooltip: 'Add to worship',
+                                    onPressed: () => _addToNotes(song),
+                                  ),
+                                  IconButton(
+                                    icon: const Icon(Icons.edit_outlined),
+                                    color: AppColors.text,
+                                    tooltip: 'Edit',
+                                    onPressed: () => _openEditPage(song),
+                                  ),
+                                  IconButton(
+                                    icon: const Icon(Icons.delete_outline),
+                                    color: AppColors.text,
+                                    tooltip: 'Delete',
+                                    onPressed: () => _deleteSong(song),
+                                  ),
+                                ],
                               ),
-                              IconButton(
-                                icon: const Icon(Icons.edit_outlined),
-                                color: AppColors.text,
-                                tooltip: 'Edit',
-                                onPressed: () => _openEditPage(song),
-                              ),
-                              IconButton(
-                                icon: const Icon(Icons.delete_outline),
-                                color: AppColors.text,
-                                tooltip: 'Delete',
-                                onPressed: () => _deleteSong(song),
-                              ),
-                            ],
+                            ),
                           ),
                         );
                       },

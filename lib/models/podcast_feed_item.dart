@@ -8,6 +8,9 @@ class PodcastFeedItem {
   final String? category;
   final String? guid;
   final String? pin;
+  final String sourceFeedUrl;
+  final String? channelTitle;
+  final String? feedPin;
 
   const PodcastFeedItem({
     required this.title,
@@ -19,9 +22,33 @@ class PodcastFeedItem {
     this.category,
     this.guid,
     this.pin,
+    this.sourceFeedUrl = '',
+    this.channelTitle,
+    this.feedPin,
   });
 
-  String? effectivePin(String? feedPin) {
+  PodcastFeedItem withSource({
+    required String sourceFeedUrl,
+    String? channelTitle,
+    String? feedPin,
+  }) {
+    return PodcastFeedItem(
+      title: title,
+      author: author,
+      enclosureUrl: enclosureUrl,
+      pubDate: pubDate,
+      imageUrl: imageUrl,
+      language: language,
+      category: category,
+      guid: guid,
+      pin: pin,
+      sourceFeedUrl: sourceFeedUrl,
+      channelTitle: channelTitle,
+      feedPin: feedPin,
+    );
+  }
+
+  String? effectivePin() {
     final itemPin = pin?.trim();
     if (itemPin != null && itemPin.isNotEmpty) {
       return itemPin;
@@ -45,7 +72,14 @@ class PodcastFeedItem {
     required String query,
     String? language,
     String? category,
+    String? sourceFeedUrl,
   }) {
+    if (sourceFeedUrl != null && sourceFeedUrl.isNotEmpty) {
+      if (this.sourceFeedUrl != sourceFeedUrl) {
+        return false;
+      }
+    }
+
     if (language != null && language.isNotEmpty) {
       final itemLanguage = (this.language ?? '').trim().toLowerCase();
       if (itemLanguage != language.trim().toLowerCase()) {
@@ -68,6 +102,7 @@ class PodcastFeedItem {
     final searchable = [
       title,
       author,
+      channelTitle ?? '',
       this.language ?? '',
       this.category ?? '',
       displayDateLabel ?? '',

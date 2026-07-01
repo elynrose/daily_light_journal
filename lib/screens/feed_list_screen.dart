@@ -24,11 +24,12 @@ class _FeedListScreenState extends State<FeedListScreen> {
   final _searchController = TextEditingController();
 
   List<PodcastFeedItem> _items = const [];
-  String? _feedPin;
   bool _isLoading = false;
   String? _errorMessage;
+  List<String> _loadWarnings = const [];
   String? _selectedLanguage;
   String? _selectedCategory;
+  String? _selectedSourceFeedUrl;
   FeedSortOption _sortOption = FeedSortOption.publishedNewest;
 
   @override
@@ -68,6 +69,44 @@ class _FeedListScreenState extends State<FeedListScreen> {
   List<String> get _availableCategories =>
       _uniqueValues((item) => item.category);
 
+  List<({String url, String label})> get _availableChannels {
+    final channels = <String, String>{};
+    for (final url in _prefsService.prefs.podcastFeedUrls) {
+      final trimmed = url.trim();
+      if (trimmed.isEmpty || channels.containsKey(trimmed)) continue;
+      channels[trimmed] = trimmed;
+    }
+    for (final item in _items) {
+      final url = item.sourceFeedUrl.trim();
+      if (url.isEmpty) continue;
+      channels[url] = _channelLabel(item);
+    }
+    final entries = channels.entries.toList()
+      ..sort((a, b) => a.value.compareTo(b.value));
+    return [
+      for (final entry in entries) (url: entry.key, label: entry.value),
+    ];
+  }
+
+  String _channelLabel(PodcastFeedItem item) {
+    final title = item.channelTitle?.trim();
+    if (title != null && title.isNotEmpty) {
+      return title;
+    }
+    return item.sourceFeedUrl;
+  }
+
+  String? get _selectedChannelLabel {
+    final selectedUrl = _selectedSourceFeedUrl;
+    if (selectedUrl == null) return null;
+    for (final channel in _availableChannels) {
+      if (channel.url == selectedUrl) {
+        return channel.label;
+      }
+    }
+    return null;
+  }
+
   List<PodcastFeedItem> get _filteredItems {
     final query = _searchController.text;
     final filtered = _items
@@ -76,6 +115,7 @@ class _FeedListScreenState extends State<FeedListScreen> {
             query: query,
             language: _selectedLanguage,
             category: _selectedCategory,
+            sourceFeedUrl: _selectedSourceFeedUrl,
           ),
         )
         .toList();
@@ -83,16 +123,17 @@ class _FeedListScreenState extends State<FeedListScreen> {
   }
 
   Future<void> _loadFeed() async {
-    final feedUrl = _prefsService.prefs.sermonFeedUrl.trim();
-    if (feedUrl.isEmpty) {
+    final feedUrls = _prefsService.prefs.podcastFeedUrls;
+    if (feedUrls.isEmpty) {
       if (!mounted) return;
       setState(() {
         _items = const [];
-        _feedPin = null;
         _errorMessage = null;
+        _loadWarnings = const [];
         _isLoading = false;
         _selectedLanguage = null;
         _selectedCategory = null;
+        _selectedSourceFeedUrl = null;
       });
       return;
     }
@@ -100,52 +141,71 @@ class _FeedListScreenState extends State<FeedListScreen> {
     setState(() {
       _isLoading = true;
       _errorMessage = null;
+      _loadWarnings = const [];
     });
 
-    try {
-      final feed = await _feedService.fetchFeed(feedUrl);
-      if (!mounted) return;
+    final mergedItems = <PodcastFeedItem>[];
+    final warnings = <String>[];
 
-      final previousPin = _feedPin;
-      final nextPin = feed.pin?.trim();
-      if (previousPin != null &&
-          nextPin != null &&
-          previousPin != nextPin) {
-        FeedPinSession.instance.clearForFeed(feedUrl);
-      }
+    await Future.wait(
+      feedUrls.map((feedUrl) async {
+        try {
+          final feed = await _feedService.fetchFeed(feedUrl);
+          for (final item in feed.items) {
+            mergedItems.add(
+              item.withSource(
+                sourceFeedUrl: feedUrl,
+                channelTitle: feed.channelTitle,
+                feedPin: feed.pin,
+              ),
+            );
+          }
+        } catch (error) {
+          warnings.add('Could not load $feedUrl');
+        }
+      }),
+    );
 
-      setState(() {
-        _items = feed.items;
-        _feedPin = nextPin;
-        _sortOption = feed.sortOption;
-        _isLoading = false;
-        if (_selectedLanguage != null &&
-            !_availableLanguages.contains(_selectedLanguage)) {
-          _selectedLanguage = null;
-        }
-        if (_selectedCategory != null &&
-            !_availableCategories.contains(_selectedCategory)) {
-          _selectedCategory = null;
-        }
-      });
-    } catch (error) {
-      if (!mounted) return;
+    if (!mounted) return;
+
+    if (mergedItems.isEmpty && warnings.isNotEmpty) {
       setState(() {
         _items = const [];
-        _feedPin = null;
-        _errorMessage = '$error';
+        _errorMessage = warnings.join('\n');
+        _loadWarnings = warnings;
         _isLoading = false;
         _selectedLanguage = null;
         _selectedCategory = null;
+        _selectedSourceFeedUrl = null;
       });
+      return;
     }
+
+    setState(() {
+      _items = sortFeedItems(mergedItems, FeedSortOption.publishedNewest);
+      _errorMessage = null;
+      _loadWarnings = warnings;
+      _isLoading = false;
+      if (_selectedLanguage != null &&
+          !_availableLanguages.contains(_selectedLanguage)) {
+        _selectedLanguage = null;
+      }
+      if (_selectedCategory != null &&
+          !_availableCategories.contains(_selectedCategory)) {
+        _selectedCategory = null;
+      }
+      if (_selectedSourceFeedUrl != null &&
+          !_availableChannels.any((c) => c.url == _selectedSourceFeedUrl)) {
+        _selectedSourceFeedUrl = null;
+      }
+    });
   }
 
   Future<void> _openPlayer(PodcastFeedItem item) async {
-    final feedUrl = _prefsService.prefs.sermonFeedUrl.trim();
-    final requiredPin = item.effectivePin(_feedPin);
+    final feedUrl = item.sourceFeedUrl;
+    final requiredPin = item.effectivePin();
 
-    if (requiredPin != null) {
+    if (requiredPin != null && feedUrl.isNotEmpty) {
       if (!FeedPinSession.instance.isVerified(feedUrl, requiredPin)) {
         final enteredPin = await showFeedPinDialog(context);
         if (!mounted || enteredPin == null) {
@@ -180,6 +240,22 @@ class _FeedListScreenState extends State<FeedListScreen> {
 
   void _selectCategory(String? category) {
     setState(() => _selectedCategory = category);
+  }
+
+  void _selectChannel(String? label) {
+    setState(() {
+      if (label == null) {
+        _selectedSourceFeedUrl = null;
+        return;
+      }
+      for (final channel in _availableChannels) {
+        if (channel.label == label) {
+          _selectedSourceFeedUrl = channel.url;
+          return;
+        }
+      }
+      _selectedSourceFeedUrl = null;
+    });
   }
 
   void _selectSortOption(FeedSortOption? sortOption) {
@@ -318,6 +394,22 @@ class _FeedListScreenState extends State<FeedListScreen> {
     );
   }
 
+  Widget _buildChannelFilters() {
+    if (_prefsService.prefs.podcastFeedUrls.length < 2) {
+      return const SizedBox.shrink();
+    }
+    final labels = _availableChannels.map((channel) => channel.label).toList();
+    if (labels.isEmpty) {
+      return const SizedBox.shrink();
+    }
+    return _buildFilterRow(
+      title: 'Channel',
+      options: labels,
+      selected: _selectedChannelLabel,
+      onSelected: _selectChannel,
+    );
+  }
+
   Widget _buildLanguageFilters() {
     return _buildFilterRow(
       title: 'Language',
@@ -337,6 +429,9 @@ class _FeedListScreenState extends State<FeedListScreen> {
   }
 
   Widget _buildEpisodeList(List<PodcastFeedItem> items) {
+    final showChannel =
+        _prefsService.prefs.podcastFeedUrls.length > 1;
+
     return RefreshIndicator(
       onRefresh: _loadFeed,
       child: ListView.separated(
@@ -367,6 +462,19 @@ class _FeedListScreenState extends State<FeedListScreen> {
                             color: AppColors.text,
                           ),
                         ),
+                        if (showChannel &&
+                            item.channelTitle != null &&
+                            item.channelTitle!.trim().isNotEmpty) ...[
+                          const SizedBox(height: 2),
+                          Text(
+                            item.channelTitle!,
+                            style: const TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.text,
+                            ),
+                          ),
+                        ],
                         if (item.author.isNotEmpty) ...[
                           const SizedBox(height: 4),
                           Text(
@@ -424,14 +532,14 @@ class _FeedListScreenState extends State<FeedListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final feedUrl = _prefsService.prefs.sermonFeedUrl.trim();
+    final feedUrls = _prefsService.prefs.podcastFeedUrls;
 
-    if (feedUrl.isEmpty) {
+    if (feedUrls.isEmpty) {
       return const Center(
         child: Padding(
           padding: EdgeInsets.all(24),
           child: Text(
-            'Add a podcast feed URL in Settings to load episodes here.',
+            'Add podcast feed URLs in Settings to load episodes here.',
             textAlign: TextAlign.center,
             style: TextStyle(color: AppColors.text, fontSize: 15),
           ),
@@ -474,7 +582,7 @@ class _FeedListScreenState extends State<FeedListScreen> {
             mainAxisSize: MainAxisSize.min,
             children: [
               const Text(
-                'No episodes found in this podcast.',
+                'No episodes found in your podcast feeds.',
                 textAlign: TextAlign.center,
                 style: TextStyle(color: AppColors.text),
               ),
@@ -492,13 +600,23 @@ class _FeedListScreenState extends State<FeedListScreen> {
     final filteredItems = _filteredItems;
     final hasActiveFilter = _searchController.text.trim().isNotEmpty ||
         _selectedLanguage != null ||
-        _selectedCategory != null;
+        _selectedCategory != null ||
+        _selectedSourceFeedUrl != null;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        if (_loadWarnings.isNotEmpty)
+          Padding(
+            padding: const EdgeInsets.fromLTRB(12, 8, 12, 0),
+            child: Text(
+              'Some feeds could not be loaded.',
+              style: const TextStyle(fontSize: 12, color: AppColors.text),
+            ),
+          ),
         _buildSearchBar(),
         _buildSortSelector(),
+        _buildChannelFilters(),
         _buildCategoryFilters(),
         _buildLanguageFilters(),
         if (_isLoading)

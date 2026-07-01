@@ -89,8 +89,30 @@ class AppPreferencesService extends ChangeNotifier {
   Future<void> updateLyricsFontScale(double scale) =>
       _save(_prefs.copyWith(lyricsFontScale: scale));
 
-  Future<void> updateSermonFeedUrl(String url) =>
-      _save(_prefs.copyWith(sermonFeedUrl: url.trim()));
+  Future<void> updatePodcastFeedUrls(List<String> urls) {
+    final normalized = <String>[];
+    final seen = <String>{};
+    for (final raw in urls) {
+      final url = raw.trim();
+      if (url.isEmpty || seen.contains(url)) continue;
+      seen.add(url);
+      normalized.add(url);
+    }
+    return _save(_prefs.copyWith(podcastFeedUrls: normalized));
+  }
+
+  Future<void> addPodcastFeedUrl(String url) {
+    final trimmed = url.trim();
+    if (trimmed.isEmpty || _prefs.podcastFeedUrls.contains(trimmed)) {
+      return Future.value();
+    }
+    return updatePodcastFeedUrls([..._prefs.podcastFeedUrls, trimmed]);
+  }
+
+  Future<void> removePodcastFeedUrl(String url) =>
+      updatePodcastFeedUrls(
+        _prefs.podcastFeedUrls.where((entry) => entry != url).toList(),
+      );
 
   Future<void> updateMoodNotificationsEnabled(bool enabled) =>
       _save(_prefs.copyWith(moodNotificationsEnabled: enabled));

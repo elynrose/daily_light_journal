@@ -23,30 +23,33 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   final _prefsService = AppPreferencesService.instance;
-  late final TextEditingController _feedUrlController;
+  late final TextEditingController _newFeedUrlController;
 
   @override
   void initState() {
     super.initState();
-    _feedUrlController = TextEditingController(
-      text: _prefsService.prefs.sermonFeedUrl,
-    );
+    _newFeedUrlController = TextEditingController();
     _prefsService.addListener(_onPrefsChanged);
   }
 
   @override
   void dispose() {
     _prefsService.removeListener(_onPrefsChanged);
-    _feedUrlController.dispose();
+    _newFeedUrlController.dispose();
     super.dispose();
   }
 
   void _onPrefsChanged() {
-    final url = _prefsService.prefs.sermonFeedUrl;
-    if (_feedUrlController.text != url) {
-      _feedUrlController.text = url;
-    }
     if (mounted) setState(() {});
+  }
+
+  Future<void> _addPodcastFeedUrl() async {
+    final url = _newFeedUrlController.text.trim();
+    if (url.isEmpty) return;
+    await _prefsService.addPodcastFeedUrl(url);
+    _newFeedUrlController.clear();
+    if (!mounted) return;
+    setState(() {});
   }
 
   AppPreferences get _prefs => _prefsService.prefs;
@@ -245,19 +248,23 @@ class _SettingsScreenState extends State<SettingsScreen> {
             const SizedBox(height: 16),
             _SectionCard(
               title: 'Profile',
-              child: Column(
-                children: UserRole.values.map((role) {
-                  return RadioListTile<UserRole>(
-                    value: role,
-                    groupValue: _prefs.userRole,
-                    onChanged: (value) {
-                      if (value != null) {
-                        unawaited(_prefsService.updateUserRole(value));
-                      }
-                    },
-                    title: Text(role.label),
-                  );
-                }).toList(),
+              child: RadioGroup<UserRole>(
+                groupValue: _prefs.userRole,
+                onChanged: (value) {
+                  if (value != null) {
+                    unawaited(_prefsService.updateUserRole(value));
+                  }
+                },
+                child: Column(
+                  children: UserRole.values
+                      .map(
+                        (role) => RadioListTile<UserRole>(
+                          value: role,
+                          title: Text(role.label),
+                        ),
+                      )
+                      .toList(),
+                ),
               ),
             ),
             _SectionCard(
@@ -289,33 +296,53 @@ class _SettingsScreenState extends State<SettingsScreen> {
               title: 'Notifications',
               child: Column(
                 children: [
-                  ...NotificationFrequency.values.map(
-                    (frequency) => RadioListTile<NotificationFrequency>(
-                      value: frequency,
-                      groupValue: _prefs.notificationFrequency,
-                      onChanged: (value) async {
-                        if (value == null) return;
-                        await _prefsService.updateNotificationFrequency(value);
-                        await NotificationService.instance
-                            .refreshScheduledReminders();
-                      },
-                      title: Text(frequency.label),
+                  RadioGroup<NotificationFrequency>(
+                    groupValue: _prefs.notificationFrequency,
+                    onChanged: (value) async {
+                      if (value == null) return;
+                      await _prefsService.updateNotificationFrequency(value);
+                      await NotificationService.instance
+                          .refreshScheduledReminders();
+                    },
+                    child: Column(
+                      children: NotificationFrequency.values
+                          .map(
+                            (frequency) => RadioListTile<NotificationFrequency>(
+                              value: frequency,
+                              title: Text(frequency.label),
+                            ),
+                          )
+                          .toList(),
                     ),
                   ),
-                  ...NotificationSource.values.map(
-                    (source) => RadioListTile<NotificationSource>(
-                      value: source,
-                      groupValue: _prefs.notificationSource,
-                      onChanged: _prefs.notificationFrequency ==
+                  IgnorePointer(
+                    ignoring: _prefs.notificationFrequency ==
+                        NotificationFrequency.none,
+                    child: Opacity(
+                      opacity: _prefs.notificationFrequency ==
                               NotificationFrequency.none
-                          ? null
-                          : (value) async {
-                              if (value == null) return;
-                              await _prefsService.updateNotificationSource(value);
-                              await NotificationService.instance
-                                  .refreshScheduledReminders();
-                            },
-                      title: Text(source.label),
+                          ? 0.5
+                          : 1,
+                      child: RadioGroup<NotificationSource>(
+                        groupValue: _prefs.notificationSource,
+                        onChanged: (value) async {
+                          if (value == null) return;
+                          await _prefsService.updateNotificationSource(value);
+                          await NotificationService.instance
+                              .refreshScheduledReminders();
+                        },
+                        child: Column(
+                          children: NotificationSource.values
+                              .map(
+                                (source) =>
+                                    RadioListTile<NotificationSource>(
+                                  value: source,
+                                  title: Text(source.label),
+                                ),
+                              )
+                              .toList(),
+                        ),
+                      ),
                     ),
                   ),
                   if (showMorning)
@@ -374,39 +401,66 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
             ),
             _SectionCard(
-              title: 'Podcast feed',
+              title: 'Podcast feeds',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
-                    'Standard RSS 2.0 / podcast feed URL (title, author, pubDate, enclosure, category). '
-                    'Optional channel fields: pin, order_by, order_direction.',
+                    'RSS 2.0 / podcast feed URLs. Episodes from all feeds appear in the Podcast tab.',
                     style: TextStyle(fontSize: 13, color: AppColors.text),
                   ),
+                  if (_prefs.podcastFeedUrls.isNotEmpty) ...[
+                    const SizedBox(height: 8),
+                    for (final url in _prefs.podcastFeedUrls)
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 4),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              child: Text(
+                                url,
+                                style: const TextStyle(
+                                  fontSize: 13,
+                                  color: AppColors.text,
+                                ),
+                              ),
+                            ),
+                            IconButton(
+                              onPressed: () => unawaited(
+                                _prefsService.removePodcastFeedUrl(url),
+                              ),
+                              icon: const Icon(Icons.close, size: 18),
+                              color: AppColors.text,
+                              padding: EdgeInsets.zero,
+                              constraints: const BoxConstraints(
+                                minWidth: 32,
+                                minHeight: 32,
+                              ),
+                              tooltip: 'Remove',
+                            ),
+                          ],
+                        ),
+                      ),
+                  ],
                   const SizedBox(height: 8),
                   TextField(
-                    controller: _feedUrlController,
+                    controller: _newFeedUrlController,
                     decoration: const InputDecoration(
-                      hintText: 'https://example.com/sermons.xml',
+                      hintText: 'https://example.com/podcast.xml',
                       border: AppColors.outlineInputBorder,
                       isDense: true,
                     ),
                     keyboardType: TextInputType.url,
                     autocorrect: false,
-                    onSubmitted: (value) => unawaited(
-                      _prefsService.updateSermonFeedUrl(value),
-                    ),
+                    onSubmitted: (_) => unawaited(_addPodcastFeedUrl()),
                   ),
                   const SizedBox(height: 8),
                   Align(
                     alignment: Alignment.centerRight,
                     child: TextButton(
-                      onPressed: () => unawaited(
-                        _prefsService.updateSermonFeedUrl(
-                          _feedUrlController.text,
-                        ),
-                      ),
-                      child: const Text('Save podcast URL'),
+                      onPressed: () => unawaited(_addPodcastFeedUrl()),
+                      child: const Text('Add feed'),
                     ),
                   ),
                 ],

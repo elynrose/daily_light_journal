@@ -66,6 +66,9 @@ class RssFeedService {
       orderDirection:
           channel == null ? null : _childText(channel, {'order_direction'}),
     );
+    final channelTitle = channel == null
+        ? null
+        : _childText(channel, {'title'});
     final channelAuthor = channel == null
         ? null
         : _firstNonEmpty([
@@ -98,11 +101,18 @@ class RssFeedService {
         channelImage: channelImage,
       );
       if (parsed != null) {
-        items.add(parsed);
+        items.add(
+          parsed.withSource(
+            sourceFeedUrl: '',
+            channelTitle: channelTitle,
+            feedPin: feedPin,
+          ),
+        );
       }
     }
 
     return PodcastFeedData(
+      channelTitle: channelTitle,
       pin: feedPin,
       sortOption: sortOption,
       items: sortFeedItems(items, sortOption),

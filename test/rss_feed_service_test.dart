@@ -33,6 +33,7 @@ void main() {
 ''';
 
     final feed = service.parseFeedXml(xml);
+    expect(feed.channelTitle, isNull);
     expect(feed.pin, '2468');
     expect(feed.sortOption, FeedSortOption.titleAz);
     expect(feed.items, hasLength(1));
@@ -44,7 +45,7 @@ void main() {
     expect(feed.items.first.category, 'Sunday Sermon');
     expect(feed.items.first.language, 'en-us');
     expect(feed.items.first.guid, 'episode-1');
-    expect(feed.items.first.effectivePin(feed.pin), '2468');
+    expect(feed.items.first.effectivePin(), '2468');
   });
 
   test('parses item-level pin override', () {
@@ -65,7 +66,7 @@ void main() {
     final feed = service.parseFeedXml(xml);
     expect(feed.pin, '1111');
     expect(feed.items.first.pin, '9999');
-    expect(feed.items.first.effectivePin(feed.pin), '9999');
+    expect(feed.items.first.effectivePin(), '9999');
   });
 
   test('parses enclosure and RFC 822 pubDate', () {
@@ -116,6 +117,7 @@ void main() {
       language: 'Spanish',
       category: 'Bible Study',
       pubDate: DateTime(2024, 3, 10),
+      sourceFeedUrl: 'https://example.com/feed.xml',
     );
 
     expect(item.matchesFilter(query: 'hope', language: null), isTrue);
@@ -131,8 +133,20 @@ void main() {
     expect(item.matchesFilter(query: '', category: 'Bible Study'), isTrue);
     expect(item.matchesFilter(query: '', category: 'Sunday Sermon'), isFalse);
     expect(
-      item.matchesFilter(query: 'hope', language: 'Spanish', category: 'Bible Study'),
+      item.matchesFilter(
+        query: 'hope',
+        language: 'Spanish',
+        category: 'Bible Study',
+        sourceFeedUrl: 'https://example.com/feed.xml',
+      ),
       isTrue,
+    );
+    expect(
+      item.matchesFilter(
+        query: '',
+        sourceFeedUrl: 'https://other.example/feed.xml',
+      ),
+      isFalse,
     );
   });
 

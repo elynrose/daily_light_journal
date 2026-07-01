@@ -148,7 +148,7 @@ class _MoodScreenState extends State<MoodScreen> {
           const _MoodHeader(),
           const SizedBox(height: 20),
           SizedBox(
-            height: 220,
+            height: 236,
             child: Row(
               children: [
                 _CarouselArrow(
@@ -164,6 +164,7 @@ class _MoodScreenState extends State<MoodScreen> {
                     itemBuilder: (context, index) {
                       return _MoodFace(
                         emoji: moods[index].emoji,
+                        name: moods[index].name,
                         selected: index == _selectedIndex,
                       );
                     },
@@ -272,32 +273,48 @@ class _MoodHeader extends StatelessWidget {
 
 class _MoodFace extends StatelessWidget {
   final String emoji;
+  final String name;
   final bool selected;
 
   const _MoodFace({
     required this.emoji,
+    required this.name,
     required this.selected,
   });
 
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Container(
-        width: 192,
-        height: 192,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: Colors.white,
-          border: Border.all(
-            color: AppColors.text,
-            width: selected ? 2.5 : 1.5,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: 192,
+            height: 192,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.white,
+              border: Border.all(
+                color: AppColors.text,
+                width: selected ? 2.5 : 1.5,
+              ),
+            ),
+            alignment: Alignment.center,
+            child: Text(
+              emoji,
+              style: const TextStyle(fontSize: 88),
+            ),
           ),
-        ),
-        alignment: Alignment.center,
-        child: Text(
-          emoji,
-          style: const TextStyle(fontSize: 88),
-        ),
+          const SizedBox(height: 6),
+          Text(
+            name,
+            style: TextStyle(
+              fontSize: 12,
+              fontWeight: selected ? FontWeight.w600 : FontWeight.w400,
+              color: AppColors.text,
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -321,7 +338,7 @@ class _ScriptureBlock extends StatelessWidget {
         Text(
           scripture.scripture,
           style: const TextStyle(
-            fontSize: 48,
+            fontSize: 24,
             fontWeight: FontWeight.w800,
             color: AppColors.text,
             height: 1.2,
@@ -331,7 +348,7 @@ class _ScriptureBlock extends StatelessWidget {
         Text(
           scripture.scriptureText,
           style: const TextStyle(
-            fontSize: 45,
+            fontSize: 22,
             height: 1.45,
             color: AppColors.text,
           ),
