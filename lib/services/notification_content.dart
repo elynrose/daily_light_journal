@@ -4,18 +4,22 @@ import '../models/app_preferences.dart';
 import '../models/bible_verse.dart';
 import '../models/entry.dart';
 import '../models/journal_snippet.dart';
+import '../models/mood_scripture.dart';
 import '../models/notification_payload.dart';
 import 'app_preferences_service.dart';
 import 'bible_storage.dart';
 import 'entry_storage.dart';
+import 'mood_storage.dart';
 
 class NotificationReminder {
   final String body;
   final String? payload;
+  final String? title;
 
   const NotificationReminder({
     required this.body,
     this.payload,
+    this.title,
   });
 }
 
@@ -31,26 +35,57 @@ class NotificationContent {
     final rng = random ?? Random();
     final prefs = AppPreferencesService.instance.prefs;
     final source = prefs.notificationSource;
+    final includeMoods = prefs.moodNotificationsEnabled;
 
-    final snippet = source == NotificationSource.bible
-        ? null
-        : EntryStorage.instance.pickRandomJournalSnippet(random: rng);
+    final candidates = <NotificationReminder>[];
 
-    final verse = (snippet == null || source != NotificationSource.notes)
-        ? BibleStorage.instance.pickRandomVerse(random: rng)
-        : null;
+    if (source != NotificationSource.bible) {
+      final snippet = EntryStorage.instance.pickRandomJournalSnippet(random: rng);
+      if (snippet != null) {
+        candidates.add(_fromSnippet(snippet));
+      }
+    }
 
-    if (snippet == null && verse == null) {
+    if (source != NotificationSource.notes) {
+      final verse = BibleStorage.instance.pickRandomVerse(random: rng);
+      if (verse != null) {
+        candidates.add(_fromVerse(verse));
+      }
+    }
+
+    if (includeMoods) {
+      final moodScripture = _pickMoodScripture(rng, prefs.selectedMoodName);
+      if (moodScripture != null) {
+        candidates.add(_fromMoodScripture(moodScripture));
+      }
+    }
+
+    if (candidates.isEmpty) {
       return const NotificationReminder(body: fallbackBody);
     }
-    if (snippet == null) {
-      return _fromVerse(verse!);
-    }
-    if (verse == null || source == NotificationSource.notes) {
-      return _fromSnippet(snippet);
-    }
 
-    return rng.nextBool() ? _fromSnippet(snippet) : _fromVerse(verse);
+    return candidates[rng.nextInt(candidates.length)];
+  }
+
+  static NotificationReminder? pickMoodReminder({Random? random}) {
+    final rng = random ?? Random();
+    final prefs = AppPreferencesService.instance.prefs;
+    if (!prefs.moodNotificationsEnabled) return null;
+
+    final moodScripture = _pickMoodScripture(rng, prefs.selectedMoodName);
+    if (moodScripture == null) return null;
+    return _fromMoodScripture(moodScripture);
+  }
+
+  static MoodScripture? _pickMoodScripture(Random rng, String? preferredMood) {
+    final storage = MoodStorage.instance;
+    if (!storage.isLoaded) return null;
+
+    if (preferredMood != null && preferredMood.trim().isNotEmpty) {
+      return storage.pickRandomForMood(preferredMood, random: rng) ??
+          storage.pickRandom(random: rng);
+    }
+    return storage.pickRandom(random: rng);
   }
 
   static NotificationReminder _fromSnippet(JournalSnippet snippet) {
@@ -72,6 +107,17 @@ class NotificationContent {
     return NotificationReminder(
       body: verse.toNotificationBody(),
       payload: BibleNotificationPayload(reference: verse.reference).encode(),
+    );
+  }
+
+  static NotificationReminder _fromMoodScripture(MoodScripture scripture) {
+    return NotificationReminder(
+      title: scripture.notificationTitle,
+      body: scripture.toNotificationBody(),
+      payload: MoodNotificationPayload(
+        moodName: scripture.moodName,
+        scripture: scripture.scripture,
+      ).encode(),
     );
   }
 }

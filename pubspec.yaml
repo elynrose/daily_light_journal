@@ -4,7 +4,7 @@ description: Church Journal — record songs, quotes, and scriptures by date.
 environment:
   sdk: ">=3.0.0 <4.0.0"
 
-version: 1.0.0+7
+version: 1.0.0+8
 
 dependencies:
   flutter:
@@ -46,3 +46,4 @@ flutter:
   uses-material-design: true
   assets:
     - Bible.json
+    - assets/mood_scriptures.json

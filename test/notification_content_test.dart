@@ -4,10 +4,15 @@ import 'dart:math';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
+import 'package:church_journal/models/app_preferences.dart';
 import 'package:church_journal/models/bible_verse.dart';
 import 'package:church_journal/models/entry.dart';
+import 'package:church_journal/models/mood_scripture.dart';
+import 'package:church_journal/models/notification_payload.dart';
+import 'package:church_journal/services/app_preferences_service.dart';
 import 'package:church_journal/services/bible_storage.dart';
 import 'package:church_journal/services/entry_storage.dart';
+import 'package:church_journal/services/mood_storage.dart';
 import 'package:church_journal/services/notification_content.dart';
 import 'package:church_journal/utils/ink_storage.dart';
 
@@ -18,13 +23,23 @@ void main() {
 
   setUp(() async {
     tempDir = await Directory.systemTemp.createTemp('notification_content_test');
-    await storage.init(hivePath: tempDir.path);
+    await EntryStorage.instance.init(hivePath: tempDir.path);
+    await AppPreferencesService.instance.init(hivePath: tempDir.path);
     bibleStorage.setVersesForTest([
       const BibleVerse(
         reference: 'John 3:16',
         text: 'For God so loved the world',
       ),
     ]);
+    MoodStorage.instance.setScripturesForTest([
+      const MoodScripture(
+        moodName: 'Thankful',
+        emoji: '😊',
+        scripture: 'Psalm 100:4',
+        scriptureText: 'Enter into his gates with thanksgiving.',
+      ),
+    ]);
+    await AppPreferencesService.instance.updateMoodNotificationsEnabled(false);
   });
 
   tearDown(() async {
@@ -137,5 +152,31 @@ void main() {
     );
     expect(reminder.body, isNot(contains('[[INK:')));
     expect(reminder.payload, isNotNull);
+  });
+
+  test('includes mood scripture when mood notifications are enabled', () async {
+    bibleStorage.setVersesForTest([]);
+    await AppPreferencesService.instance.updateMoodNotificationsEnabled(true);
+
+    final reminder = NotificationContent.pickReminder(random: Random(0));
+
+    expect(reminder.body, contains('Psalm 100:4'));
+    expect(reminder.title, '😊 Thankful');
+
+    final payload = NotificationPayload.decode(reminder.payload);
+    expect(payload, isA<MoodNotificationPayload>());
+    expect(
+      (payload as MoodNotificationPayload).moodName,
+      'Thankful',
+    );
+  });
+
+  test('pickMoodReminder returns mood-only notification', () async {
+    await AppPreferencesService.instance.updateMoodNotificationsEnabled(true);
+
+    final reminder = NotificationContent.pickMoodReminder(random: Random(0));
+
+    expect(reminder, isNotNull);
+    expect(reminder!.body, contains('Enter into his gates'));
   });
 }

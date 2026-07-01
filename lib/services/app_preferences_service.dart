@@ -91,4 +91,10 @@ class AppPreferencesService extends ChangeNotifier {
 
   Future<void> updateSermonFeedUrl(String url) =>
       _save(_prefs.copyWith(sermonFeedUrl: url.trim()));
+
+  Future<void> updateMoodNotificationsEnabled(bool enabled) =>
+      _save(_prefs.copyWith(moodNotificationsEnabled: enabled));
+
+  Future<void> updateSelectedMoodName(String moodName) =>
+      _save(_prefs.copyWith(selectedMoodName: moodName.trim()));
 }

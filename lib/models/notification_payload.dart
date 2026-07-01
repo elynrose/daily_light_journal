@@ -17,6 +17,7 @@ sealed class NotificationPayload {
       return switch (map['t']) {
         'journal' => JournalNotificationPayload.fromJson(map),
         'bible' => BibleNotificationPayload.fromJson(map),
+        'mood' => MoodNotificationPayload.fromJson(map),
         _ => null,
       };
     } catch (_) {
@@ -72,6 +73,30 @@ class BibleNotificationPayload extends NotificationPayload {
   Map<String, dynamic> toJson() => {
         't': 'bible',
         'r': reference,
+      };
+}
+
+class MoodNotificationPayload extends NotificationPayload {
+  final String moodName;
+  final String scripture;
+
+  const MoodNotificationPayload({
+    required this.moodName,
+    required this.scripture,
+  });
+
+  factory MoodNotificationPayload.fromJson(Map<String, dynamic> map) {
+    return MoodNotificationPayload(
+      moodName: map['m'] as String? ?? '',
+      scripture: map['r'] as String? ?? '',
+    );
+  }
+
+  @override
+  Map<String, dynamic> toJson() => {
+        't': 'mood',
+        'm': moodName,
+        'r': scripture,
       };
 }
 

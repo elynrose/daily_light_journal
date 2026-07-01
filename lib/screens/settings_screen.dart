@@ -11,6 +11,7 @@ import '../services/app_preferences_service.dart';
 import '../services/backup_service.dart';
 import '../services/notification_service.dart';
 import '../services/song_storage.dart';
+import '../utils/picked_file_reader.dart';
 import '../theme/app_colors.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -108,11 +109,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
       final result = await FilePicker.platform.pickFiles(
         type: FileType.custom,
         allowedExtensions: const ['csv'],
+        withData: true,
       );
-      final path = result?.files.single.path;
-      if (path == null) return;
-
-      final csv = await File(path).readAsString();
+      final csv = await readPickedFileText(result);
+      if (csv == null) return;
       final importResult =
           await BackupService.instance.importFromCsv(csv, replace: true);
 
@@ -198,11 +198,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
       final result = await FilePicker.platform.pickFiles(
         type: FileType.custom,
         allowedExtensions: const ['json'],
+        withData: true,
       );
-      final path = result?.files.single.path;
-      if (path == null) return;
-
-      final json = await File(path).readAsString();
+      final json = await readPickedFileText(result);
+      if (json == null) return;
       final imported = await SongStorage.instance.importFromLibraryJson(
         json,
         replace: true,
@@ -353,6 +352,24 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         onSave: _prefsService.updateEveningTime,
                       ),
                     ),
+                  SwitchListTile(
+                    contentPadding: EdgeInsets.zero,
+                    title: const Text('Mood scriptures'),
+                    subtitle: const Text(
+                      'Include mood-based KJV verses in reminders. '
+                      'Morning & evening also sends a midday mood verse.',
+                    ),
+                    value: _prefs.moodNotificationsEnabled,
+                    onChanged: _prefs.notificationFrequency ==
+                            NotificationFrequency.none
+                        ? null
+                        : (value) async {
+                            await _prefsService
+                                .updateMoodNotificationsEnabled(value);
+                            await NotificationService.instance
+                                .refreshScheduledReminders();
+                          },
+                  ),
                 ],
               ),
             ),

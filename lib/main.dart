@@ -7,6 +7,7 @@ import 'models/notification_payload.dart';
 import 'screens/bible_screen.dart';
 import 'screens/gallery_screen.dart';
 import 'screens/journal_screen.dart';
+import 'screens/mood_screen.dart';
 import 'screens/onboarding_screen.dart';
 import 'screens/settings_screen.dart';
 import 'screens/songs_screen.dart';
@@ -14,6 +15,7 @@ import 'services/app_preferences_service.dart';
 import 'services/bible_storage.dart';
 import 'services/entry_storage.dart';
 import 'services/journal_context.dart';
+import 'services/mood_storage.dart';
 import 'services/notification_service.dart';
 import 'services/photo_storage.dart';
 import 'services/song_storage.dart';
@@ -27,6 +29,7 @@ void main() async {
   await PhotoStorage.instance.init();
   await AppPreferencesService.instance.init();
   await BibleStorage.instance.load();
+  await MoodStorage.instance.load();
   await NotificationService.instance.init();
   await NotificationService.instance.refreshScheduledReminders();
   runApp(const DailyLightJournalApp());
@@ -87,6 +90,9 @@ class _AppShellState extends State<AppShell> with WidgetsBindingObserver {
   int _journalRefreshToken = 0;
   String? _bibleInitialReference;
   int _bibleRefreshToken = 0;
+  String? _moodInitialMoodName;
+  String? _moodInitialScriptureReference;
+  int _moodRefreshToken = 0;
   StreamSubscription<NotificationPayload>? _notificationTapSub;
 
   @override
@@ -168,6 +174,13 @@ class _AppShellState extends State<AppShell> with WidgetsBindingObserver {
           _bibleInitialReference = payload.reference;
           _bibleRefreshToken++;
         });
+      case MoodNotificationPayload():
+        setState(() {
+          _selectedTab = AppTab.mood;
+          _moodInitialMoodName = payload.moodName;
+          _moodInitialScriptureReference = payload.scripture;
+          _moodRefreshToken++;
+        });
     }
   }
 
@@ -209,6 +222,16 @@ class _AppShellState extends State<AppShell> with WidgetsBindingObserver {
           ),
           initialReference: _bibleInitialReference,
           onAddedToScriptures: _onAddedScriptureToJournal,
+        );
+      case AppTab.mood:
+        return MoodScreen(
+          key: ValueKey(
+            'mood-$_moodRefreshToken-'
+            '${_moodInitialMoodName ?? ''}-'
+            '${_moodInitialScriptureReference ?? ''}',
+          ),
+          initialMoodName: _moodInitialMoodName,
+          initialScriptureReference: _moodInitialScriptureReference,
         );
       case AppTab.gallery:
         return const GalleryScreen(key: ValueKey('gallery'));

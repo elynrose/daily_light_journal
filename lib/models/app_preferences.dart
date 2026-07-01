@@ -79,6 +79,8 @@ class AppPreferences {
   final double notesFontScale;
   final double lyricsFontScale;
   final String sermonFeedUrl;
+  final bool moodNotificationsEnabled;
+  final String? selectedMoodName;
 
   const AppPreferences({
     this.onboardingComplete = false,
@@ -93,6 +95,8 @@ class AppPreferences {
     this.notesFontScale = 1.0,
     this.lyricsFontScale = 1.0,
     this.sermonFeedUrl = '',
+    this.moodNotificationsEnabled = false,
+    this.selectedMoodName,
   });
 
   AppPreferences copyWith({
@@ -108,6 +112,9 @@ class AppPreferences {
     double? notesFontScale,
     double? lyricsFontScale,
     String? sermonFeedUrl,
+    bool? moodNotificationsEnabled,
+    String? selectedMoodName,
+    bool clearSelectedMoodName = false,
   }) {
     return AppPreferences(
       onboardingComplete: onboardingComplete ?? this.onboardingComplete,
@@ -123,6 +130,11 @@ class AppPreferences {
       notesFontScale: notesFontScale ?? this.notesFontScale,
       lyricsFontScale: lyricsFontScale ?? this.lyricsFontScale,
       sermonFeedUrl: sermonFeedUrl ?? this.sermonFeedUrl,
+      moodNotificationsEnabled:
+          moodNotificationsEnabled ?? this.moodNotificationsEnabled,
+      selectedMoodName: clearSelectedMoodName
+          ? null
+          : (selectedMoodName ?? this.selectedMoodName),
     );
   }
 
@@ -140,6 +152,8 @@ class AppPreferences {
       'notesFontScale': notesFontScale,
       'lyricsFontScale': lyricsFontScale,
       'sermonFeedUrl': sermonFeedUrl,
+      'moodNotificationsEnabled': moodNotificationsEnabled,
+      'selectedMoodName': selectedMoodName,
     };
   }
 
@@ -161,6 +175,9 @@ class AppPreferences {
       notesFontScale: (map['notesFontScale'] as num?)?.toDouble() ?? 1.0,
       lyricsFontScale: (map['lyricsFontScale'] as num?)?.toDouble() ?? 1.0,
       sermonFeedUrl: map['sermonFeedUrl'] as String? ?? '',
+      moodNotificationsEnabled:
+          map['moodNotificationsEnabled'] as bool? ?? false,
+      selectedMoodName: map['selectedMoodName'] as String?,
     );
   }
 }

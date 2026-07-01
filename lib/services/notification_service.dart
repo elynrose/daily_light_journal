@@ -193,7 +193,65 @@ class NotificationService {
           );
         }
       }
+
+      if (_shouldScheduleMiddayMood(prefs)) {
+        final midday = tz.TZDateTime(
+          tz.local,
+          day.year,
+          day.month,
+          day.day,
+          12,
+          0,
+        );
+        if (midday.isAfter(now)) {
+          await _scheduleMoodReminder(
+            id: notificationId++,
+            scheduledAt: midday,
+          );
+        }
+      }
     }
+  }
+
+  bool _shouldScheduleMiddayMood(AppPreferences prefs) {
+    return prefs.moodNotificationsEnabled &&
+        prefs.notificationFrequency == NotificationFrequency.twiceDaily;
+  }
+
+  Future<void> _scheduleMoodReminder({
+    required int id,
+    required tz.TZDateTime scheduledAt,
+  }) async {
+    final reminder = NotificationContent.pickMoodReminder();
+    if (reminder == null) return;
+
+    const darwinDetails = DarwinNotificationDetails(
+      presentAlert: true,
+      presentBadge: true,
+      presentSound: true,
+    );
+    final androidDetails = AndroidNotificationDetails(
+      _channelId,
+      _channelName,
+      channelDescription: 'Morning and evening journal and scripture reminders',
+      importance: Importance.high,
+      priority: Priority.high,
+      styleInformation: BigTextStyleInformation(reminder.body),
+    );
+
+    await _plugin.zonedSchedule(
+      id: id,
+      title: reminder.title ?? 'Mood Scripture',
+      body: reminder.body,
+      payload: reminder.payload,
+      scheduledDate: scheduledAt,
+      notificationDetails: NotificationDetails(
+        android: androidDetails,
+        iOS: darwinDetails,
+        macOS: darwinDetails,
+      ),
+      androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
+    );
   }
 
   bool _shouldScheduleMorning(AppPreferences prefs) {
@@ -212,7 +270,7 @@ class NotificationService {
     required bool isMorning,
   }) async {
     final reminder = NotificationContent.pickReminder();
-    final title = isMorning ? 'Morning Light' : 'Evening Light';
+    final title = reminder.title ?? (isMorning ? 'Morning Light' : 'Evening Light');
 
     const darwinDetails = DarwinNotificationDetails(
       presentAlert: true,
