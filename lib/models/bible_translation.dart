@@ -57,8 +57,103 @@ class BibleTranslation {
     assetPath: 'translations/ESV.json',
   );
 
+  static const esvuk = BibleTranslation(
+    id: 'esvuk',
+    label: 'ESVUK',
+    assetPath: 'translations/ESVUK.json',
+  );
+
+  static const gnv = BibleTranslation(
+    id: 'gnv',
+    label: 'GNV',
+    assetPath: 'translations/GNV.json',
+  );
+
+  static const gw = BibleTranslation(
+    id: 'gw',
+    label: 'GW',
+    assetPath: 'translations/GW.json',
+  );
+
+  static const isv = BibleTranslation(
+    id: 'isv',
+    label: 'ISV',
+    assetPath: 'translations/ISV.json',
+  );
+
+  static const jub = BibleTranslation(
+    id: 'jub',
+    label: 'JUB',
+    assetPath: 'translations/JUB.json',
+  );
+
+  static const kj21 = BibleTranslation(
+    id: 'kj21',
+    label: 'KJ21',
+    assetPath: 'translations/KJ21.json',
+  );
+
+  static const leb = BibleTranslation(
+    id: 'leb',
+    label: 'LEB',
+    assetPath: 'translations/LEB.json',
+  );
+
+  static const lsb = BibleTranslation(
+    id: 'lsb',
+    label: 'LSB',
+    assetPath: 'translations/LSB.json',
+  );
+
+  static const mev = BibleTranslation(
+    id: 'mev',
+    label: 'MEV',
+    assetPath: 'translations/MEV.json',
+  );
+
+  static const nasb = BibleTranslation(
+    id: 'nasb',
+    label: 'NASB',
+    assetPath: 'translations/NASB.json',
+  );
+
+  static const nasb1995 = BibleTranslation(
+    id: 'nasb1995',
+    label: 'NASB1995',
+    assetPath: 'translations/NASB1995.json',
+  );
+
+  static const net = BibleTranslation(
+    id: 'net',
+    label: 'NET',
+    assetPath: 'translations/NET.json',
+  );
+
+  static const niv = BibleTranslation(
+    id: 'niv',
+    label: 'NIV',
+    assetPath: 'translations/NIV.json',
+  );
+
+  static const nivuk = BibleTranslation(
+    id: 'nivuk',
+    label: 'NIVUK',
+    assetPath: 'translations/NIVUK.json',
+  );
+
+  static const nkjv = BibleTranslation(
+    id: 'nkjv',
+    label: 'NKJV',
+    assetPath: 'translations/NKJV.json',
+  );
+
+  static const nlt = BibleTranslation(
+    id: 'nlt',
+    label: 'NLT',
+    assetPath: 'translations/NLT.json',
+  );
+
   static const all = [
-    kjv,
     akjv,
     amp,
     asv,
@@ -66,6 +161,23 @@ class BibleTranslation {
     csb,
     ehv,
     esv,
+    esvuk,
+    gnv,
+    gw,
+    isv,
+    jub,
+    kj21,
+    kjv,
+    leb,
+    lsb,
+    mev,
+    nasb,
+    nasb1995,
+    net,
+    niv,
+    nivuk,
+    nkjv,
+    nlt,
   ];
 
   static BibleTranslation fromId(String id) {

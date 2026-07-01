@@ -4,7 +4,7 @@ description: Church Journal — record songs, quotes, and scriptures by date.
 environment:
   sdk: ">=3.0.0 <4.0.0"
 
-version: 1.0.0+10
+version: 1.0.0+11
 
 dependencies:
   flutter:
@@ -53,4 +53,21 @@ flutter:
     - translations/CSB.json
     - translations/EHV.json
     - translations/ESV.json
+    - translations/ESVUK.json
+    - translations/GNV.json
+    - translations/GW.json
+    - translations/ISV.json
+    - translations/JUB.json
+    - translations/KJ21.json
+    - translations/KJV.json
+    - translations/LEB.json
+    - translations/LSB.json
+    - translations/MEV.json
+    - translations/NASB.json
+    - translations/NASB1995.json
+    - translations/NET.json
+    - translations/NIV.json
+    - translations/NIVUK.json
+    - translations/NKJV.json
+    - translations/NLT.json
     - assets/mood_scriptures.json
