@@ -1,6 +1,7 @@
 import 'app_preferences.dart';
 
 import 'study_audio_attachment.dart';
+import '../utils/ink_storage.dart';
 
 enum EntryCategory { song, quote, scripture, feed }
 
@@ -144,7 +145,10 @@ class Entry {
 
   String get combinedNotes {
     if (notePages.isNotEmpty) {
-      return notePages.where((page) => page.trim().isNotEmpty).join('\n\n');
+      return notePages
+          .map(pageText)
+          .where((page) => page.trim().isNotEmpty)
+          .join('\n\n');
     }
     return notes;
   }

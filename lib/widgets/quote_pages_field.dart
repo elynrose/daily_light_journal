@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
+import '../services/ink_recognition_service.dart';
 import '../theme/app_colors.dart';
 import '../utils/ink_storage.dart';
 import 'handwriting_canvas.dart';
@@ -28,29 +31,28 @@ class QuotePagesFieldState extends State<QuotePagesField> {
   late List<String> _pages;
   late List<TextEditingController> _controllers;
   late List<FocusNode> _focusNodes;
+  late List<List<List<List<double>>>> _strokes;
   late List<bool> _inkModes;
+  late List<int> _transcribedHashes;
   int _currentPage = 0;
+  bool _transcribing = false;
 
   @override
   void initState() {
     super.initState();
     _pageController = PageController();
     _pages = _normalizePages(widget.initialPages);
-    _controllers = [];
-    _focusNodes = [];
-    _inkModes = _pages.map(isInkPage).toList();
-    _buildControllers();
+    _buildState();
   }
 
   @override
   void didUpdateWidget(covariant QuotePagesField oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.initialPages != widget.initialPages) {
-      _disposeControllers();
+      _disposeState();
       _pages = _normalizePages(widget.initialPages);
       _currentPage = 0;
-      _inkModes = _pages.map(isInkPage).toList();
-      _buildControllers();
+      _buildState();
       if (_pageController.hasClients) {
         _pageController.jumpToPage(0);
       }
@@ -62,17 +64,25 @@ class QuotePagesFieldState extends State<QuotePagesField> {
     return List<String>.from(pages);
   }
 
-  void _buildControllers() {
-    _controllers = _pages
-        .map(
-          (page) => TextEditingController(text: isInkPage(page) ? '' : page)
-            ..addListener(_notifyPagesChanged),
-        )
-        .toList();
-    _focusNodes = List.generate(_pages.length, (_) => FocusNode());
+  void _buildState() {
+    _controllers = [];
+    _focusNodes = [];
+    _strokes = [];
+    _inkModes = [];
+    _transcribedHashes = [];
+    for (final page in _pages) {
+      final data = decodeInkPage(page);
+      _strokes.add(data.strokes);
+      _inkModes.add(data.inkMode);
+      _transcribedHashes.add(0);
+      _controllers.add(
+        TextEditingController(text: data.text)..addListener(_notifyPagesChanged),
+      );
+      _focusNodes.add(FocusNode());
+    }
   }
 
-  void _disposeControllers() {
+  void _disposeState() {
     for (final controller in _controllers) {
       controller.removeListener(_notifyPagesChanged);
       controller.dispose();
@@ -82,54 +92,108 @@ class QuotePagesFieldState extends State<QuotePagesField> {
     }
     _controllers = [];
     _focusNodes = [];
+    _strokes = [];
+    _inkModes = [];
+    _transcribedHashes = [];
   }
 
-  void _syncPagesFromControllers() {
-    for (var index = 0; index < _controllers.length; index++) {
-      if (_inkModes[index]) continue;
-      _pages[index] = _controllers[index].text;
+  String _composePage(int index) => encodeInkPage(
+        strokes: _strokes[index],
+        text: _controllers[index].text,
+        inkMode: _inkModes[index],
+      );
+
+  void _syncPages() {
+    for (var index = 0; index < _pages.length; index++) {
+      _pages[index] = _composePage(index);
     }
   }
 
   void _notifyPagesChanged() {
-    _syncPagesFromControllers();
+    _syncPages();
     widget.onPagesChanged(List<String>.from(_pages));
   }
 
   void _onInkChanged(int index, String inkValue) {
-    _pages[index] = inkValue;
+    _strokes[index] = decodeInkStrokes(inkValue);
+    _syncPages();
     widget.onPagesChanged(List<String>.from(_pages));
   }
 
-  void _toggleInkMode(int index) {
-    setState(() {
-      if (_inkModes[index]) {
-        final recognized = _controllers[index].text.trim();
-        _pages[index] = recognized;
-        _inkModes[index] = false;
-      } else {
-        _syncPagesFromControllers();
-        _pages[index] = encodeInkStrokes([]);
-        _controllers[index].text = '';
-        _inkModes[index] = true;
+  int _strokesHash(List<List<List<double>>> strokes) =>
+      encodeInkStrokes(strokes).hashCode;
+
+  Future<void> _toggleInkMode(int index) async {
+    if (_transcribing) return;
+
+    // Keyboard -> stylus: just show the sketch, keeping both text and strokes.
+    if (!_inkModes[index]) {
+      setState(() => _inkModes[index] = true);
+      _notifyPagesChanged();
+      return;
+    }
+
+    // Stylus -> keyboard: transcribe the sketch (once per drawing) into the
+    // text, but never discard the strokes or the existing text.
+    final strokes = _strokes[index];
+    final hash = _strokesHash(strokes);
+    final needsTranscription =
+        strokes.isNotEmpty && hash != _transcribedHashes[index];
+
+    if (needsTranscription) {
+      setState(() => _transcribing = true);
+      String? recognized;
+      try {
+        recognized = await InkRecognitionService.instance.transcribe(
+          strokes,
+          onDownloadingModel: () => _showSnack(
+            'Downloading handwriting model (one-time, needs internet)…',
+          ),
+        );
+      } on TimeoutException {
+        _showSnack(
+          'Handwriting recognition timed out. Check your internet '
+          'connection and try again.',
+        );
+      } on InkModelUnavailableException {
+        _showSnack(
+          'Could not download the handwriting model. Connect to the '
+          'internet and try again.',
+        );
+      } catch (error) {
+        _showSnack('Could not recognize handwriting: $error');
+      } finally {
+        if (mounted) setState(() => _transcribing = false);
       }
-    });
-    widget.onPagesChanged(List<String>.from(_pages));
+
+      if (!mounted) return;
+      if (recognized == null) {
+        // Recognition failed; stay in stylus mode so nothing is lost.
+        return;
+      }
+
+      final text = recognized.trim();
+      if (text.isNotEmpty) {
+        final current = _controllers[index].text.trim();
+        _controllers[index].text =
+            current.isEmpty ? text : '$current\n$text';
+      }
+      _transcribedHashes[index] = hash;
+    }
+
+    setState(() => _inkModes[index] = false);
+    _notifyPagesChanged();
   }
 
-  void _onTextRecognized(int index, String text) {
-    final current = _controllers[index].text.trim();
-    _controllers[index].text =
-        current.isEmpty ? text : '$current\n$text';
-    setState(() {
-      _inkModes[index] = false;
-      _pages[index] = _controllers[index].text;
-    });
-    widget.onPagesChanged(List<String>.from(_pages));
+  void _showSnack(String message) {
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message)),
+    );
   }
 
   List<String> collectPages() {
-    _syncPagesFromControllers();
+    _syncPages();
     return List<String>.from(_pages);
   }
 
@@ -151,7 +215,7 @@ class QuotePagesFieldState extends State<QuotePagesField> {
   Future<void> _deletePage() async {
     if (_pages.length <= 1) return;
 
-    _syncPagesFromControllers();
+    _syncPages();
     final index = _currentPage;
 
     final confirmed = await showDialog<bool>(
@@ -183,7 +247,9 @@ class QuotePagesFieldState extends State<QuotePagesField> {
       _pages.removeAt(index);
       _controllers.removeAt(index);
       _focusNodes.removeAt(index);
+      _strokes.removeAt(index);
       _inkModes.removeAt(index);
+      _transcribedHashes.removeAt(index);
 
       if (_currentPage >= _pages.length) {
         _currentPage = _pages.length - 1;
@@ -199,15 +265,14 @@ class QuotePagesFieldState extends State<QuotePagesField> {
   }
 
   void _addPage() {
-    _syncPagesFromControllers();
+    _syncPages();
     setState(() {
       _pages.add('');
-      final controller = TextEditingController()
-        ..addListener(_notifyPagesChanged);
-      final focusNode = FocusNode();
-      _controllers.add(controller);
-      _focusNodes.add(focusNode);
+      _controllers.add(TextEditingController()..addListener(_notifyPagesChanged));
+      _focusNodes.add(FocusNode());
+      _strokes.add(<List<List<double>>>[]);
       _inkModes.add(false);
+      _transcribedHashes.add(0);
       _currentPage = _pages.length - 1;
     });
     widget.onPagesChanged(List<String>.from(_pages));
@@ -225,7 +290,7 @@ class QuotePagesFieldState extends State<QuotePagesField> {
 
   @override
   void dispose() {
-    _disposeControllers();
+    _disposeState();
     _pageController.dispose();
     super.dispose();
   }
@@ -246,11 +311,10 @@ class QuotePagesFieldState extends State<QuotePagesField> {
             itemBuilder: (context, index) {
               if (_inkModes[index]) {
                 return HandwritingCanvas(
-                  key: ValueKey('ink-page-$index-${_pages[index].hashCode}'),
-                  initialValue: _pages[index],
+                  key: ValueKey('ink-page-$index'),
+                  initialValue: encodeInkStrokes(_strokes[index]),
                   fontScale: widget.fontScale,
                   onChanged: (value) => _onInkChanged(index, value),
-                  onTextRecognized: (text) => _onTextRecognized(index, text),
                 );
               }
 
@@ -287,16 +351,23 @@ class QuotePagesFieldState extends State<QuotePagesField> {
                 icon: const Icon(Icons.chevron_left, color: AppColors.text),
               ),
               IconButton(
-                onPressed: () => _toggleInkMode(_currentPage),
+                onPressed:
+                    _transcribing ? null : () => _toggleInkMode(_currentPage),
                 padding: EdgeInsets.zero,
                 constraints: const BoxConstraints(minWidth: 36, minHeight: 36),
                 tooltip: _inkModes[_currentPage]
-                    ? 'Switch to keyboard'
+                    ? 'Switch to keyboard (transcribe handwriting)'
                     : 'Switch to stylus',
-                icon: Icon(
-                  _inkModes[_currentPage] ? Icons.keyboard : Icons.draw,
-                  color: AppColors.text,
-                ),
+                icon: _transcribing
+                    ? const SizedBox(
+                        width: 18,
+                        height: 18,
+                        child: CircularProgressIndicator(strokeWidth: 2),
+                      )
+                    : Icon(
+                        _inkModes[_currentPage] ? Icons.keyboard : Icons.draw,
+                        color: AppColors.text,
+                      ),
               ),
               Expanded(
                 child: Row(

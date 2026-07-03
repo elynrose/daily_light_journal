@@ -54,4 +54,40 @@ void main() {
     final verse = storage.pickRandomVerse();
     expect(['John 3:16', 'Genesis 1:1'], contains(verse?.reference));
   });
+
+  test('parseVerseReference splits book, chapter, and verse', () {
+    expect(BibleStorage.parseVerseReference('John 3:16'), ('John', 3, 16));
+    expect(
+      BibleStorage.parseVerseReference('1 Corinthians 13:4'),
+      ('1 Corinthians', 13, 4),
+    );
+    expect(BibleStorage.parseVerseReference('nonsense'), isNull);
+  });
+
+  test('book, chapter, and verse selectors reflect the loaded data', () {
+    final storage = BibleStorage.instance;
+    storage.setVersesForTest([
+      const BibleVerse(reference: 'John 3:16', text: 'For God so loved'),
+      const BibleVerse(reference: 'John 3:17', text: 'For God sent not'),
+      const BibleVerse(reference: 'John 4:1', text: 'When therefore'),
+      const BibleVerse(reference: 'Genesis 1:1', text: 'In the beginning'),
+    ]);
+
+    expect(storage.books, ['John', 'Genesis']);
+    expect(storage.chaptersForBook('John'), [3, 4]);
+    expect(storage.versesForBookChapter('John', 3), [16, 17]);
+  });
+
+  test('chapterVersesFrom returns the rest of the chapter from a verse', () {
+    final storage = BibleStorage.instance;
+    storage.setVersesForTest([
+      const BibleVerse(reference: 'John 3:15', text: 'Whosoever believeth'),
+      const BibleVerse(reference: 'John 3:16', text: 'For God so loved'),
+      const BibleVerse(reference: 'John 3:17', text: 'For God sent not'),
+      const BibleVerse(reference: 'John 4:1', text: 'When therefore'),
+    ]);
+
+    final verses = storage.chapterVersesFrom('John', 3, 16);
+    expect(verses.map((v) => v.reference), ['John 3:16', 'John 3:17']);
+  });
 }

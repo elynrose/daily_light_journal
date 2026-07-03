@@ -38,7 +38,8 @@ class JournalScreen extends StatefulWidget {
   State<JournalScreen> createState() => _JournalScreenState();
 }
 
-class _JournalScreenState extends State<JournalScreen> {
+class _JournalScreenState extends State<JournalScreen>
+    with WidgetsBindingObserver {
   static const _autosaveDelay = Duration(milliseconds: 800);
 
   final EntryStorage _storage = EntryStorage.instance;
@@ -102,7 +103,18 @@ class _JournalScreenState extends State<JournalScreen> {
     _preachedByFocusNode.addListener(_onPreachedByFocusChange);
     _notesFocusNode.addListener(_onNotesFocusChange);
     AppPreferencesService.instance.addListener(_onPrefsChanged);
+    WidgetsBinding.instance.addObserver(this);
     _loadEntryForCurrentSelection();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.inactive ||
+        state == AppLifecycleState.paused ||
+        state == AppLifecycleState.hidden ||
+        state == AppLifecycleState.detached) {
+      unawaited(_flushSave());
+    }
   }
 
   void _onPrefsChanged() {
@@ -605,6 +617,7 @@ class _JournalScreenState extends State<JournalScreen> {
   void dispose() {
     _autosaveTimer?.cancel();
     unawaited(_flushSave());
+    WidgetsBinding.instance.removeObserver(this);
     AppPreferencesService.instance.removeListener(_onPrefsChanged);
     _titleController.removeListener(_scheduleAutosave);
     _preachedByController.removeListener(_scheduleAutosave);

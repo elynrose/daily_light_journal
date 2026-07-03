@@ -5,6 +5,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 import 'package:church_journal/models/entry.dart';
 import 'package:church_journal/models/song.dart';
+import 'package:church_journal/models/study_audio_attachment.dart';
 import 'package:church_journal/services/entry_storage.dart';
 
 void main() {
@@ -266,5 +267,75 @@ void main() {
       storage.getSermonPreachedBySync(day, period: ServicePeriod.am),
       'Pastor John',
     );
+  });
+
+  test('devotional entry persists prayer topics, gratitude, and study audio',
+      () async {
+    final day = DateTime(2024, 5, 4);
+
+    await storage.saveEntry(Entry(
+      id: 'devotional',
+      date: day,
+      title: '',
+      notes: 'John 3:16',
+      category: EntryCategory.scripture,
+      period: ServicePeriod.am,
+      prayerTopics: 'Family and friends',
+      gratitude: 'A new day',
+      studyAudio: const StudyAudioAttachment(
+        title: 'Faith 101',
+        enclosureUrl: 'https://example.com/audio.mp3',
+        author: 'Pastor Ada',
+      ),
+    ));
+
+    final entry = storage.getEntrySync(
+      day,
+      EntryCategory.scripture,
+      period: ServicePeriod.am,
+    );
+
+    expect(entry?.notes, 'John 3:16');
+    expect(entry?.prayerTopics, 'Family and friends');
+    expect(entry?.gratitude, 'A new day');
+    expect(entry?.studyAudio?.title, 'Faith 101');
+    expect(entry?.studyAudio?.enclosureUrl, 'https://example.com/audio.mp3');
+  });
+
+  test('appendScriptureNotes preserves devotional fields', () async {
+    final day = DateTime(2024, 6, 6);
+
+    await storage.saveEntry(Entry(
+      id: 'devotional',
+      date: day,
+      title: '',
+      notes: 'Genesis 1:1',
+      category: EntryCategory.scripture,
+      period: ServicePeriod.am,
+      prayerTopics: 'Wisdom',
+      gratitude: 'Rest',
+      studyAudio: const StudyAudioAttachment(
+        title: 'Creation',
+        enclosureUrl: 'https://example.com/creation.mp3',
+      ),
+    ));
+
+    await storage.appendScriptureNotes(
+      'Genesis 1:2\nAnd the earth was without form',
+      date: day,
+      period: ServicePeriod.am,
+    );
+
+    final entry = storage.getEntrySync(
+      day,
+      EntryCategory.scripture,
+      period: ServicePeriod.am,
+    );
+
+    expect(entry?.notes, contains('Genesis 1:1'));
+    expect(entry?.notes, contains('Genesis 1:2'));
+    expect(entry?.prayerTopics, 'Wisdom');
+    expect(entry?.gratitude, 'Rest');
+    expect(entry?.studyAudio?.title, 'Creation');
   });
 }

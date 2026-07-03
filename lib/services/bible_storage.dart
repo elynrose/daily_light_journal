@@ -20,6 +20,9 @@ class BibleStorage {
   bool _loaded = false;
   final Map<String, BibleVerse> _versesByNormalizedReference = {};
 
+  final List<String> _bookOrder = [];
+  final Map<String, Map<int, List<int>>> _bookChapterVerses = {};
+
   bool get isLoaded => _loaded;
 
   String get currentTranslationId => _currentTranslationId;
@@ -70,6 +73,61 @@ class BibleStorage {
           (verse) => MapEntry(normalizeReference(verse.reference), verse),
         ),
       );
+
+    _bookOrder.clear();
+    _bookChapterVerses.clear();
+    for (final verse in _verses) {
+      final parsed = parseVerseReference(verse.reference);
+      if (parsed == null) continue;
+      final (book, chapter, verseNumber) = parsed;
+      if (!_bookChapterVerses.containsKey(book)) {
+        _bookChapterVerses[book] = {};
+        _bookOrder.add(book);
+      }
+      _bookChapterVerses[book]!.putIfAbsent(chapter, () => []).add(verseNumber);
+    }
+  }
+
+  /// Parses a reference like "1 John 3:16" into (book, chapter, verse).
+  static (String, int, int)? parseVerseReference(String reference) {
+    final colon = reference.lastIndexOf(':');
+    if (colon <= 0) return null;
+    final verse = int.tryParse(reference.substring(colon + 1).trim());
+    if (verse == null) return null;
+    final left = reference.substring(0, colon).trim();
+    final lastSpace = left.lastIndexOf(' ');
+    if (lastSpace <= 0) return null;
+    final chapter = int.tryParse(left.substring(lastSpace + 1).trim());
+    if (chapter == null) return null;
+    final book = left.substring(0, lastSpace).trim();
+    if (book.isEmpty) return null;
+    return (book, chapter, verse);
+  }
+
+  List<String> get books => List.unmodifiable(_bookOrder);
+
+  List<int> chaptersForBook(String book) {
+    final chapters = _bookChapterVerses[book]?.keys.toList() ?? <int>[];
+    chapters.sort();
+    return chapters;
+  }
+
+  List<int> versesForBookChapter(String book, int chapter) {
+    final verses = _bookChapterVerses[book]?[chapter]?.toList() ?? <int>[];
+    verses.sort();
+    return verses;
+  }
+
+  /// Returns every verse in [book] [chapter] whose verse number is greater than
+  /// or equal to [fromVerse], preserving chapter order.
+  List<BibleVerse> chapterVersesFrom(String book, int chapter, int fromVerse) {
+    final result = <BibleVerse>[];
+    for (final verseNumber in versesForBookChapter(book, chapter)) {
+      if (verseNumber < fromVerse) continue;
+      final verse = verseForReference('$book $chapter:$verseNumber');
+      if (verse != null) result.add(verse);
+    }
+    return result;
   }
 
   BibleVerse? verseForReference(String reference) {

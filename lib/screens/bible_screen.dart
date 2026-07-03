@@ -28,7 +28,6 @@ class _BibleScreenState extends State<BibleScreen> {
   final BibleStorage _bibleStorage = BibleStorage.instance;
   final _prefsService = AppPreferencesService.instance;
   final EntryStorage _entryStorage = EntryStorage.instance;
-  final TextEditingController _searchController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
   final Map<String, GlobalKey> _verseKeys = {};
 
@@ -37,6 +36,10 @@ class _BibleScreenState extends State<BibleScreen> {
   String? _error;
   String? _loadedTranslationId;
   final Set<String> _highlightedReferences = {};
+
+  String? _selectedBook;
+  int? _selectedChapter;
+  int? _selectedVerse;
 
   @override
   void initState() {
@@ -51,14 +54,13 @@ class _BibleScreenState extends State<BibleScreen> {
     if (oldWidget.initialReference != widget.initialReference &&
         widget.initialReference != null &&
         !_loading) {
-      _applyInitialReference(widget.initialReference!);
+      _applySelectionFromReference(widget.initialReference!);
     }
   }
 
   @override
   void dispose() {
     _prefsService.removeListener(_onPrefsChanged);
-    _searchController.dispose();
     _scrollController.dispose();
     super.dispose();
   }
@@ -84,19 +86,11 @@ class _BibleScreenState extends State<BibleScreen> {
       await _bibleStorage.load(translationId: translationId);
       if (!mounted) return;
 
-      final query = _searchController.text.trim();
+      _loadedTranslationId = translationId;
       setState(() {
-        _verses = query.isEmpty
-            ? _bibleStorage.allVerses
-            : _bibleStorage.search(query);
-        _loadedTranslationId = translationId;
         _loading = false;
       });
-
-      final initialReference = widget.initialReference;
-      if (initialReference != null) {
-        _applyInitialReference(initialReference);
-      }
+      _initializeSelection();
     } catch (error) {
       if (!mounted) return;
       setState(() {
@@ -111,28 +105,88 @@ class _BibleScreenState extends State<BibleScreen> {
     await _prefsService.updateBibleTranslation(translationId);
   }
 
-  void _applyInitialReference(String reference) {
-    final verses = _bibleStorage.versesForReferenceQuery(reference);
-    if (verses.isEmpty) {
-      _searchController.text = reference;
-      setState(() {
-        _verses = _bibleStorage.search(reference);
-        _highlightedReferences.clear();
-      });
+  void _initializeSelection() {
+    final initialReference = widget.initialReference;
+    if (initialReference != null &&
+        _applySelectionFromReference(initialReference)) {
       return;
     }
 
-    _searchController.text = reference;
+    final books = _bibleStorage.books;
+    if (books.isEmpty) {
+      setState(() => _verses = const []);
+      return;
+    }
+
+    final book = (_selectedBook != null && books.contains(_selectedBook))
+        ? _selectedBook!
+        : books.first;
+    _applySelection(book: book, chapter: _selectedChapter, verse: _selectedVerse);
+  }
+
+  bool _applySelectionFromReference(String reference) {
+    final parsed = BibleStorage.parseVerseReference(reference);
+    if (parsed == null) return false;
+    final (book, chapter, verse) = parsed;
+    if (!_bibleStorage.books.contains(book)) return false;
+    _applySelection(book: book, chapter: chapter, verse: verse, scroll: true);
+    return true;
+  }
+
+  /// Loads the whole chapter starting at the selected verse.
+  void _applySelection({
+    required String book,
+    int? chapter,
+    int? verse,
+    bool scroll = false,
+  }) {
+    final chapters = _bibleStorage.chaptersForBook(book);
+    if (chapters.isEmpty) return;
+
+    final selectedChapter =
+        (chapter != null && chapters.contains(chapter)) ? chapter : chapters.first;
+    final chapterVerseNumbers =
+        _bibleStorage.versesForBookChapter(book, selectedChapter);
+    final selectedVerse = (verse != null && chapterVerseNumbers.contains(verse))
+        ? verse
+        : (chapterVerseNumbers.isNotEmpty ? chapterVerseNumbers.first : 1);
+
+    final chapterVerses =
+        _bibleStorage.chapterVersesFrom(book, selectedChapter, selectedVerse);
+
     setState(() {
-      _verses = verses;
+      _selectedBook = book;
+      _selectedChapter = selectedChapter;
+      _selectedVerse = selectedVerse;
+      _verses = chapterVerses;
       _highlightedReferences
         ..clear()
-        ..addAll(verses.map((verse) => verse.reference));
+        ..add('$book $selectedChapter:$selectedVerse');
     });
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _scrollToReference(verses.first.reference);
-    });
+    if (scroll && chapterVerses.isNotEmpty) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _scrollToReference(chapterVerses.first.reference);
+      });
+    }
+  }
+
+  void _onBookChanged(String? book) {
+    if (book == null) return;
+    _applySelection(book: book);
+  }
+
+  void _onChapterChanged(int? chapter) {
+    final book = _selectedBook;
+    if (book == null || chapter == null) return;
+    _applySelection(book: book, chapter: chapter);
+  }
+
+  void _onVerseChanged(int? verse) {
+    final book = _selectedBook;
+    final chapter = _selectedChapter;
+    if (book == null || chapter == null || verse == null) return;
+    _applySelection(book: book, chapter: chapter, verse: verse, scroll: true);
   }
 
   void _scrollToReference(String reference) {
@@ -198,13 +252,6 @@ class _BibleScreenState extends State<BibleScreen> {
       return reference;
     }
     return reference.substring(colonIndex + 1);
-  }
-
-  void _onSearchChanged(String query) {
-    setState(() {
-      _highlightedReferences.clear();
-      _verses = _bibleStorage.search(query);
-    });
   }
 
   Future<void> _addVerseToNotes(BibleVerse verse) async {
@@ -293,28 +340,92 @@ class _BibleScreenState extends State<BibleScreen> {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: TextField(
-                controller: _searchController,
-                decoration: InputDecoration(
-                  hintText: 'Search reference or text',
-                  filled: true,
-                  fillColor: AppColors.offWhite,
-                  prefixIcon: const Icon(Icons.search, color: AppColors.text),
-                  contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-                  border: AppColors.outlineInputBorder,
-                  enabledBorder: AppColors.outlineInputBorder,
-                  focusedBorder: AppColors.outlineInputBorder,
-                ),
-                style: const TextStyle(color: AppColors.text),
-                onChanged: _onSearchChanged,
-              ),
+              child: _buildReferenceSelectors(),
             ),
             const SizedBox(height: 8),
             Expanded(child: _buildBody(fontScale)),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildReferenceSelectors() {
+    final books = _bibleStorage.books;
+    final chapters =
+        _selectedBook != null ? _bibleStorage.chaptersForBook(_selectedBook!) : <int>[];
+    final verses = (_selectedBook != null && _selectedChapter != null)
+        ? _bibleStorage.versesForBookChapter(_selectedBook!, _selectedChapter!)
+        : <int>[];
+
+    return Row(
+      children: [
+        Expanded(
+          flex: 4,
+          child: _SelectorBox(
+            child: DropdownButton<String>(
+              isExpanded: true,
+              value: _selectedBook,
+              hint: const Text('Book'),
+              dropdownColor: Colors.white,
+              style: const TextStyle(fontSize: 14, color: AppColors.text),
+              items: books
+                  .map(
+                    (book) => DropdownMenuItem(
+                      value: book,
+                      child: Text(book, overflow: TextOverflow.ellipsis),
+                    ),
+                  )
+                  .toList(),
+              onChanged: _loading ? null : _onBookChanged,
+            ),
+          ),
+        ),
+        const SizedBox(width: 8),
+        Expanded(
+          flex: 2,
+          child: _SelectorBox(
+            child: DropdownButton<int>(
+              isExpanded: true,
+              value: _selectedChapter,
+              hint: const Text('Ch'),
+              dropdownColor: Colors.white,
+              style: const TextStyle(fontSize: 14, color: AppColors.text),
+              items: chapters
+                  .map(
+                    (chapter) => DropdownMenuItem(
+                      value: chapter,
+                      child: Text('$chapter'),
+                    ),
+                  )
+                  .toList(),
+              onChanged: _loading ? null : _onChapterChanged,
+            ),
+          ),
+        ),
+        const SizedBox(width: 8),
+        Expanded(
+          flex: 2,
+          child: _SelectorBox(
+            child: DropdownButton<int>(
+              isExpanded: true,
+              value: _selectedVerse,
+              hint: const Text('Vs'),
+              dropdownColor: Colors.white,
+              style: const TextStyle(fontSize: 14, color: AppColors.text),
+              items: verses
+                  .map(
+                    (verse) => DropdownMenuItem(
+                      value: verse,
+                      child: Text('$verse'),
+                    ),
+                  )
+                  .toList(),
+              onChanged: _loading ? null : _onVerseChanged,
+            ),
+          ),
+        ),
+      ],
     );
   }
 
@@ -333,12 +444,10 @@ class _BibleScreenState extends State<BibleScreen> {
     }
 
     if (_verses.isEmpty) {
-      return Center(
+      return const Center(
         child: Text(
-          _searchController.text.trim().isEmpty
-              ? 'No verses found'
-              : 'No matches for "${_searchController.text.trim()}"',
-          style: const TextStyle(color: AppColors.text),
+          'No verses found',
+          style: TextStyle(color: AppColors.text),
         ),
       );
     }
@@ -433,6 +542,27 @@ class _BibleScreenState extends State<BibleScreen> {
           ],
         );
       },
+    );
+  }
+}
+
+class _SelectorBox extends StatelessWidget {
+  final Widget child;
+
+  const _SelectorBox({required this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: AppColors.offWhite,
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: AppColors.border),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        child: DropdownButtonHideUnderline(child: child),
+      ),
     );
   }
 }

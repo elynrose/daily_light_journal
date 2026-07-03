@@ -65,20 +65,44 @@ class _SettingsScreenState extends State<SettingsScreen> {
     await NotificationService.instance.refreshScheduledReminders();
   }
 
+  /// Origin rect required by iOS/iPad to anchor the share sheet popover.
+  /// Without it, `shareXFiles` fails to present on iPad.
+  Rect _shareOrigin() {
+    final box = context.findRenderObject() as RenderBox?;
+    if (box != null && box.hasSize) {
+      return box.localToGlobal(Offset.zero) & box.size;
+    }
+    final size = MediaQuery.sizeOf(context);
+    return Rect.fromCenter(
+      center: Offset(size.width / 2, size.height / 2),
+      width: 1,
+      height: 1,
+    );
+  }
+
   Future<void> _exportBackup() async {
     try {
       final csv = await BackupService.instance.exportToCsv();
-      final dir = await getTemporaryDirectory();
+      final dir = await getApplicationDocumentsDirectory();
       final file = File(
         '${dir.path}/church_journal_backup_${DateTime.now().millisecondsSinceEpoch}.csv',
       );
-      await file.writeAsString(csv);
+      await file.writeAsString(csv, flush: true);
 
-      await Share.shareXFiles(
-        [XFile(file.path)],
+      if (!mounted) return;
+      final result = await Share.shareXFiles(
+        [XFile(file.path, mimeType: 'text/csv', name: 'church_journal_backup.csv')],
         subject: 'Church Journal backup',
         text: 'Church Journal data backup',
+        sharePositionOrigin: _shareOrigin(),
       );
+
+      if (!mounted) return;
+      if (result.status == ShareResultStatus.success) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Backup exported')),
+        );
+      }
     } catch (error) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
@@ -157,16 +181,24 @@ class _SettingsScreenState extends State<SettingsScreen> {
       }
 
       final json = SongStorage.instance.exportLibraryJson();
-      final dir = await getTemporaryDirectory();
+      final dir = await getApplicationDocumentsDirectory();
       final file = File(
         '${dir.path}/church_journal_songs_${DateTime.now().millisecondsSinceEpoch}.json',
       );
-      await file.writeAsString(json);
+      await file.writeAsString(json, flush: true);
 
+      if (!mounted) return;
       await Share.shareXFiles(
-        [XFile(file.path)],
+        [
+          XFile(
+            file.path,
+            mimeType: 'application/json',
+            name: 'church_journal_songs.json',
+          ),
+        ],
         subject: 'Church Journal song library',
         text: 'Church Journal song library export',
+        sharePositionOrigin: _shareOrigin(),
       );
     } catch (error) {
       if (!mounted) return;

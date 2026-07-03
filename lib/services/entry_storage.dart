@@ -336,6 +336,9 @@ class EntryStorage {
       notes: notes,
       category: EntryCategory.scripture,
       period: targetPeriod,
+      prayerTopics: existing?.prayerTopics ?? '',
+      gratitude: existing?.gratitude ?? '',
+      studyAudio: existing?.studyAudio,
     ));
   }
 

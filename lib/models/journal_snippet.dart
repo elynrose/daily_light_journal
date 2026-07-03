@@ -30,15 +30,16 @@ class JournalSnippet {
     return '${formatDate()} · ${period.label}\n$excerpt';
   }
 
-  /// Returns a random non-empty paragraph from [text], skipping ink-only pages.
+  /// Returns a random non-empty paragraph from [text], using the readable text
+  /// of a handwriting page and skipping strokes-only pages.
   static String? pickRandomParagraph(String text, {Random? random}) {
-    final trimmed = text.trim();
-    if (trimmed.isEmpty || isInkPage(trimmed)) return null;
+    final trimmed = pageText(text).trim();
+    if (trimmed.isEmpty) return null;
 
     final paragraphs = trimmed
         .split(RegExp(r'\n\s*\n'))
         .map((paragraph) => paragraph.trim())
-        .where((paragraph) => paragraph.isNotEmpty && !isInkPage(paragraph))
+        .where((paragraph) => paragraph.isNotEmpty)
         .toList();
 
     if (paragraphs.isEmpty) return null;
@@ -51,13 +52,13 @@ class JournalSnippet {
   static List<String> collectParagraphs(Iterable<String> pages) {
     final paragraphs = <String>[];
     for (final page in pages) {
-      final trimmed = page.trim();
-      if (trimmed.isEmpty || isInkPage(trimmed)) continue;
+      final trimmed = pageText(page).trim();
+      if (trimmed.isEmpty) continue;
 
       final pageParagraphs = trimmed
           .split(RegExp(r'\n\s*\n'))
           .map((paragraph) => paragraph.trim())
-          .where((paragraph) => paragraph.isNotEmpty && !isInkPage(paragraph));
+          .where((paragraph) => paragraph.isNotEmpty);
 
       paragraphs.addAll(pageParagraphs);
     }
