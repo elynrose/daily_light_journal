@@ -9,6 +9,7 @@ import 'package:share_plus/share_plus.dart';
 import '../models/app_preferences.dart';
 import '../models/bible_translation.dart';
 import '../services/app_preferences_service.dart';
+import '../services/auth_service.dart';
 import '../services/backup_service.dart';
 import '../services/notification_service.dart';
 import '../services/song_storage.dart';
@@ -162,6 +163,38 @@ class _SettingsScreenState extends State<SettingsScreen> {
     }
   }
 
+  Future<void> _signOut() async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Sign out?'),
+        content: const Text(
+          'Your data stays saved in the cloud and on this device. '
+          'You will need to sign in again to keep syncing.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: const Text('Sign out'),
+          ),
+        ],
+      ),
+    );
+    if (confirmed != true) return;
+    try {
+      await AuthService.instance.signOut();
+    } catch (error) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Sign out failed: $error')),
+      );
+    }
+  }
+
   Future<void> _shareApp() async {
     const message =
         'Church Journal helps you record worship songs, sermon notes, and scriptures by date. '
@@ -298,6 +331,36 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       )
                       .toList(),
                 ),
+              ),
+            ),
+            _SectionCard(
+              title: 'Account',
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    leading: const Icon(Icons.account_circle_outlined,
+                        color: AppColors.text),
+                    title: Text(
+                      AuthService.instance.currentUser?.displayName?.isNotEmpty ==
+                              true
+                          ? AuthService.instance.currentUser!.displayName!
+                          : 'Signed in',
+                    ),
+                    subtitle: Text(
+                      AuthService.instance.currentUser?.email ??
+                          'Synced to the cloud',
+                    ),
+                  ),
+                  ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    leading:
+                        const Icon(Icons.logout, color: AppColors.text),
+                    title: const Text('Sign out'),
+                    onTap: () => unawaited(_signOut()),
+                  ),
+                ],
               ),
             ),
             _SectionCard(

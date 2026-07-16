@@ -5,12 +5,17 @@ class Song {
   final String lyrics;
   final String number;
 
+  /// True for songs the user created in-app (synced to the cloud).
+  /// False for songs that came from an imported/seeded library (local-only).
+  final bool isUserAdded;
+
   const Song({
     required this.id,
     required this.title,
     required this.key,
     required this.lyrics,
     this.number = '',
+    this.isUserAdded = false,
   });
 
   Song copyWith({
@@ -19,6 +24,7 @@ class Song {
     String? key,
     String? lyrics,
     String? number,
+    bool? isUserAdded,
   }) {
     return Song(
       id: id ?? this.id,
@@ -26,6 +32,7 @@ class Song {
       key: key ?? this.key,
       lyrics: lyrics ?? this.lyrics,
       number: number ?? this.number,
+      isUserAdded: isUserAdded ?? this.isUserAdded,
     );
   }
 
@@ -36,6 +43,7 @@ class Song {
       'key': key,
       'lyrics': lyrics,
       'number': number,
+      'isUserAdded': isUserAdded,
     };
   }
 
@@ -46,6 +54,7 @@ class Song {
       key: map['key'] as String? ?? '',
       lyrics: map['lyrics'] as String? ?? '',
       number: map['number'] as String? ?? '',
+      isUserAdded: map['isUserAdded'] as bool? ?? false,
     );
   }
 
@@ -57,6 +66,7 @@ class Song {
       key: json['key'] as String? ?? '',
       lyrics: json['lyrics'] as String? ?? '',
       number: number,
+      isUserAdded: json['isUserAdded'] as bool? ?? false,
     );
   }
 }

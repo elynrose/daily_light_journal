@@ -5,6 +5,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import '../models/entry.dart';
 import '../models/journal_snippet.dart';
 import '../models/song.dart';
+import 'sync_service.dart';
 
 class EntryStorage {
   EntryStorage._();
@@ -141,12 +142,16 @@ class EntryStorage {
     final key = sermonTitleKey(date, period: period);
     if (title.trim().isEmpty) {
       await _box?.delete(key);
+      SyncService.instance.deleteEntry(key);
       return;
     }
-    await _box?.put(key, {
+    final record = {
       '_type': 'sermon_title',
       'title': title.trim(),
-    });
+      'updatedAt': SyncService.nowMillis(),
+    };
+    await _box?.put(key, record);
+    SyncService.instance.pushEntry(key, record);
   }
 
   String getSermonPreachedBySync(
@@ -168,12 +173,16 @@ class EntryStorage {
     final key = sermonPreachedByKey(date, period: period);
     if (preachedBy.trim().isEmpty) {
       await _box?.delete(key);
+      SyncService.instance.deleteEntry(key);
       return;
     }
-    await _box?.put(key, {
+    final record = {
       '_type': 'sermon_preached_by',
       'preachedBy': preachedBy.trim(),
-    });
+      'updatedAt': SyncService.nowMillis(),
+    };
+    await _box?.put(key, record);
+    SyncService.instance.pushEntry(key, record);
   }
 
   Future<void> saveEntry(Entry entry) async {
@@ -191,14 +200,18 @@ class EntryStorage {
           existing.period == normalized.period &&
           isSameDate(existing.date, normalizedDate)) {
         await _box?.delete(existing.id);
+        SyncService.instance.deleteEntry(existing.id);
       }
     }
 
-    await _box?.put(key, normalized.toMap());
+    final map = normalized.toMap()..['updatedAt'] = SyncService.nowMillis();
+    await _box?.put(key, map);
+    SyncService.instance.pushEntry(key, map);
   }
 
   Future<void> deleteEntry(String id) async {
     await _box?.delete(id);
+    SyncService.instance.deleteEntry(id);
   }
 
   Future<void> deleteEntryForDateCategoryAndPeriod(
@@ -208,12 +221,14 @@ class EntryStorage {
   }) async {
     final key = dateCategoryKey(date, category, period: period);
     await _box?.delete(key);
+    SyncService.instance.deleteEntry(key);
 
     for (final existing in List<Entry>.from(_entries)) {
       if (existing.category == category &&
           existing.period == period &&
           isSameDate(existing.date, date)) {
         await _box?.delete(existing.id);
+        SyncService.instance.deleteEntry(existing.id);
       }
     }
   }

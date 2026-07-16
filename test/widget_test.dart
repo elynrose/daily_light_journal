@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -39,7 +40,9 @@ void main() {
   });
 
   testWidgets('App loads journal screen', (WidgetTester tester) async {
-    await tester.pumpWidget(const DailyLightJournalApp());
+    // The full app is gated behind sign-in (which needs Firebase), so pump the
+    // main shell directly to verify the post-login UI.
+    await tester.pumpWidget(const MaterialApp(home: AppShell()));
     await tester.pumpAndSettle();
 
     expect(find.text('Prev'), findsOneWidget);

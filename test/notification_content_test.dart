@@ -4,7 +4,6 @@ import 'dart:math';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-import 'package:church_journal/models/app_preferences.dart';
 import 'package:church_journal/models/bible_verse.dart';
 import 'package:church_journal/models/entry.dart';
 import 'package:church_journal/models/mood_scripture.dart';

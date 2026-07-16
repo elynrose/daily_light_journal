@@ -4,6 +4,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import '../models/app_preferences.dart';
 import '../models/bible_translation.dart';
 import 'bible_storage.dart';
+import 'sync_service.dart';
 
 class AppPreferencesService extends ChangeNotifier {
   AppPreferencesService._();
@@ -15,6 +16,7 @@ class AppPreferencesService extends ChangeNotifier {
 
   Box<Map>? _box;
   AppPreferences _prefs = const AppPreferences();
+  int _updatedAt = 0;
 
   AppPreferences get prefs => _prefs;
 
@@ -33,13 +35,31 @@ class AppPreferencesService extends ChangeNotifier {
     final stored = _box?.get(_prefsKey);
     if (stored != null) {
       _prefs = AppPreferences.fromMap(stored);
+      _updatedAt = (stored['updatedAt'] as num?)?.toInt() ?? 0;
     }
   }
 
   Future<void> _save(AppPreferences prefs) async {
     _prefs = prefs;
-    await _box?.put(_prefsKey, prefs.toMap());
+    _updatedAt = SyncService.nowMillis();
+    final map = prefs.toMap()..['updatedAt'] = _updatedAt;
+    await _box?.put(_prefsKey, map);
     notifyListeners();
+    SyncService.instance.pushPreferences(map);
+  }
+
+  /// Preferences map including the `updatedAt` field, for cloud sync.
+  Map<String, dynamic> exportRawMap() {
+    return _prefs.toMap()..['updatedAt'] = _updatedAt;
+  }
+
+  /// Applies preferences pulled from the cloud without re-pushing them.
+  Future<void> applyRemoteMap(Map<String, dynamic> map) async {
+    _prefs = AppPreferences.fromMap(map);
+    _updatedAt = (map['updatedAt'] as num?)?.toInt() ?? SyncService.nowMillis();
+    await _box?.put(_prefsKey, map);
+    notifyListeners();
+    await BibleStorage.instance.load(translationId: _prefs.bibleTranslationId);
   }
 
   Future<void> completeOnboarding({

@@ -1,0 +1,33 @@
+{
+  "firestore": {
+    "rules": "firestore.rules"
+  },
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "churchjournal-66f96",
+          "appId": "1:1016089587594:android:e985e2bb8511f5bd08e273",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "ios": {
+        "default": {
+          "projectId": "churchjournal-66f96",
+          "appId": "1:1016089587594:ios:9da12a12ddab4f4c08e273",
+          "uploadDebugSymbols": false,
+          "fileOutput": "ios/Runner/GoogleService-Info.plist"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "churchjournal-66f96",
+          "configurations": {
+            "android": "1:1016089587594:android:e985e2bb8511f5bd08e273",
+            "ios": "1:1016089587594:ios:9da12a12ddab4f4c08e273"
+          }
+        }
+      }
+    }
+  }
+}

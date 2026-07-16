@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1016089587594",
+    "project_id": "churchjournal-66f96",
+    "storage_bucket": "churchjournal-66f96.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1016089587594:android:e985e2bb8511f5bd08e273",
+        "android_client_info": {
+          "package_name": "com.churchjournal.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1016089587594-c3n4ej180anbapn7i7gnd50fm7s0je3e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.churchjournal.app",
+            "certificate_hash": "4017bb1cff0cc661b83ca22e6a1c53921d977d95"
+          }
+        },
+        {
+          "client_id": "1016089587594-p658lpqbmtl12vfspspkl6jldq6k682o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAUbtKYsVpVy-lC0Mb9ldq__INK8VoKvkk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1016089587594-p658lpqbmtl12vfspspkl6jldq6k682o.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1016089587594-6gjplpslj33aij2271um1lmiknh20ggh.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.churchjournal.app",
+                "app_store_id": "6784422426"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

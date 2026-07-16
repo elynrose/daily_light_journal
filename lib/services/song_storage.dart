@@ -4,6 +4,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:uuid/uuid.dart';
 
 import '../models/song.dart';
+import 'sync_service.dart';
 
 class SongStorage {
   SongStorage._();
@@ -78,20 +79,33 @@ class SongStorage {
     required String key,
     required String lyrics,
     String number = '',
+    bool? isUserAdded,
   }) async {
+    final resolvedId = id ?? const Uuid().v4();
+    final existing = id != null ? getSongById(id) : null;
+    final resolvedUserAdded = isUserAdded ?? existing?.isUserAdded ?? true;
     final song = Song(
-      id: id ?? const Uuid().v4(),
+      id: resolvedId,
       title: title.trim(),
       key: key.trim(),
       lyrics: lyrics.trim(),
       number: number.trim(),
+      isUserAdded: resolvedUserAdded,
     );
-    await _box?.put(song.id, song.toMap());
+    final map = song.toMap()..['updatedAt'] = SyncService.nowMillis();
+    await _box?.put(song.id, map);
+    if (song.isUserAdded) {
+      SyncService.instance.pushSong(song.id, map);
+    }
     return song;
   }
 
   Future<void> deleteSong(String id) async {
+    final existing = getSongById(id);
     await _box?.delete(id);
+    if (existing?.isUserAdded ?? false) {
+      SyncService.instance.deleteSong(id);
+    }
   }
 
   Future<void> clearAll() async {
@@ -131,6 +145,7 @@ class SongStorage {
         key: song.key,
         lyrics: song.lyrics,
         number: song.number,
+        isUserAdded: false,
       );
       imported++;
     }
@@ -168,6 +183,23 @@ class SongStorage {
       final value = box.get(key);
       if (value == null) continue;
       records[key.toString()] = Song.fromMap(value).toMap();
+    }
+    return records;
+  }
+
+  /// Only songs the user created in-app (for cloud sync). Preserves the stored
+  /// `updatedAt` field used for last-write-wins conflict resolution.
+  Map<String, Map<String, dynamic>> exportUserAddedRawRecords() {
+    final box = _box;
+    if (box == null) return {};
+    final records = <String, Map<String, dynamic>>{};
+    for (final key in box.keys) {
+      final value = box.get(key);
+      if (value == null) continue;
+      if (value['isUserAdded'] != true) continue;
+      records[key.toString()] = Map<String, dynamic>.from(
+        value.map((k, v) => MapEntry(k.toString(), v)),
+      );
     }
     return records;
   }
